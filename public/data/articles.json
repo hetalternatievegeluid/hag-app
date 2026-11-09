@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T15:52",
+ "updated": "2026-11-09T19:05",
  "dossiers": [
   {
    "id": "iran",
@@ -8,6 +8,10 @@
   {
    "id": "oekraine",
    "name": "Oekraïne en Rusland"
+  },
+  {
+   "id": "china",
+   "name": "China en Azië-Pacific"
   },
   {
    "id": "europa",
@@ -340,6 +344,7 @@
    "source": "site",
    "dossiers": [
     "iran",
+    "china",
     "vs"
    ]
   },
@@ -355,7 +360,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -455,7 +461,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-sun-aug-30-2026-23-47-37-gmt-0200-midden-europese-zomertijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3345729_analyse-artikel-31-08-2026-noordoost-azie-de-eilanden-van-1945-en-de-terugkeer-van-de-open-vraag",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "3340077",
@@ -695,6 +703,7 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3284563_analyse-artikel-19-07-2026-hoe-de-chipoorlog-tussen-washington-en-peking-taiwan-en-nederland-tot-instrument-maakt",
    "source": "site",
    "dossiers": [
+    "china",
     "europa"
    ]
   },
@@ -756,7 +765,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -1006,6 +1016,7 @@
    "dossiers": [
     "iran",
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -1188,7 +1199,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3128547_analyse-artikel-31-03-26-tussen-hormuz-en-taiwan-hoe-de-oorlog-met-iran-uitgroeit-tot-een-test-voor-de-nieuwe-wereldorde",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "china"
    ]
   },
   {
@@ -1260,6 +1272,7 @@
    "source": "site",
    "dossiers": [
     "iran",
+    "china",
     "europa"
    ]
   },
@@ -1274,7 +1287,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3068080_nieuws-artikel-16-03-2026-wereldorde-onder-druk-conflicten-rond-iran-taiwan-en-bondgenootschappen-tonen-een-systeem-in-transitie",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "china"
    ]
   },
   {
@@ -1431,6 +1445,7 @@
    "dossiers": [
     "iran",
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -1446,7 +1461,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -1517,7 +1533,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2993891_nieuws-artikel-09-02-2026-internationale-crisisdynamiek-verdiept-zich-van-oekraine-tot-het-midden-oosten",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -1658,7 +1675,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3128583_analyse-artikel-15-01-26-chokepoints-claims-hoe-de-strijd-tussen-amerika-en-china-zich-verplaatst-naar-arctica-groenland-panama-venezuela-en-iran",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "china"
    ]
   },
   {
@@ -1753,7 +1771,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2903234_nieuws-artikel-28-12-25-vredesoverleg-over-oekraine-versnelt-terwijl-de-vs-militair-ingrijpt-in-afrika-en-mondiale-spanningen-oplopen",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -1768,6 +1787,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -1872,6 +1892,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -1931,6 +1952,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -1991,7 +2013,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2030,7 +2053,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2070,7 +2094,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2800943_nieuws-artikel-05-11-25-wereldorde-in-beweging-nieuwe-machtsblokken-wapenwedlopen-en-diplomatieke-schuifbewegingen",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2112,7 +2137,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-fri-oct-31-2025-12-41-42-gmt-0100-midden-europese-standaardtijd-high.png",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2791307_nieuws-artikel-31-10-25-trump-en-xi-zoeken-nieuwe-balans-in-azie-historische-ontmoeting-in-busan-markeert-geopolitieke-verschuiving",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "3133154",
@@ -2139,6 +2166,7 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3133163_analyse-artikel-26-10-25-nederland-tussen-grootmachten-hoe-het-nexperia-conflict-een-nieuw-technologisch-machtsspel-ontketent",
    "source": "site",
    "dossiers": [
+    "china",
     "europa"
    ]
   },
@@ -2225,7 +2253,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2310,7 +2339,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2722659_nieuws-artikel-24-09-25-wereldpolitiek-in-beweging-trump-zet-toon-bij-vn-oekraine-strijdt-door-spanningen-in-midden-oosten-en-navo-lopen-op",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2427,6 +2457,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -2455,7 +2486,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2674966_nieuws-artikel-26-08-25-oorlog-en-diplomatie-oekraine-zoekt-vrede-steun-en-wapens-terwijl-spanningen-in-gaza-en-azie-oplaaien",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2640,7 +2672,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3133519_analyse-artikel-04-08-25-de-shanghai-cooperation-organisation-2025-de-contouren-van-een-nieuwe-wereldorde",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2655,6 +2688,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -2669,7 +2703,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2637082_nieuws-artikel-01-08-25-wereld-op-het-randje-trump-jaagt-bondgenoten-van-zich-af-terwijl-nucleaire-retoriek-oplaait",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2698,7 +2733,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2630137_nieuws-artikel-28-07-25-diplomatie-onder-druk-de-wereld-tussen-escalatie-en-evenwicht",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2728,7 +2764,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2742,7 +2779,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2618912_analyse-artikel-20-07-2025-op-de-rand-van-confrontatie-wereldpolitiek-richting-2027",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2756,7 +2794,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3134923_analyse-artikel-20-07-2025-op-de-rand-van-confrontatie-wereldpolitiek-richting-2027",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2827,7 +2866,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2605500_nieuws-artikel-11-07-2025-de-nieuwe-wereldorde-in-beweging-oorlog-diplomatie-en-de-strijd-om-invloed",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -2854,6 +2894,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -2869,6 +2910,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -2942,6 +2984,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -3095,7 +3138,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-tue-jun-10-2025-20-15-30-gmt-0200-midden-europese-zomertijd-high.png",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2555872_nieuws-artikel-10-06-25-de-wereld-op-drift-diplomatie-dreiging-en-nieuwe-allianties-in-juni-2025",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "2548555",
@@ -3125,7 +3170,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -3154,7 +3200,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -3457,7 +3504,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2483926_nieuws-artikel-tussen-grondstoffen-en-grenzeloosheid-de-spannende-driehoeksrelatie-oekraine-trump-poetin",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -3543,6 +3591,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -3585,7 +3634,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-mon-apr-14-2025-06-29-27-gmt-0200-midden-europese-zomertijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2450199_trump-gebruikt-economische-spierballen-hoe-importheffingen-een-wapen-werden-in-zijn-strijd-tegen-china",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "2442990",
@@ -3597,7 +3648,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-thu-apr-10-2025-08-30-06-gmt-0200-midden-europese-zomertijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2442990_de-wereld-in-hertekening-handelsoorlog-vs-china-trekt-wereldwijd-economisch-en-politiek-spel-op-losse-schroeven",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "2441207",
@@ -3679,6 +3732,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -3734,7 +3788,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/image-high-8reftf.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2397714_de-spanningen-rondom-azie-pacific-van-handelsoorlog-tot-militaire-dreiging",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "2392611",
@@ -3791,6 +3847,7 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2368674_trump-en-de-nieuwe-wereldorde-de-strijd-om-amerikaanse-dominantie",
    "source": "site",
    "dossiers": [
+    "china",
     "europa"
    ]
   },
@@ -3818,6 +3875,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -3862,6 +3920,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -3892,6 +3951,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -3975,6 +4035,7 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2294643_ai-als-geopolitiek-machtsspel-de-oorlog-om-technologische-dominantie",
    "source": "site",
    "dossiers": [
+    "china",
     "europa"
    ]
   },
@@ -4003,7 +4064,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2280910_trump-2-0-wat-zijn-tweede-termijn-betekent-voor-de-wereldorde",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -4228,6 +4290,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -4243,6 +4306,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -4296,7 +4360,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2127195_de-geopolitieke-complexiteit-noord-korea-s-steun-aan-rusland-in-oekraine-en-de-oplopende-spanningen-op-het-koreaanse-schiereiland",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -4326,7 +4391,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -4363,7 +4429,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-tue-oct-15-2024-10-04-22-gmt-0200-midden-europese-zomertijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2099351_taiwan-in-de-tangodans-van-supermachten-chips-macht-en-de-dreiging-van-conflict",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "2090139",
@@ -4401,7 +4469,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -4415,7 +4484,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2070829_wat-is-er-precies-gaande-in-de-wereld-een-analyse-van-de-huidige-geopolitieke-verschuivingen",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -4480,7 +4550,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-mon-sep-16-2024-10-08-48-gmt-0200-cest-high.png",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2044826_de-rivaliteit-om-de-quantumcomputer-de-strijd-tussen-de-vs-en-china",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "2034752",
@@ -4733,6 +4805,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -4760,7 +4833,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/image-high-wudc38.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1914927_china-s-opkomst-in-het-midden-oosten-en-de-indo-pacifische-rivaliteit-de-nieuwe-wereldorde",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "1912459",
@@ -4844,7 +4919,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1862611_machtsverschuivingen-een-diepgaande-analyse-van-hoe-historische-en-huidige-geopolitieke-dynamieken-de-weg-hebben-verhard-voor-hedendaagse-conflicten",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -4858,6 +4934,7 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1851607_taiwanese-chips-op-het-wereldschaakbord-technologie-en-spanningen",
    "source": "site",
    "dossiers": [
+    "china",
     "europa"
    ]
   },
@@ -4887,6 +4964,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -5121,7 +5199,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1728188_de-veranderende-wereldorde",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "china"
    ]
   },
   {
@@ -5299,6 +5378,7 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1667959_taiwan-een-eiland-tussen-twee-grootmachten",
    "source": "site",
    "dossiers": [
+    "china",
     "europa"
    ]
   },
@@ -5340,6 +5420,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -5382,6 +5463,7 @@
    "source": "site",
    "dossiers": [
     "oekraine",
+    "china",
     "europa"
    ]
   },
@@ -5395,7 +5477,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/gqehl9/pasted-imagesunjan212024235839gmt0100midden-europesestandaardtijd.jpg",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1640432_hoe-de-wereldorde-verandert-in-2024-de-uitdagingen-en-kansen-van-china-de-vs-en-de-wereld",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "china"
+   ]
   },
   {
    "id": "1639867",

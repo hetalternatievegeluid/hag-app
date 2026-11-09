@@ -122,6 +122,24 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.stroomblok{padding:26px 0 10px;border-bottom:1px solid var(--line)}
+.stroomblok h2{font-family:var(--serif);font-weight:600;font-size:1.15rem;margin:0 0 4px}
+.stroom-intro{color:var(--muted);font-size:.85rem;margin:0 0 8px;max-width:62ch}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.85rem;padding:5px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+ul.newslist{list-style:none;margin:0;padding:0}
+.news{padding:12px 0;border-bottom:1px solid var(--line)}
+.news:last-child{border-bottom:0}
+.nmeta{font-size:.78rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-bottom:4px}
+.nmeta time{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.nmeta b{color:var(--ink);font-weight:600}
+.lbl{border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.lbl.staat{border-color:var(--accent);color:var(--accent)}
+.ntitle{font-family:var(--serif);font-size:1.08rem;font-weight:600;line-height:1.3;text-decoration:none;display:block}
+.ntitle:hover{text-decoration:underline;text-underline-offset:3px}
+.news p{margin:4px 0 0;font-size:.88rem;color:var(--muted);max-width:64ch}
+.daykop{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--muted);margin:24px 0 2px;font-size:1rem}
 .related{margin-top:48px;border-top:1px solid var(--line);padding-top:20px}
 .related h2{font-family:var(--serif);font-weight:600;font-size:1.1rem;margin:0 0 6px}
 .related a{display:block;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none;font-family:var(--serif);font-size:1.08rem}
@@ -196,6 +214,7 @@ footer .social a:hover{text-decoration:underline}
 const SITE = "https://www.hetalternatievegeluid.nl";
 const CATS = [
   {id:"alles", name:"Alles"},
+  {id:"stroom", name:"Nieuwsstroom"},
   {id:"nieuws", name:"Nieuws"},
   {id:"onderzoek", name:"Onderzoek"},
   {id:"analyse", name:"Analyse"},
@@ -220,7 +239,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {cat:"alles", q:"", dossier:null};
+const state = {cat:"alles", q:"", dossier:null, sectie:null, limit:80};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -241,14 +260,14 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
-    return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}<span class="n">${n}</span></button>`;
+    const n = c.id==="stroom" ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
 document.getElementById("tabs").addEventListener("click", e=>{
   const b = e.target.closest(".tab"); if(!b) return;
   state.cat = b.dataset.cat;
-  state.dossier = null;
+  state.dossier = null; state.sectie = null; state.limit = 80;
   if(location.hash) location.hash = ""; else renderList();
   renderTabs();
 });
@@ -274,6 +293,7 @@ function renderList(){
   const main = document.getElementById("main");
   document.getElementById("tools").hidden = false;
   document.getElementById("tabs").hidden = false;
+  if(state.cat==="stroom"){ main.innerHTML = stroomView(); return; }
   let list = filtered();
   let html = "";
 
@@ -287,7 +307,8 @@ function renderList(){
       <h2>${esc(ds.name)}</h2>
       <p>${items.length} artikelen, van ${fmtShort.format(first)} tot ${fmtShort.format(last)}.</p>
       <div class="actions"><button class="btn ${f?"":"ghost"}" data-act="follow" data-id="${ds.id}" aria-pressed="${f}">${f?"Je volgt dit dossier":"Volg dit dossier"}</button></div>
-    </section>`;
+    </section>
+    ${stroomBlok(ds.id,5)}`;
   } else if(state.cat==="alles" && !state.q.trim()){
     const h = list[0];
     const d = new Date(h.date);
@@ -297,6 +318,7 @@ function renderList(){
       <p class="lead">${esc(h.intro)}</p>
       <a class="btn" href="#artikel-${h.id}">Lees meer »</a>
     </section>
+    ${stroomBlok(null,5)}
     <section class="dossiers">
       <h2>Lopende dossiers</h2>
       <div class="dgrid">${DOSSIERS.map(ds=>{
@@ -386,6 +408,61 @@ function renderReader(a){
   window.scrollTo(0,0);
 }
 
+/* ---------- nieuwsstroom ---------- */
+let NIEUWS = null;
+async function loadNieuws(){
+  try {
+    const r = await fetch("/api/nieuws", {cache:"no-cache"});
+    if(!r.ok) throw new Error(r.status);
+    NIEUWS = await r.json();
+  } catch(e) {
+    if(!NIEUWS) NIEUWS = {fout:true, berichten:[], secties:[]};
+  }
+  if(!location.hash && ARTICLES.length) renderList();
+}
+function nTijd(iso){
+  const d = new Date(iso), nu = new Date(), dag = x => x.toDateString();
+  const t = fmtTime.format(d);
+  if(dag(d)===dag(nu)) return t;
+  const gister = new Date(nu); gister.setDate(nu.getDate()-1);
+  if(dag(d)===dag(gister)) return "gisteren " + t;
+  return fmtShort.format(d) + " " + t;
+}
+function newsItem(b, alleenTijd){
+  const d = new Date(b.tijd);
+  return `<li class="news"><div class="nmeta"><time datetime="${esc(b.tijd)}">${alleenTijd ? fmtTime.format(d) : nTijd(b.tijd)}</time><b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></div><a class="ntitle" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a>${b.samenvatting ? `<p>${esc(b.samenvatting)}</p>` : ""}</li>`;
+}
+function stroomBlok(sectie, n){
+  if(!NIEUWS) return `<section class="stroomblok"><h2>Nieuwsstroom</h2><p class="stroom-intro">Laden…</p></section>`;
+  const lijst = NIEUWS.berichten.filter(b => !sectie || b.secties.includes(sectie)).slice(0, n);
+  if(!lijst.length) return "";
+  const naam = sectie ? (NIEUWS.secties.find(s => s.id===sectie) || {}).naam : "";
+  return `<section class="stroomblok"><h2>Nieuwsstroom${naam ? ": " + esc(naam) : ""}</h2>
+    <p class="stroom-intro">Koppen uit andere media, automatisch verzameld en niet door ons gecontroleerd.</p>
+    <ul class="newslist">${lijst.map(b => newsItem(b, false)).join("")}</ul>
+    <p><button class="btn ghost" data-act="stroom" data-id="${sectie || ""}">Hele nieuwsstroom</button></p></section>`;
+}
+function stroomView(){
+  if(!NIEUWS) return `<p class="loading">Nieuwsstroom laden…</p>`;
+  let html = `<section class="dhead"><h2>Nieuwsstroom</h2><p>Koppen uit andere media, elk kwartier automatisch verzameld. Deze berichten zijn niet door Het Alternatieve Geluid gecontroleerd. Bij elk bericht staat wie het meldt en wat voor bron dat is; staatsmedia zijn rood gemarkeerd.</p></section>`;
+  if(NIEUWS.fout && !NIEUWS.berichten.length) return html + `<div class="empty"><strong>De nieuwsstroom is nu niet bereikbaar</strong>Probeer het over een paar minuten opnieuw.</div>`;
+  html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...NIEUWS.secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
+  const q = norm(state.q.trim());
+  const lijst = NIEUWS.berichten.filter(b => (!state.sectie || b.secties.includes(state.sectie)) && (!q || norm(b.titel + " " + b.samenvatting + " " + b.bron).includes(q)));
+  if(!lijst.length) return html + `<div class="empty"><strong>Geen berichten gevonden</strong>Kies een andere sectie of zoekterm.</div>`;
+  const toon = lijst.slice(0, state.limit);
+  let dag = "";
+  html += toon.map(b => {
+    const k = cap(fmtFull.format(new Date(b.tijd)));
+    let pre = "";
+    if(k!==dag){ pre = (dag ? `</ul>` : "") + `<h3 class="daykop">${k}</h3><ul class="newslist">`; dag = k; }
+    return pre + newsItem(b, true);
+  }).join("") + `</ul>`;
+  if(lijst.length > toon.length) html += `<p><button class="btn ghost" data-act="meer">Meer laden</button></p>`;
+  html += `<p class="stroom-intro">Bijgewerkt om ${fmtTime.format(new Date(NIEUWS.bijgewerkt))}.</p>`;
+  return html;
+}
+
 /* ---------- routing ---------- */
 function route(){
   const m = location.hash.match(/^#artikel-(\d+)$/);
@@ -405,6 +482,9 @@ document.getElementById("main").addEventListener("click", e=>{
     if(followed.has(b.dataset.id)) followed.delete(b.dataset.id); else followed.add(b.dataset.id);
     persistFollow(); renderList(); return;
   }
+  if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="sectie"){ state.sectie = b.dataset.id || null; state.limit = 80; renderList(); return; }
+  if(act==="stroom"){ state.cat = "stroom"; state.sectie = b.dataset.id || null; state.dossier = null; state.limit = 80; }
   if(act==="dossier"){ state.dossier = b.dataset.id; state.cat = "alles"; state.q = ""; document.getElementById("q").value = ""; }
   if(act==="clear-dossier"){ state.dossier = null; }
   renderTabs();
@@ -430,6 +510,8 @@ async function load(){
   }
 }
 load();
+loadNieuws();
+setInterval(loadNieuws, 5*60*1000);
 if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script>
 </body>

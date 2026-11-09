@@ -41,7 +41,7 @@ async function get(url) {
 }
 
 // ---------- tekst-hulpjes ----------
-function stripSuffix(t) { return (t || "").replace(/\s*\|\s*Het Alternatieve Geluid\s*$/i, "").trim(); }
+function stripSuffix(t) { return (t || "").replace(/\s*\|\s*Het Alternatieve Geluid\s*$/i, "").replace(/\s*\/\s*(Nieuws|Onderzoeks?|Analyse|Een Andere Kijk)\s+Artikelen\s*$/i, "").trim(); }
 function cleanTitle(raw) {
   return stripSuffix(raw)
     .replace(/^\s*(\([^)]*\)\s*)+/, "")            // "(Nieuws Artikel: 09/11/2026) " eraf

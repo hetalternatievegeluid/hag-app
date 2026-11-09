@@ -1,0 +1,41 @@
+{
+  "_uitleg": "Instellingen voor de nieuwsstroom. 'secties' zijn de onderwerpen (zelfde ID's als de dossiers). Een bericht komt in een sectie als een trefwoord in de kop of samenvatting staat. Bij een bron met 'sectie' komen ALLE berichten van die bron in die sectie, ook zonder trefwoord. Een bron uitzetten: zet 'aan' op false.",
+  "secties": [
+    { "id": "oekraine", "naam": "Oekraïne en Rusland",
+      "trefwoorden": ["Oekraïne", "Oekraïens", "Ukrain", "Kyiv", "Kiev", "Zelensky", "Poetin", "Putin", "Kremlin", "Moskou", "Moscow", "Rusland", "Russia", "Donbas", "Donetsk", "Charkiv", "Kharkiv", "Zaporizh", "Odesa", "Krim", "Crimea"] },
+    { "id": "iran", "naam": "Iran en de Golf",
+      "trefwoorden": ["Iran", "Tehran", "Teheran", "Hormuz", "Perzische Golf", "Persian Gulf", "Golfstaten", "Gulf states", "Houthi", "Yemen", "Jemen", "Saudi", "Saoedi", "Israel", "Israël", "Gaza", "Hezbollah", "Lebanon", "Libanon", "Qatar", "Emirat", "Araghchi", "Netanyahu"] },
+    { "id": "china", "naam": "China en Azië-Pacific",
+      "trefwoorden": ["China", "Chinese", "Chinees", "Beijing", "Peking", "Xi Jinping", "Taiwan", "Taipei", "Hong Kong", "Hongkong", "Japan", "Tokyo", "Korea", "Pyongyang", "Seoul", "Philippine", "Filipijn", "South China Sea", "Zuid-Chinese Zee", "Indo-Pacific", "ASEAN"] },
+    { "id": "europa", "naam": "Europa en Nederland",
+      "trefwoorden": ["Nederland", "Netherlands", "Dutch", "Den Haag", "The Hague", "Europese Unie", "European Union", "EU ", "Brussel", "Brussels", "Duitsland", "Germany", "Frankrijk", "France", "Macron", "Merz", "NAVO", "NATO", "von der Leyen", "Jetten"] },
+    { "id": "vs", "naam": "Amerikaanse macht",
+      "trefwoorden": ["Trump", "White House", "Witte Huis", "Pentagon", "Congress", "Congres", "Senate", "Senaat", "Rubio", "Hegseth", "Vance", "Washington"] }
+  ],
+  "bronnen": [
+    { "id": "nos", "naam": "NOS", "label": "Westerse mainstream media", "feed": "https://feeds.nos.nl/nosnieuwsbuitenland", "aan": true },
+    { "id": "bbc", "naam": "BBC World", "label": "Westerse mainstream media", "feed": "https://feeds.bbci.co.uk/news/world/rss.xml", "aan": true },
+    { "id": "guardian", "naam": "The Guardian", "label": "Westerse mainstream media", "feed": "https://www.theguardian.com/world/rss", "aan": true },
+    { "id": "politico", "naam": "Politico Europe", "label": "Westerse mainstream media", "feed": "https://www.politico.eu/feed/", "aan": true },
+
+    { "id": "aljazeera", "naam": "Al Jazeera English", "label": "Qatarese staatsomroep", "feed": "https://www.aljazeera.com/xml/rss/all.xml", "aan": true },
+
+    { "id": "kyivindependent", "naam": "Kyiv Independent", "label": "Oekraïense onafhankelijke media", "feed": "https://kyivindependent.com/news-archive/rss/", "sectie": "oekraine", "aan": true },
+    { "id": "pravda", "naam": "Ukrainska Pravda", "label": "Oekraïense media", "feed": "https://www.pravda.com.ua/eng/rss/", "sectie": "oekraine", "aan": true },
+    { "id": "meduza", "naam": "Meduza", "label": "Russische onafhankelijke media (ballingschap)", "feed": "https://meduza.io/rss/en/all", "sectie": "oekraine", "aan": true },
+    { "id": "tass", "naam": "TASS", "label": "Russische staatsmedia", "staat": true, "feed": "https://tass.com/rss/v2.xml", "aan": true },
+
+    { "id": "almonitor", "naam": "Al-Monitor", "label": "Midden-Oosten nieuwssite (VS)", "feed": "https://www.al-monitor.com/rss", "sectie": "iran", "aan": true },
+    { "id": "timesofisrael", "naam": "Times of Israel", "label": "Israëlische media", "feed": "https://www.timesofisrael.com/feed/", "aan": true },
+    { "id": "iranintl", "naam": "Iran International", "label": "Iraanse oppositiemedia (Saoedische financiering gemeld)", "feed": "https://www.iranintl.com/en/feed", "sectie": "iran", "aan": true },
+    { "id": "tasnim", "naam": "Tasnim", "label": "Iraanse staatsgelieerde media (Revolutionaire Garde)", "staat": true, "feed": "https://www.tasnimnews.com/en/rss", "sectie": "iran", "aan": true },
+    { "id": "presstv", "naam": "Press TV", "label": "Iraanse staatsmedia", "staat": true, "feed": "https://www.presstv.ir/RSS", "sectie": "iran", "aan": true },
+
+    { "id": "scmp", "naam": "South China Morning Post", "label": "Hongkongse media (eigendom Alibaba)", "feed": "https://www.scmp.com/rss/91/feed", "sectie": "china", "aan": true },
+    { "id": "globaltimes", "naam": "Global Times", "label": "Chinese staatsmedia", "staat": true, "feed": "https://www.globaltimes.cn/rss/outbrain.xml", "aan": true },
+    { "id": "nikkei", "naam": "Nikkei Asia", "label": "Japanse media", "feed": "https://asia.nikkei.com/rss/feed/nar", "aan": true },
+    { "id": "diplomat", "naam": "The Diplomat", "label": "Azië-Pacific tijdschrift", "feed": "https://thediplomat.com/feed/", "sectie": "china", "aan": true },
+    { "id": "focustaiwan", "naam": "Focus Taiwan", "label": "Taiwanees staatspersbureau (CNA)", "staat": true, "feed": "https://focustaiwan.tw/rss/aall.xml", "sectie": "china", "aan": true },
+    { "id": "yonhap", "naam": "Yonhap", "label": "Zuid-Koreaans persbureau", "feed": "https://en.yna.co.kr/RSS/news.xml", "sectie": "china", "aan": true }
+  ]
+}

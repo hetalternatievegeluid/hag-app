@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Beheer · Het Alternatieve Geluid</title>
+<link rel="icon" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600;6..72,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F2F3; --surface:#FFFFFF; --ink:#16171C; --muted:#5D5F68; --line:#D9DADE;
+  --accent:#C62A21; --accent-soft:#FBE7E5; --ok:#1F7A4D; --bar:#16171C;
+  --serif:"Newsreader", Georgia, serif; --sans:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#16171C; --surface:#1F2027; --ink:#F2F2F3; --muted:#A3A5AE; --line:#2D2F38; --accent:#E8463B; --accent-soft:#2F1B1B; --ok:#4CC38A; --bar:#0C0D10; color-scheme:dark; }
+}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bar)}
+.bar{background:var(--bar);color:#fff;border-bottom:3px solid var(--accent);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.bar .wrap{display:flex;align-items:center;gap:12px;padding:10px 20px;flex-wrap:wrap}
+.bar img{width:32px;height:32px}
+.bar strong{font-family:var(--serif);font-size:1.1rem;margin-right:auto}
+.bar nav{display:flex;gap:4px}
+.bar nav button{background:none;border:0;color:#C9CBD2;font:inherit;font-size:.9rem;padding:6px 10px;border-radius:999px;cursor:pointer}
+.bar nav button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+main{padding:24px 0 60px}
+h1{font-family:var(--serif);font-size:1.8rem;margin:0 0 6px}
+h2{font-family:var(--serif);font-size:1.3rem;margin:28px 0 10px}
+p.hint{color:var(--muted);font-size:.88rem;margin:0 0 14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:12px}
+label{display:block;font-size:.85rem;font-weight:600;margin:12px 0 4px}
+input,textarea,select{width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 11px}
+textarea{min-height:90px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media (max-width:560px){.row{grid-template-columns:1fr}}
+.btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;font-size:.9rem;padding:9px 16px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.small{padding:5px 12px;font-size:.82rem}
+.btn:disabled{opacity:.5;cursor:default}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.meta{font-size:.8rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-right:4px}
+.tag.actief{border-color:var(--accent);color:var(--accent)}
+.labels{display:flex;gap:6px;flex-wrap:wrap}
+.labels label{display:flex;align-items:center;gap:6px;font-weight:500;margin:0;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+.labels input{width:auto;margin:0}
+.labels label:has(input:checked){border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.msg{padding:10px 14px;border-radius:6px;margin:12px 0;font-size:.9rem}
+.msg.fout{background:var(--accent-soft);color:var(--accent)}
+.msg.ok{background:var(--surface);border-left:3px solid var(--ok)}
+.pick{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-bottom:6px;font:inherit;color:var(--ink);cursor:pointer}
+.pick:hover{border-color:var(--accent)}
+.pick small{display:block;color:var(--muted);font-size:.78rem}
+.list-scroll{max-height:340px;overflow:auto;padding-right:4px}
+.update{border-top:1px solid var(--line);padding:12px 0}
+.update:first-child{border-top:0}
+.quote{white-space:pre-wrap;margin:6px 0}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap">
+  <img src="/icons/logo.png" alt="">
+  <strong>Beheer</strong>
+  <nav id="nav" hidden>
+    <button data-view="flitsen" aria-pressed="true">Flitsen</button>
+    <button data-view="moderatie" aria-pressed="false">Moderatie <span id="wachtteller"></span></button>
+    <button data-view="uit" aria-pressed="false">Uitloggen</button>
+  </nav>
+</div></div>
+<main class="wrap" id="main"></main>
+
+<script>
+const LABELS = {bevestigd:"Bevestigd", claim:"Claim", onbevestigd:"Onbevestigd"};
+const CHAT = {gemodereerd:"Gemodereerd (jij keurt eerst goed)", open:"Open (direct zichtbaar, filters blijven werken)", gesloten:"Gesloten"};
+let WW = "";
+try { WW = sessionStorage.getItem("hag-beheer") || ""; } catch(e) {}
+let SECTIES = [], STROOM = [];
+const main = document.getElementById("main");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = iso => new Intl.DateTimeFormat("nl-NL",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}).format(new Date(iso));
+
+async function api(actie, data = {}){
+  const r = await fetch("/api/beheer", {method:"POST", headers:{"content-type":"application/json","x-beheer":WW}, body:JSON.stringify({actie, ...data})});
+  const j = await r.json().catch(()=>({fout:"Onverwachte fout"}));
+  if(!r.ok) throw new Error(j.fout || "Er ging iets mis");
+  return j;
+}
+function melding(el, tekst, soort="ok"){ el.innerHTML = `<div class="msg ${soort}">${esc(tekst)}</div>`; }
+
+/* ---------- inloggen ---------- */
+function toonLogin(fout){
+  document.getElementById("nav").hidden = true;
+  main.innerHTML = `<h1>Inloggen</h1><p class="hint">Gebruik het wachtwoord dat je in Netlify hebt ingesteld als BEHEER_WACHTWOORD.</p>
+    <div class="card"><label for="ww">Wachtwoord</label><input id="ww" type="password" autocomplete="current-password">
+    <div class="actions"><button class="btn" id="login">Inloggen</button></div><div id="lmsg"></div></div>`;
+  if(fout) melding(document.getElementById("lmsg"), fout, "fout");
+  const go = async () => {
+    WW = document.getElementById("ww").value;
+    try { await api("controle"); try{ sessionStorage.setItem("hag-beheer", WW); }catch(e){} start(); }
+    catch(e){ melding(document.getElementById("lmsg"), e.message, "fout"); }
+  };
+  document.getElementById("login").onclick = go;
+  document.getElementById("ww").onkeydown = e => { if(e.key==="Enter") go(); };
+}
+
+/* ---------- navigatie ---------- */
+document.getElementById("nav").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.view==="uit"){ WW=""; try{ sessionStorage.removeItem("hag-beheer"); }catch(e){} toonLogin(); return; }
+  kies(b.dataset.view);
+});
+function kies(view){
+  document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
+  if(view==="moderatie") toonModeratie(); else toonFlitsen();
+}
+
+/* ---------- flitsen-overzicht ---------- */
+async function toonFlitsen(){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const {flitsen} = await api("lijst");
+    main.innerHTML = `<h1>Flitsen</h1><p class="hint">Grote ontwikkelingen die je volgt. Actieve flitsen staan bovenaan de app.</p>
+      <div class="actions" style="margin:0 0 18px"><button class="btn" id="nieuw">Nieuwe flits</button></div>
+      ${flitsen.length ? flitsen.map(f=>`<div class="card">
+        <span class="tag ${f.status==="actief"?"actief":""}">${f.status==="actief"?"Actief":"Archief"}</span><span class="tag">Gesprek: ${esc(f.chat||"gemodereerd")}</span>
+        <h2 style="margin:8px 0 4px">${esc(f.titel)}</h2>
+        <p class="meta">${f.updates} updates · bijgewerkt ${fmt(f.bijgewerkt)}</p>
+        <div class="actions"><button class="btn small" data-open="${f.id}">Openen</button><a class="btn ghost small" href="/#flits-${f.id}" target="_blank">Bekijk in app</a></div>
+      </div>`).join("") : `<div class="card"><p class="hint" style="margin:0">Nog geen flitsen. Maak er een aan vanuit een kop in de nieuwsstroom, of vanaf nul.</p></div>`}`;
+    document.getElementById("nieuw").onclick = () => toonEditor(null);
+    main.querySelectorAll("[data-open]").forEach(b=> b.onclick = () => toonEditor(b.dataset.open));
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
+/* ---------- flits bewerken ---------- */
+async function toonEditor(id){
+  let f = {titel:"", context:"", sectie:SECTIES[0]?.id || "", bron:{naam:"",url:"",label:""}, community:"", status:"actief", chat:"gemodereerd", updates:[]};
+  if(id){ try { f = await api("lees", {id}); } catch(e){ melding(main, e.message, "fout"); return; } }
+  const sectieOpties = SECTIES.map(s=>`<option value="${esc(s.id)}" ${s.id===f.sectie?"selected":""}>${esc(s.naam)}</option>`).join("");
+  main.innerHTML = `<button class="btn ghost small" id="terug">← Alle flitsen</button>
+    <h1 style="margin-top:14px">${id ? "Flits bewerken" : "Nieuwe flits"}</h1>
+    ${!id && STROOM.length ? `<div class="card"><strong>Kies een kop uit de nieuwsstroom</strong><p class="hint">Of vul hieronder alles zelf in.</p>
+      <input id="zoek" placeholder="Zoek in de nieuwsstroom" style="margin-bottom:10px"><div class="list-scroll" id="stroomlijst"></div></div>` : ""}
+    <div class="card">
+      <label for="titel">Titel</label><input id="titel" value="${esc(f.titel)}" maxlength="200">
+      <label for="context">Context (een paar zinnen van jou: wat is er aan de hand en waarom volg je dit)</label><textarea id="context" maxlength="2000">${esc(f.context)}</textarea>
+      <div class="row">
+        <div><label for="sectie">Sectie</label><select id="sectie">${sectieOpties}</select></div>
+        <div><label for="community">Link naar de community (Substack-chat of Telegram, optioneel)</label><input id="community" value="${esc(f.community)}" placeholder="https://"></div>
+      </div>
+      <div class="row">
+        <div><label for="bnaam">Aanleiding: bron</label><input id="bnaam" value="${esc(f.bron?.naam)}"></div>
+        <div><label for="blabel">Soort bron</label><input id="blabel" value="${esc(f.bron?.label)}" placeholder="bijv. Westerse mainstream media"></div>
+      </div>
+      <label for="burl">Link naar het bronbericht</label><input id="burl" value="${esc(f.bron?.url)}" placeholder="https://">
+      <div class="row">
+        <div><label for="status">Status</label><select id="status"><option value="actief" ${f.status==="actief"?"selected":""}>Actief (staat bovenaan de app)</option><option value="archief" ${f.status==="archief"?"selected":""}>Archief</option></select></div>
+        <div><label for="chat">Gesprek</label><select id="chat">${Object.entries(CHAT).map(([k,v])=>`<option value="${k}" ${f.chat===k?"selected":""}>${v}</option>`).join("")}</select></div>
+      </div>
+      <div class="actions"><button class="btn" id="bewaar">${id ? "Opslaan" : "Flits aanmaken"}</button>${id ? `<a class="btn ghost" href="/#flits-${id}" target="_blank">Bekijk in app</a><button class="btn ghost" id="weg">Verwijderen</button>` : ""}</div>
+      <div id="fmsg"></div>
+    </div>
+    ${id ? `<h2>Nieuwe update</h2>
+    <div class="card">
+      <label for="utekst">Wat is er gebeurd?</label><textarea id="utekst" maxlength="1500"></textarea>
+      <label>Label</label><div class="labels">${Object.entries(LABELS).map(([k,v],i)=>`<label><input type="radio" name="ulabel" value="${k}" ${i===2?"checked":""}>${v}</label>`).join("")}</div>
+      <div class="row"><div><label for="ubnaam">Bron</label><input id="ubnaam"></div><div><label for="uburl">Link</label><input id="uburl" placeholder="https://"></div></div>
+      <div class="actions"><button class="btn" id="plaats">Update plaatsen</button></div><div id="umsg"></div>
+    </div>
+    <h2>Tijdlijn</h2><div class="card" id="tijdlijn">${tijdlijnHTML(f)}</div>` : ""}`;
+
+  document.getElementById("terug").onclick = () => kies("flitsen");
+  const lees = () => ({ id, titel:val("titel"), context:val("context"), sectie:val("sectie"), community:val("community"), status:val("status"), chat:val("chat"), bron:{naam:val("bnaam"), url:val("burl"), label:val("blabel")} });
+  document.getElementById("bewaar").onclick = async () => {
+    try { const n = await api("opslaan", lees()); if(!id) toonEditor(n.id); else melding(document.getElementById("fmsg"), "Opgeslagen."); }
+    catch(e){ melding(document.getElementById("fmsg"), e.message, "fout"); }
+  };
+  if(id){
+    document.getElementById("weg").onclick = async () => {
+      if(!confirm("Deze flits met alle updates en reacties definitief verwijderen?")) return;
+      try { await api("verwijder", {id}); kies("flitsen"); } catch(e){ melding(document.getElementById("fmsg"), e.message, "fout"); }
+    };
+    document.getElementById("plaats").onclick = async () => {
+      const label = document.querySelector('input[name="ulabel"]:checked')?.value;
+      try {
+        const n = await api("update", {flits:id, tekst:val("utekst"), label, bron:{naam:val("ubnaam"), url:val("uburl")}});
+        ["utekst","ubnaam","uburl"].forEach(i=>document.getElementById(i).value="");
+        document.getElementById("tijdlijn").innerHTML = tijdlijnHTML(n); koppelTijdlijn(n);
+        melding(document.getElementById("umsg"), "Update geplaatst.");
+      } catch(e){ melding(document.getElementById("umsg"), e.message, "fout"); }
+    };
+    koppelTijdlijn(f);
+  }
+  if(!id && STROOM.length){
+    const lijst = document.getElementById("stroomlijst");
+    const toon = q => {
+      const n = q.toLowerCase();
+      lijst.innerHTML = STROOM.filter(b=>!n || (b.titel+" "+b.bron).toLowerCase().includes(n)).slice(0,60)
+        .map((b,i)=>`<button class="pick" data-i="${STROOM.indexOf(b)}">${esc(b.titel)}<small>${esc(b.bron)} · ${esc(b.label)} · ${fmt(b.tijd)}</small></button>`).join("") || `<p class="hint">Niets gevonden.</p>`;
+    };
+    toon("");
+    document.getElementById("zoek").oninput = e => toon(e.target.value);
+    lijst.onclick = e => {
+      const p = e.target.closest(".pick"); if(!p) return;
+      const b = STROOM[+p.dataset.i];
+      set("titel", b.titel); set("bnaam", b.bron); set("blabel", b.label); set("burl", b.url);
+      if(b.secties?.[0]) set("sectie", b.secties[0]);
+      document.getElementById("titel").focus();
+    };
+  }
+}
+const val = id => document.getElementById(id)?.value ?? "";
+const set = (id, v) => { const el = document.getElementById(id); if(el) el.value = v; };
+
+function tijdlijnHTML(f){
+  if(!f.updates.length) return `<p class="hint" style="margin:0">Nog geen updates.</p>`;
+  return f.updates.map(u=>`<div class="update" data-u="${u.id}">
+    <p class="meta">${fmt(u.tijd)}${u.bijgewerkt ? ` · bijgewerkt ${fmt(u.bijgewerkt)}` : ""}</p>
+    <textarea data-f="tekst">${esc(u.tekst)}</textarea>
+    <div class="row">
+      <div><label>Label</label><select data-f="label">${Object.entries(LABELS).map(([k,v])=>`<option value="${k}" ${u.label===k?"selected":""}>${v}</option>`).join("")}</select></div>
+      <div><label>Bron</label><input data-f="bnaam" value="${esc(u.bron?.naam)}"></div>
+    </div>
+    <label>Link</label><input data-f="burl" value="${esc(u.bron?.url)}">
+    <div class="actions"><button class="btn small" data-a="opslaan">Wijziging opslaan</button><button class="btn ghost small" data-a="weg">Verwijderen</button></div>
+  </div>`).join("");
+}
+function koppelTijdlijn(f){
+  const box = document.getElementById("tijdlijn");
+  box.onclick = async e => {
+    const b = e.target.closest("button[data-a]"); if(!b) return;
+    const el = b.closest(".update"), uid = el.dataset.u, g = k => el.querySelector(`[data-f="${k}"]`).value;
+    try {
+      let n;
+      if(b.dataset.a==="weg"){ if(!confirm("Deze update verwijderen?")) return; n = await api("update-weg", {flits:f.id, id:uid}); }
+      else n = await api("update", {flits:f.id, id:uid, tekst:g("tekst"), label:g("label"), bron:{naam:g("bnaam"), url:g("burl")}});
+      box.innerHTML = tijdlijnHTML(n); koppelTijdlijn(n);
+    } catch(err){ alert(err.message); }
+  };
+}
+
+/* ---------- moderatie ---------- */
+async function toonModeratie(){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const {reacties} = await api("wachtrij");
+    zetTeller(reacties.length);
+    main.innerHTML = `<h1>Moderatie</h1><p class="hint">Reacties die op je goedkeuring wachten: bij een gemodereerd gesprek, met een link of filterwoord, of na drie meldingen.</p>
+      ${reacties.length ? reacties.map(r=>`<div class="card" data-r="${r.id}" data-f="${r.flits}">
+        <p class="meta">${esc(r.flitsTitel)} · ${fmt(r.tijd)}${r.reden==="gemeld" ? ` · <strong style="color:var(--accent)">${r.meldingen}× gemeld</strong>` : ""}</p>
+        <strong>${esc(r.naam)}</strong><p class="quote">${esc(r.tekst)}</p>
+        <div class="actions"><button class="btn small" data-b="goedkeuren">Goedkeuren</button><button class="btn ghost small" data-b="verwijderen">Verwijderen</button></div>
+      </div>`).join("") : `<div class="card"><p class="hint" style="margin:0">Niets te beoordelen.</p></div>`}`;
+    main.onclick = async e => {
+      const b = e.target.closest("button[data-b]"); if(!b) return;
+      const c = b.closest(".card");
+      try { await api("reactie", {flits:c.dataset.f, id:c.dataset.r, besluit:b.dataset.b}); c.remove(); zetTeller(main.querySelectorAll("[data-r]").length); }
+      catch(err){ alert(err.message); }
+    };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+function zetTeller(n){ document.getElementById("wachtteller").textContent = n ? `(${n})` : ""; }
+
+/* ---------- start ---------- */
+async function start(){
+  document.getElementById("nav").hidden = false;
+  main.onclick = null;
+  try {
+    const r = await fetch("/api/nieuws"); const n = await r.json();
+    SECTIES = n.secties || []; STROOM = n.berichten || [];
+  } catch(e) {}
+  if(!SECTIES.length) SECTIES = [{id:"oekraine",naam:"Oekraïne en Rusland"},{id:"iran",naam:"Iran en de Golf"},{id:"china",naam:"China en Azië-Pacific"},{id:"europa",naam:"Europa en Nederland"},{id:"vs",naam:"Amerikaanse macht"}];
+  kies("flitsen");
+  api("wachtrij").then(r=>zetTeller(r.reacties.length)).catch(()=>{});
+}
+if(WW) api("controle").then(start).catch(e=>toonLogin()); else toonLogin();
+</script>
+</body>
+</html>

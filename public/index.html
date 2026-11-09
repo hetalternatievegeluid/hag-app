@@ -122,6 +122,42 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.flitsen{padding:22px 0 18px;border-bottom:1px solid var(--line)}
+.flitsen h2{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:700;font-size:1.15rem;margin:0 0 12px}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent)}
+@media (prefers-reduced-motion:no-preference){.pulse{animation:pulse 2s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(198,42,33,.55)}70%{box-shadow:0 0 0 9px rgba(198,42,33,0)}100%{box-shadow:0 0 0 0 rgba(198,42,33,0)}}}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.fcard{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.fcard:hover{border-color:var(--accent)}
+.fcard strong{font-family:var(--serif);font-size:1.12rem;line-height:1.25}
+.ftag{font-size:.74rem;font-weight:700;letter-spacing:.02em;color:var(--accent);text-transform:uppercase}
+.flast{font-size:.86rem;color:var(--ink)}
+.flast b{font-variant-numeric:tabular-nums;margin-right:4px}
+.fmeta{font-size:.78rem;color:var(--muted)}
+.flits h2.kop{font-family:var(--serif);font-size:1.35rem;margin:34px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+.aanleiding{font-size:.9rem;color:var(--muted)}
+.aanleiding a,.ubron a{color:var(--accent)}
+ol.tijdlijn{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line)}
+ol.tijdlijn li{position:relative;padding:0 0 20px 6px}
+ol.tijdlijn li::before{content:"";position:absolute;left:-25px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+ol.tijdlijn p{margin:4px 0 0;font-family:var(--serif);font-size:1.06rem;line-height:1.55;max-width:64ch}
+ol.tijdlijn p.ubron{font-family:var(--sans);font-size:.82rem;color:var(--muted)}
+.ulbl{font-size:.74rem;font-weight:700;border-radius:4px;padding:0 6px}
+.ulbl.bevestigd{background:var(--ink);color:var(--bg)}
+.ulbl.claim{border:1px solid var(--accent);color:var(--accent)}
+.ulbl.onbevestigd{border:1px dashed var(--muted);color:var(--muted)}
+.uitleg{margin-top:4px}
+ul.rlist{list-style:none;margin:0 0 10px;padding:0}
+ul.rlist li{padding:12px 0;border-bottom:1px solid var(--line)}
+ul.rlist p{margin:4px 0 0;white-space:pre-wrap;overflow-wrap:break-word;max-width:64ch}
+.meld{margin-left:auto;background:none;border:0;color:var(--muted);font:inherit;font-size:.76rem;cursor:pointer;text-decoration:underline}
+.rform{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;margin-top:14px}
+.rform label{display:block;font-size:.85rem;font-weight:600;margin:10px 0 4px}
+.rform input,.rform textarea{width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 11px}
+.rform textarea{min-height:100px;resize:vertical}
+.rform .note{margin:12px 0 0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.privacy{margin-top:12px;font-size:.78rem}
 .stroomblok{padding:26px 0 10px;border-bottom:1px solid var(--line)}
 .stroomblok h2{font-family:var(--serif);font-weight:600;font-size:1.15rem;margin:0 0 4px}
 .stroom-intro{color:var(--muted);font-size:.85rem;margin:0 0 8px;max-width:62ch}
@@ -312,7 +348,7 @@ function renderList(){
   } else if(state.cat==="alles" && !state.q.trim()){
     const h = list[0];
     const d = new Date(h.date);
-    html += `<section class="hero">
+    html += flitsenBlok() + `<section class="hero">
       <p class="meta"><span class="cat">${rubriekFull(h)}</span></p>
       <h2><a href="#artikel-${h.id}">${esc(h.title)}</a></h2>
       <p class="lead">${esc(h.intro)}</p>
@@ -463,8 +499,117 @@ function stroomView(){
   return html;
 }
 
+/* ---------- flitsen ---------- */
+let FLITSEN = [], flitsTimer = null;
+const ULABEL = {bevestigd:"Bevestigd", claim:"Claim", onbevestigd:"Onbevestigd"};
+const sectieNaam = id => (NIEUWS?.secties || []).find(s=>s.id===id)?.naam || (DOSSIERS.find(d=>d.id===id)||{}).name || "";
+async function loadFlitsen(){
+  try { const r = await fetch("/api/flitsen", {cache:"no-cache"}); if(r.ok) FLITSEN = (await r.json()).flitsen || []; } catch(e) {}
+  if(!location.hash && ARTICLES.length) renderList();
+}
+function flitsenBlok(){
+  const actief = FLITSEN.filter(f=>f.status==="actief");
+  if(!actief.length) return "";
+  return `<section class="flitsen"><h2><span class="pulse" aria-hidden="true"></span>Flitsen</h2>
+    <div class="fgrid">${actief.map(f=>`<a class="fcard" href="#flits-${f.id}">
+      <span class="ftag">Flits${sectieNaam(f.sectie) ? " · " + esc(sectieNaam(f.sectie)) : ""}</span>
+      <strong>${esc(f.titel)}</strong>
+      ${f.laatste ? `<span class="flast"><b>${nTijd(f.laatste.tijd)}</b> ${esc(f.laatste.tekst.slice(0,140))}${f.laatste.tekst.length>140?"…":""}</span>` : ""}
+      <span class="fmeta">${f.updates} ${f.updates===1?"update":"updates"} · bijgewerkt ${nTijd(f.bijgewerkt)}</span>
+    </a>`).join("")}</div></section>`;
+}
+function communityLabel(u){
+  try { const h = new URL(u).hostname; if(/substack/.test(h)) return "Praat mee op Substack"; if(/t\.me|telegram/.test(h)) return "Praat mee op Telegram"; } catch(e) {}
+  return "Praat mee in de community";
+}
+async function renderFlits(id){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = true;
+  document.getElementById("tabs").hidden = true;
+  main.innerHTML = `<p class="loading">Laden…</p>`;
+  window.scrollTo(0,0);
+  let f, rx;
+  try {
+    const [a, b] = await Promise.all([fetch(`/api/flitsen?id=${id}`), fetch(`/api/reacties?flits=${id}`)]);
+    if(!a.ok) throw new Error("niet gevonden");
+    f = await a.json(); rx = b.ok ? await b.json() : {reacties:[], chat:"gesloten"};
+  } catch(e) {
+    main.innerHTML = `<div class="empty"><strong>Deze flits bestaat niet (meer)</strong><p><a class="btn" href="#">Naar de startpagina</a></p></div>`;
+    return;
+  }
+  document.title = f.titel + " | Het Alternatieve Geluid";
+  const open = f.status==="actief" && rx.chat!=="gesloten";
+  main.innerHTML = `<article class="reader flits">
+    <button class="back" id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Terug</button>
+    <p class="meta"><span class="ftag">${f.status==="actief" ? "Flits" : "Flits · archief"}${sectieNaam(f.sectie) ? " · " + esc(sectieNaam(f.sectie)) : ""}</span></p>
+    <h1>${esc(f.titel)}</h1>
+    <p class="meta">Gevolgd sinds ${fmtShort.format(new Date(f.gemaakt))} · bijgewerkt ${nTijd(f.bijgewerkt)}</p>
+    ${f.context ? `<p class="lead">${esc(f.context)}</p>` : ""}
+    ${f.bron?.naam ? `<p class="aanleiding">Aanleiding: ${f.bron.url ? `<a href="${esc(f.bron.url)}" target="_blank" rel="noopener">${esc(f.bron.naam)}</a>` : esc(f.bron.naam)}${f.bron.label ? ` <span class="lbl">${esc(f.bron.label)}</span>` : ""}</p>` : ""}
+    ${f.community ? `<p><a class="btn ghost" href="${esc(f.community)}" target="_blank" rel="noopener">${communityLabel(f.community)}</a></p>` : ""}
+    <h2 class="kop">Ontwikkelingen</h2>
+    ${f.updates.length ? `<ol class="tijdlijn">${f.updates.map(u=>`<li>
+      <div class="nmeta"><time datetime="${esc(u.tijd)}">${nTijd(u.tijd)}</time><span class="ulbl ${esc(u.label)}">${ULABEL[u.label]||""}</span>${u.bijgewerkt ? `<span>bijgewerkt ${nTijd(u.bijgewerkt)}${u.geschiedenis?.length ? `, eerder: ${esc(ULABEL[u.geschiedenis[u.geschiedenis.length-1].label]||"")}` : ""}</span>` : ""}</div>
+      <p>${esc(u.tekst)}</p>
+      ${u.bron?.naam ? `<p class="ubron">Bron: ${u.bron.url ? `<a href="${esc(u.bron.url)}" target="_blank" rel="noopener">${esc(u.bron.naam)}</a>` : esc(u.bron.naam)}</p>` : ""}
+    </li>`).join("")}</ol>` : `<p class="stroom-intro">Nog geen ontwikkelingen.</p>`}
+    <p class="stroom-intro uitleg"><b>Bevestigd</b>: door meerdere onafhankelijke bronnen gemeld of officieel bevestigd. <b>Claim</b>: een bewering van een betrokken partij. <b>Onbevestigd</b>: gemeld, maar nog niet te verifiëren.</p>
+    <h2 class="kop">Gesprek</h2>
+    <div id="reacties">${reactiesHTML(rx.reacties)}</div>
+    ${open ? `<form class="rform" id="rform" novalidate>
+      <p class="stroom-intro">Reageer op de inhoud, niet op personen. Geen beledigingen, bedreigingen of oproepen tot geweld. ${rx.chat==="gemodereerd" ? "Reacties verschijnen na goedkeuring." : "Reacties met een link verschijnen pas na goedkeuring."}</p>
+      <label for="rnaam">Naam</label><input id="rnaam" maxlength="40" autocomplete="nickname">
+      <label for="rtekst">Je reactie</label><textarea id="rtekst" maxlength="1000"></textarea>
+      <div class="hp" aria-hidden="true"><label>Laat leeg <input id="rweb" tabindex="-1" autocomplete="off"></label></div>
+      <div class="actions"><button class="btn" type="submit">Plaatsen</button></div>
+      <div id="rmsg" role="status"></div>
+      <p class="stroom-intro privacy">We bewaren alleen de naam die je kiest en je reactie, geen e-mailadres of IP-adres. Om spam te beperken gebruiken we een versleutelde code van je verbinding die na tien minuten niet meer meetelt.</p>
+    </form>` : `<p class="stroom-intro">Het gesprek bij deze flits is gesloten.</p>`}
+  </article>`;
+  document.getElementById("back").onclick = () => { location.hash = ""; };
+  const form = document.getElementById("rform");
+  const t0 = Date.now();
+  if(form){
+    try { document.getElementById("rnaam").value = localStorage.getItem("hag-naam") || ""; } catch(e) {}
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const knop = form.querySelector("button"), msg = document.getElementById("rmsg");
+      knop.disabled = true;
+      const naam = document.getElementById("rnaam").value;
+      try {
+        const r = await fetch("/api/reacties", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({flits:id, naam, tekst:document.getElementById("rtekst").value, website:document.getElementById("rweb").value, t:t0})});
+        const j = await r.json();
+        if(!r.ok) throw new Error(j.fout || "Er ging iets mis.");
+        try { localStorage.setItem("hag-naam", naam); } catch(e) {}
+        document.getElementById("rtekst").value = "";
+        msg.innerHTML = `<div class="note"><p>${j.status==="zichtbaar" ? "Je reactie staat erbij." : "Bedankt. Je reactie verschijnt zodra hij is goedgekeurd."}</p></div>`;
+        if(j.status==="zichtbaar") verversReacties(id);
+      } catch(err) {
+        msg.innerHTML = `<div class="note"><p>${esc(err.message)}</p></div>`;
+      } finally { knop.disabled = false; }
+    };
+  }
+  document.getElementById("reacties").onclick = async e => {
+    const b = e.target.closest("[data-meld]"); if(!b) return;
+    if(!confirm("Deze reactie melden als ongepast?")) return;
+    b.disabled = true; b.textContent = "Gemeld";
+    try { await fetch("/api/reacties", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({flits:id, actie:"meld", id:b.dataset.meld})}); } catch(err) {}
+  };
+  flitsTimer = setInterval(()=>verversReacties(id), 45000);
+}
+function reactiesHTML(lijst){
+  if(!lijst.length) return `<p class="stroom-intro">Nog geen reacties.</p>`;
+  return `<ul class="rlist">${lijst.map(r=>`<li><div class="nmeta"><b>${esc(r.naam)}</b><time datetime="${esc(r.tijd)}">${nTijd(r.tijd)}</time><button class="meld" data-meld="${esc(r.id)}">Melden</button></div><p>${esc(r.tekst)}</p></li>`).join("")}</ul>`;
+}
+async function verversReacties(id){
+  try { const r = await fetch(`/api/reacties?flits=${id}`, {cache:"no-cache"}); if(!r.ok) return; const j = await r.json(); const box = document.getElementById("reacties"); if(box) box.innerHTML = reactiesHTML(j.reacties); } catch(e) {}
+}
+
 /* ---------- routing ---------- */
 function route(){
+  clearInterval(flitsTimer);
+  const fm = location.hash.match(/^#flits-([a-f0-9]{12})$/);
+  if(fm){ renderFlits(fm[1]); return; }
   const m = location.hash.match(/^#artikel-(\d+)$/);
   const a = m && byId(m[1]);
   if(a){ renderReader(a); document.title = a.title + " | Het Alternatieve Geluid"; }
@@ -511,7 +656,8 @@ async function load(){
 }
 load();
 loadNieuws();
-setInterval(loadNieuws, 5*60*1000);
+loadFlitsen();
+setInterval(()=>{ loadNieuws(); loadFlitsen(); }, 5*60*1000);
 if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script>
 </body>

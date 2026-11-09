@@ -1,0 +1,6 @@
+{
+  "_uitleg": "Hier kun je per artikel-ID (het nummer in de link op je website) de titel, reeks of categorie handmatig vastzetten. Deze waarden winnen altijd van wat het script vindt.",
+  "3434999": { "title": "Een vijver in Washington, een golf in de peilingen", "series": "Amerikaanse midterms", "part": 1 },
+  "3435962": { "title": "Israël op het stembiljet", "series": "Amerikaanse midterms", "part": 2 },
+  "3436348": { "title": "Niet op het stembiljet", "series": "Amerikaanse midterms", "part": 3 }
+}

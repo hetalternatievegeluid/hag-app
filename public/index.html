@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Het Alternatieve Geluid</title>
+<meta name="description" content="Voor wie verder kijkt dan de krantenkop.">
+<meta name="theme-color" content="#16171C">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="HAG">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F2F3; --surface:#FFFFFF; --ink:#16171C; --muted:#5D5F68; --line:#D9DADE;
+  --accent:#C62A21; --accent-soft:#FBE7E5; --focus:#C62A21; --bar:#16171C; --bar-ink:#FFFFFF;
+  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  --sans:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16171C; --surface:#1F2027; --ink:#F2F2F3; --muted:#A3A5AE; --line:#2D2F38;
+    --accent:#E8463B; --accent-soft:#2F1B1B; --focus:#E8463B; --bar:#0C0D10; --bar-ink:#FFFFFF; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16171C; --surface:#1F2027; --ink:#F2F2F3; --muted:#A3A5AE; --line:#2D2F38;
+  --accent:#E8463B; --accent-soft:#2F1B1B; --focus:#E8463B; --bar:#0C0D10; --bar-ink:#FFFFFF; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 120px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bar)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{background:var(--bar);color:var(--bar-ink);border-bottom:3px solid var(--accent)}
+.bar .brand{padding:12px 0}
+.brand a.home{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--bar-ink)}
+.brand img{width:40px;height:40px;flex:none}
+.brand p{color:#B9BBC3}
+.tools{padding-top:12px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0 10px}
+.brand h1{font-family:var(--serif);font-weight:700;font-size:1.35rem;letter-spacing:-.01em;margin:0}
+.brand h1 a{text-decoration:none}
+.brand p{margin:0;color:var(--muted);font-size:.82rem}
+.tools{display:flex;gap:10px;align-items:center;padding-bottom:12px}
+.search{flex:1;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 14px}
+.search svg{flex:none;color:var(--muted)}
+.search input{flex:1;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.95rem;padding:9px 0;min-width:0}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{outline:none}
+.search:focus-within{border-color:var(--focus)}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px 10px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:none;color:var(--muted);font:inherit;font-size:.9rem;font-weight:500;padding:6px 12px;border-radius:999px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--accent);color:#fff}
+.tab .n{font-size:.75rem;opacity:.7;margin-left:4px}
+
+/* hero */
+.hero{padding:34px 0 30px;border-bottom:1px solid var(--line)}
+.hero .cat{background:var(--accent);color:#fff;padding:3px 10px;border-radius:999px}
+.hero .meta{color:var(--muted);font-size:.85rem;margin:0 0 14px}
+.hero h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,6vw,2.9rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 18px;max-width:20ch}
+.hero h2 a{text-decoration:none}
+.hero h2 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+.hero .lead{font-family:var(--serif);font-weight:600;font-size:1.18rem;line-height:1.6;margin:0 0 20px;max-width:62ch}
+.btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:600;font-size:.92rem;padding:10px 18px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+
+/* timeline list */
+.month{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--muted);margin:30px 0 6px;padding-left:76px}
+ol.feed{list-style:none;margin:0;padding:0;position:relative}
+ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.item{display:grid;grid-template-columns:52px 1fr;gap:24px;padding:14px 0;position:relative}
+.item::before{content:"";position:absolute;left:58px;top:24px;width:7px;height:7px;border-radius:50%;background:var(--bg);border:1.5px solid var(--muted)}
+.item.saved::before{background:var(--accent);border-color:var(--accent)}
+.item time{text-align:right;font-size:.8rem;line-height:1.25;color:var(--muted);padding-top:4px}
+.item time b{display:block;font-family:var(--serif);font-size:1.45rem;font-weight:600;color:var(--ink);line-height:1}
+.cat{display:inline-block;font-size:.76rem;font-weight:600;color:var(--accent);margin-bottom:3px}
+.series{font-size:.76rem;color:var(--muted);font-weight:500}
+.item h3{font-family:var(--serif);font-weight:600;font-size:1.28rem;line-height:1.22;margin:0 0 6px;letter-spacing:-.01em}
+.item h3 a{text-decoration:none}
+.item h3 a:hover{text-decoration:underline;text-underline-offset:3px}
+.item p{margin:0;color:var(--muted);font-size:.93rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:64ch}
+.empty{padding:48px 0;text-align:center;color:var(--muted)}
+.empty strong{display:block;font-family:var(--serif);font-size:1.25rem;color:var(--ink);margin-bottom:6px}
+
+/* reader */
+.reader{padding:22px 0 60px}
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:var(--muted);font:inherit;font-size:.9rem;cursor:pointer;padding:6px 0;margin-bottom:22px}
+.reader .meta{color:var(--muted);font-size:.88rem;margin:0 0 12px}
+.reader .meta .cat{margin:0 8px 0 0}
+.reader h1{font-family:var(--serif);font-weight:700;font-size:clamp(2rem,6.5vw,3rem);line-height:1.06;letter-spacing:-.02em;margin:0 0 22px}
+.seriesnav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--muted);margin:0 0 26px}
+.seriesnav a{padding:4px 11px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--ink)}
+.seriesnav a[aria-current="page"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.reader .lead{font-family:var(--serif);font-weight:600;font-size:1.22rem;line-height:1.62;margin:0 0 30px;max-width:64ch}
+.note{background:var(--accent-soft);border-left:3px solid var(--accent);padding:14px 16px;font-size:.9rem;margin:0 0 26px;max-width:64ch}
+.note p{margin:0}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.body{font-family:var(--serif);font-size:1.12rem;line-height:1.7;max-width:64ch;overflow-wrap:break-word}
+.body p{margin:0 0 1.1em}
+.body h2,.body h3,.body h4{font-family:var(--serif);font-weight:700;line-height:1.25;margin:1.7em 0 .5em}
+.body h2{font-size:1.45rem}.body h3{font-size:1.2rem}
+.body img{max-width:100%;height:auto;border-radius:4px;display:block;margin:1.2em 0}
+.body figure{margin:1.4em 0}.body figcaption{font-family:var(--sans);font-size:.85rem;color:var(--muted)}
+.body a{color:var(--accent)}
+.body blockquote{border-left:3px solid var(--accent);margin:1.3em 0;padding:.1em 0 .1em 1em}
+.body ul,.body ol{padding-left:1.3em}
+.body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.loading{padding:60px 0;text-align:center;color:var(--muted)}
+.related{margin-top:48px;border-top:1px solid var(--line);padding-top:20px}
+.related h2{font-family:var(--serif);font-weight:600;font-size:1.1rem;margin:0 0 6px}
+.related a{display:block;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none;font-family:var(--serif);font-size:1.08rem}
+.related a span{display:block;font-family:var(--sans);font-size:.8rem;color:var(--muted)}
+
+.dossiers{padding:26px 0 10px;border-bottom:1px solid var(--line)}
+.dossiers h2{font-family:var(--serif);font-weight:600;font-size:1.15rem;margin:0 0 12px}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.dcard{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:0 0 6px 6px;padding:12px 14px;cursor:pointer}
+.dcard:hover{border-color:var(--accent)}
+.dcard strong{display:block;font-family:var(--serif);font-size:1.1rem}
+.dcard span{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
+.dcard em{display:block;font-family:var(--serif);font-style:normal;font-size:.95rem;line-height:1.35;margin-top:8px}
+.dhead{padding:20px 0 18px;border-bottom:1px solid var(--line)}
+.dhead .back{margin-bottom:12px}
+.dhead h2{font-family:var(--serif);font-weight:700;font-size:clamp(1.8rem,5.5vw,2.4rem);letter-spacing:-.02em;margin:0 0 6px}
+.dhead p{margin:0;color:var(--muted);font-size:.9rem}
+.dhead .actions{margin-top:14px}
+footer{color:var(--muted);font-size:.85rem;padding:36px 20px 44px;border-top:1px solid var(--line);margin-top:40px}
+footer .vision{font-family:var(--serif);font-size:1.08rem;line-height:1.5;color:var(--ink);max-width:52ch;margin:0 0 16px}
+footer .social{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 16px}
+footer .social a{font-weight:600;text-decoration:none;color:var(--ink)}
+footer .social a:hover{text-decoration:underline}
+@media (max-width:520px){
+  .brand p{display:none}
+  .month{padding-left:58px}
+  ol.feed::before{left:45px}
+  .item{grid-template-columns:38px 1fr;gap:20px}
+  .item::before{left:42px}
+  .item time b{font-size:1.25rem}
+}
+@media (prefers-reduced-motion:no-preference){
+  .reader{animation:in .25s ease-out}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="bar"><div class="wrap">
+    <div class="brand">
+      <h1><a href="#" id="home" class="home"><img src="/icons/logo.png" alt="">Het Alternatieve Geluid</a></h1>
+      <p>Voor wie verder kijkt dan de krantenkop.</p>
+    </div>
+  </div></div>
+  <div class="wrap">
+    <div class="tools" id="tools">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Zoek in artikelen" aria-label="Zoek in artikelen" autocomplete="off">
+      </label>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Categorieën"></nav>
+  </div>
+</header>
+<main class="wrap" id="main"></main>
+<footer class="wrap">
+  <p class="vision">Zo bouwen we bruggen: kritisch maar open, onafhankelijk maar verbonden.</p>
+  <nav class="social" aria-label="Sociale media">
+    <a href="https://x.com/HetAlternatieve" target="_blank" rel="noopener">X</a>
+    <a href="https://tiktok.com/@hetalternatievegeluid" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://youtube.com/@HetAlternatieveGeluid" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://instagram.com/hetalternatievegeluid" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://hetalternatievegeluid.substack.com/" target="_blank" rel="noopener">Substack</a>
+  </nav>
+  <p>Contact: <a href="mailto:hetalternatievegeluid@gmail.com">hetalternatievegeluid@gmail.com</a></p>
+  <p id="updated"></p>
+  <p>© 2024–2026 Het Alternatieve Geluid</p>
+</footer>
+
+<script>
+const SITE = "https://www.hetalternatievegeluid.nl";
+const CATS = [
+  {id:"alles", name:"Alles"},
+  {id:"nieuws", name:"Nieuws"},
+  {id:"onderzoek", name:"Onderzoek"},
+  {id:"analyse", name:"Analyse"},
+  {id:"anderekijk", name:"Een Andere Kijk"},
+  {id:"bewaard", name:"Bewaard"}
+];
+const CATNAME = {nieuws:"Nieuws", onderzoek:"Onderzoek", analyse:"Analyse", anderekijk:"Een Andere Kijk"};
+const RUBRIEK = {nieuws:"Nieuws Artikel", onderzoek:"Onderzoeks Artikel", analyse:"Analyse Artikel", anderekijk:"Een Andere Kijk"};
+let DOSSIERS = [];
+const rubriekShort = a => a.deel ? `Een Andere Kijk: Deel ${a.deel}` : RUBRIEK[a.cat];
+const rubriekFull = a => a.deel ? rubriekShort(a) : `${RUBRIEK[a.cat]}: ${numDate(new Date(a.date))}`;
+const fmtShort = new Intl.DateTimeFormat("nl-NL",{day:"numeric",month:"long"});
+const numDate = d => `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
+let followed = new Set();
+try { followed = new Set(JSON.parse(localStorage.getItem("hag-follow") || "[]")); } catch(e) {}
+function persistFollow(){ try { localStorage.setItem("hag-follow", JSON.stringify([...followed])); } catch(e) {} }
+function dossierLine(a){
+  const ds = DOSSIERS.filter(d=>d.ids.includes(a.id));
+  return ds.length ? `<nav class="seriesnav" aria-label="Dossiers">Dossier: ${ds.map(d=>`<a href="#" data-act="dossier" data-id="${d.id}">${esc(d.name)}</a>`).join("")}</nav>` : "";
+}
+
+let ARTICLES = [];
+
+/* ---------- state ---------- */
+const state = {cat:"alles", q:"", dossier:null};
+let saved = new Set();
+try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
+function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
+
+const fmtDay = new Intl.DateTimeFormat("nl-NL",{day:"numeric"});
+const fmtMon = new Intl.DateTimeFormat("nl-NL",{month:"short"});
+const fmtMonth = new Intl.DateTimeFormat("nl-NL",{month:"long",year:"numeric"});
+const fmtFull = new Intl.DateTimeFormat("nl-NL",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+const fmtTime = new Intl.DateTimeFormat("nl-NL",{hour:"2-digit",minute:"2-digit"});
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let sorted = [];
+let UPDATED = null;
+const byId = id => ARTICLES.find(a=>a.id===id);
+
+/* ---------- tabs ---------- */
+function renderTabs(){
+  const tabs = document.getElementById("tabs");
+  tabs.innerHTML = CATS.map(c=>{
+    const n = c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}<span class="n">${n}</span></button>`;
+  }).join("");
+}
+document.getElementById("tabs").addEventListener("click", e=>{
+  const b = e.target.closest(".tab"); if(!b) return;
+  state.cat = b.dataset.cat;
+  state.dossier = null;
+  if(location.hash) location.hash = ""; else renderList();
+  renderTabs();
+});
+document.getElementById("q").addEventListener("input", e=>{
+  state.q = e.target.value;
+  if(location.hash) location.hash = ""; else renderList();
+});
+
+/* ---------- list ---------- */
+function filtered(){
+  const q = norm(state.q.trim());
+  return sorted.filter(a=>{
+    if(state.cat==="bewaard" && !saved.has(a.id)) return false;
+    if(state.dossier && !DOSSIERS.find(d=>d.id===state.dossier).ids.includes(a.id)) return false;
+    if(!["alles","bewaard"].includes(state.cat) && a.cat!==state.cat) return false;
+    if(q && !norm(a.title+" "+a.intro+" "+(a.series||"")).includes(q)) return false;
+    return true;
+  });
+}
+function seriesLabel(a){ return a.series ? `<span class="series">Reeks ${esc(a.series)}, deel ${a.part}</span>` : ""; }
+
+function renderList(){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = false;
+  document.getElementById("tabs").hidden = false;
+  let list = filtered();
+  let html = "";
+
+  if(state.dossier){
+    const ds = DOSSIERS.find(x=>x.id===state.dossier);
+    const items = sorted.filter(a=>ds.ids.includes(a.id));
+    const first = new Date(items[items.length-1].date), last = new Date(items[0].date);
+    const f = followed.has(ds.id);
+    html += `<section class="dhead">
+      <button class="back" data-act="clear-dossier"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Alle artikelen</button>
+      <h2>${esc(ds.name)}</h2>
+      <p>${items.length} artikelen, van ${fmtShort.format(first)} tot ${fmtShort.format(last)}.</p>
+      <div class="actions"><button class="btn ${f?"":"ghost"}" data-act="follow" data-id="${ds.id}" aria-pressed="${f}">${f?"Je volgt dit dossier":"Volg dit dossier"}</button></div>
+    </section>`;
+  } else if(state.cat==="alles" && !state.q.trim()){
+    const h = list[0];
+    const d = new Date(h.date);
+    html += `<section class="hero">
+      <p class="meta"><span class="cat">${rubriekFull(h)}</span></p>
+      <h2><a href="#artikel-${h.id}">${esc(h.title)}</a></h2>
+      <p class="lead">${esc(h.intro)}</p>
+      <a class="btn" href="#artikel-${h.id}">Lees meer »</a>
+    </section>
+    <section class="dossiers">
+      <h2>Lopende dossiers</h2>
+      <div class="dgrid">${DOSSIERS.map(ds=>{
+        const latest = sorted.find(a=>ds.ids.includes(a.id));
+        return `<button class="dcard" data-act="dossier" data-id="${ds.id}"><strong>${esc(ds.name)}</strong><span>${ds.ids.length} artikelen, laatst op ${fmtShort.format(new Date(latest.date))}</span><em>${esc(latest.title)}</em></button>`;
+      }).join("")}</div>
+    </section>
+    <section class="dossiers">
+      <h2>Video’s</h2>
+      <p style="margin:0 0 14px;color:var(--muted);max-width:60ch">Korte infographic-video’s die je in een paar minuten bijpraten over een complex onderwerp.</p>
+      <div class="actions" style="margin-bottom:18px">
+        <a class="btn" href="https://tiktok.com/@hetalternatievegeluid" target="_blank" rel="noopener">Bekijk op TikTok</a>
+        <a class="btn ghost" href="https://youtube.com/@HetAlternatieveGeluid" target="_blank" rel="noopener">Bekijk op YouTube</a>
+      </div>
+    </section>`;
+    list = list.slice(1);
+  }
+
+  if(!list.length){
+    let msg;
+    if(state.q.trim()) msg = `<strong>Niets gevonden voor “${esc(state.q.trim())}”</strong>Probeer een ander woord, of zoek in alle categorieën.`;
+    else if(state.cat==="bewaard") msg = `<strong>Nog niets bewaard</strong>Open een artikel en tik op Bewaar om het hier terug te vinden.`;
+    else msg = `<strong>Nog geen artikelen in ${CATNAME[state.cat]}</strong>Kom later terug voor nieuwe stukken.`;
+    main.innerHTML = html + `<div class="empty">${msg}</div>`;
+    return;
+  }
+
+  let month = "", open = false;
+  for(const a of list){
+    const d = new Date(a.date);
+    const m = fmtMonth.format(d);
+    if(m!==month){
+      if(open) html += `</ol>`;
+      html += `<h2 class="month">${cap(m)}</h2><ol class="feed">`;
+      month = m; open = true;
+    }
+    html += `<li class="item${saved.has(a.id)?" saved":""}">
+      <time datetime="${a.date}"><b>${fmtDay.format(d)}</b>${fmtMon.format(d).replace(".","")}</time>
+      <div>
+        <span class="cat">${rubriekShort(a)}</span> ${seriesLabel(a)}
+        <h3><a href="#artikel-${a.id}">${esc(a.title)}</a></h3>
+        ${a.intro ? `<p>${esc(a.intro)}</p>` : ""}
+      </div>
+    </li>`;
+  }
+  if(open) html += `</ol>`;
+  main.innerHTML = html;
+}
+
+/* ---------- reader ---------- */
+function renderReader(a){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = true;
+  document.getElementById("tabs").hidden = true;
+  const d = new Date(a.date);
+  let seriesNav = "";
+  if(a.series){
+    const parts = sorted.filter(x=>x.series===a.series).sort((x,y)=>x.part-y.part);
+    seriesNav = `<nav class="seriesnav" aria-label="Reeks">Reeks ${esc(a.series)}:
+      ${parts.map(p=>`<a href="#artikel-${p.id}" ${p.id===a.id?'aria-current="page"':""}>Deel ${p.part}</a>`).join("")}</nav>`;
+  }
+  const others = sorted.filter(x=>x.id!==a.id && x.cat===a.cat).slice(0,3);
+  const isSaved = saved.has(a.id);
+  main.innerHTML = `<article class="reader">
+    <button class="back" id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Alle artikelen</button>
+    <p class="meta"><span class="cat">${rubriekShort(a)}</span> ${cap(fmtFull.format(d))}, ${fmtTime.format(d)}</p>
+    <h1>${esc(a.title)}</h1>
+    ${seriesNav}
+    ${dossierLine(a)}
+    ${a.html ? `<div class="body">${a.html}</div>` : `${a.intro ? `<p class="lead">${esc(a.intro)}</p>` : ""}<div class="note"><p>De volledige tekst van dit artikel staat (nog) niet in de app.</p></div>`}
+    <div class="actions">
+      <button class="btn" id="save" aria-pressed="${isSaved}">${isSaved ? "Bewaard" : "Bewaar"}</button>
+      <a class="btn ghost" href="${esc(a.url)}" target="_blank" rel="noopener">${a.source==="substack" ? "Bekijk op Substack" : "Bekijk op de website"}</a>
+    </div>
+    ${others.length ? `<section class="related"><h2>Meer ${CATNAME[a.cat].toLowerCase()}</h2>
+      ${others.map(o=>`<a href="#artikel-${o.id}"><span>${cap(fmtFull.format(new Date(o.date)))}</span>${esc(o.title)}</a>`).join("")}</section>` : ""}
+  </article>`;
+  document.getElementById("back").onclick = ()=>{ location.hash = ""; };
+  document.getElementById("save").onclick = (e)=>{
+    if(saved.has(a.id)) saved.delete(a.id); else saved.add(a.id);
+    persist();
+    const on = saved.has(a.id);
+    e.currentTarget.textContent = on ? "Bewaard" : "Bewaar";
+    e.currentTarget.setAttribute("aria-pressed", on);
+    renderTabs();
+  };
+  window.scrollTo(0,0);
+}
+
+/* ---------- routing ---------- */
+function route(){
+  const m = location.hash.match(/^#artikel-(\d+)$/);
+  const a = m && byId(m[1]);
+  if(a){ renderReader(a); document.title = a.title + " | Het Alternatieve Geluid"; }
+  else { renderList(); document.title = "Het Alternatieve Geluid"; }
+}
+document.getElementById("home").addEventListener("click", e=>{
+  e.preventDefault(); state.cat="alles"; state.q=""; state.dossier=null; document.getElementById("q").value="";
+  renderTabs(); if(location.hash) location.hash=""; else renderList(); window.scrollTo(0,0);
+});
+document.getElementById("main").addEventListener("click", e=>{
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  e.preventDefault();
+  const act = b.dataset.act;
+  if(act==="follow"){
+    if(followed.has(b.dataset.id)) followed.delete(b.dataset.id); else followed.add(b.dataset.id);
+    persistFollow(); renderList(); return;
+  }
+  if(act==="dossier"){ state.dossier = b.dataset.id; state.cat = "alles"; state.q = ""; document.getElementById("q").value = ""; }
+  if(act==="clear-dossier"){ state.dossier = null; }
+  renderTabs();
+  if(location.hash) location.hash = ""; else renderList();
+  window.scrollTo(0,0);
+});
+window.addEventListener("hashchange", route);
+async function load(){
+  document.getElementById("main").innerHTML = `<p class="loading">Artikelen laden…</p>`;
+  try {
+    const res = await fetch("/data/articles.json", {cache:"no-cache"});
+    if(!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    ARTICLES = data.articles || [];
+    sorted = [...ARTICLES].sort((a,b)=> b.date.localeCompare(a.date));
+    DOSSIERS = (data.dossiers || []).map(d=>({...d, ids: ARTICLES.filter(a=>(a.dossiers||[]).includes(d.id)).map(a=>a.id)})).filter(d=>d.ids.length);
+    UPDATED = data.updated;
+    if(UPDATED) document.getElementById("updated").textContent = "Bijgewerkt op " + fmtFull.format(new Date(UPDATED)) + " om " + fmtTime.format(new Date(UPDATED)) + ".";
+    renderTabs();
+    route();
+  } catch(e) {
+    document.getElementById("main").innerHTML = `<div class="empty"><strong>De artikelen konden niet worden geladen</strong>Controleer je internetverbinding en probeer het opnieuw.<p><button class="btn" onclick="load()">Opnieuw proberen</button></p></div>`;
+  }
+}
+load();
+if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
+</script>
+</body>
+</html>

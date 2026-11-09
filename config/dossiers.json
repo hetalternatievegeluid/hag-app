@@ -1,0 +1,33 @@
+{
+  "_uitleg": "Een artikel komt in een dossier als een van de trefwoorden in de titel of intro staat. Met 'altijd' en 'nooit' zet je losse artikelen (op ID) er handmatig in of uit. De volgorde hier is de volgorde in de app.",
+  "dossiers": [
+    {
+      "id": "iran",
+      "name": "Iran en de Golf",
+      "trefwoorden": ["Iran", "Iraans", "Hormuz", "Teheran", "Araghchi", "Golfstaten", "Houthi", "Riyad", "Saoedi"],
+      "altijd": ["3319025", "3292529", "3230921", "3370078"],
+      "nooit": []
+    },
+    {
+      "id": "oekraine",
+      "name": "Oekraïne en Rusland",
+      "trefwoorden": ["Oekraïne", "Oekraïens", "Kyiv", "Zelensky", "Poetin", "Kremlin", "Moskou", "Rusland", "Russisch"],
+      "altijd": [],
+      "nooit": ["3345729"]
+    },
+    {
+      "id": "europa",
+      "name": "Europa en Nederland",
+      "trefwoorden": ["Nederland", "Europa", "Europese", "EU-", "Brussel", "Parijs", "Duitsland", "Ceuta"],
+      "altijd": ["3295506", "3284563", "3134910"],
+      "nooit": []
+    },
+    {
+      "id": "vs",
+      "name": "Amerikaanse macht",
+      "trefwoorden": ["midterms", "Congres", "NSS", "Truth Social-account"],
+      "altijd": ["3395893", "3380121"],
+      "nooit": []
+    }
+  ]
+}

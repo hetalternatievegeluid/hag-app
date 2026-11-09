@@ -1,0 +1,665 @@
+{
+ "updated": null,
+ "dossiers": [
+  {
+   "id": "iran",
+   "name": "Iran en de Golf"
+  },
+  {
+   "id": "oekraine",
+   "name": "Oekraïne en Rusland"
+  },
+  {
+   "id": "europa",
+   "name": "Europa en Nederland"
+  },
+  {
+   "id": "vs",
+   "name": "Amerikaanse macht"
+  }
+ ],
+ "articles": [
+  {
+   "id": "3442311",
+   "cat": "nieuws",
+   "title": "Iedereen aan zet, niemand beweegt",
+   "date": "2026-11-09T10:00",
+   "intro": "Twintig minuten aan de telefoon met CNN, en vijf keer dezelfde woorden. Nieuwe grote aanvallen op Iran zijn “highly unlikely”. In hetzelfde gesprek somde Donald Trump op wat hij kan raken: 38 Iraanse bruggen “in letterlijk één uur”, met drie vliegdekschepen in de regio. Het was zondag, vijf dagen nadat zijn partij beide kamers van het Congres verloor. Diezelfde dag zei de Iraanse minister Araghchi dat de bemiddelaars sinds die uitslag niet meer hebben gereisd. Twee hoofdsteden, elk wachtend op een zet van de ander.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3442311_nieuws-artikel-09-11-2026-iedereen-aan-zet-niemand-beweegt",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "vs"
+   ]
+  },
+  {
+   "id": "3437861",
+   "cat": "analyse",
+   "title": "Een bunker in een berg, een supermacht in de knel",
+   "date": "2026-11-05T14:00",
+   "intro": "Op zondag 1 november zei Donald Trump dat Irans nucleaire en militaire capaciteit grotendeels vernietigd was. Er restten nog “één of twee” locaties, waaronder Pickaxe Mountain, en die kon hij naar eigen zeggen in tien minuten uitschakelen. Een dag eerder had hij in een stevig telefoongesprek de druk van Benjamin Netanyahu afgehouden om direct na de Amerikaanse verkiezingen weer aan te vallen. De oorlog die in februari begon, is acht maanden later nog niet gewonnen. De supermacht die bijna alles kan vernietigen, krijgt steeds minder voor elkaar.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3437861_analyse-artikel-05-11-2026-een-bunker-in-een-berg-een-supermacht-in-de-knel",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3436348",
+   "cat": "nieuws",
+   "series": "Amerikaanse midterms",
+   "part": 3,
+   "title": "Niet op het stembiljet",
+   "date": "2026-11-04T09:30",
+   "intro": "Maandagavond vroeg Donald Trump bij Fox-presentator Sean Hannity aan Republikeinse kiezers om “te doen alsof ik op het stembiljet sta”. Iets meer dan een etmaal later volgde hij de uitslagen vanuit het Witte Huis en zag hij de Democraten beide Kamers van het Congres veroveren. Op Truth Social schreef hij toen: “Ik stond niet op het stembiljet, en als dat wel zo was, hadden we met een aardverschuiving gewonnen!”",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3436348_amerikaanse-midterms-3-nieuws-artikel-04-11-2026",
+   "source": "site",
+   "dossiers": [
+    "vs"
+   ]
+  },
+  {
+   "id": "3435962",
+   "cat": "nieuws",
+   "series": "Amerikaanse midterms",
+   "part": 2,
+   "title": "Israël op het stembiljet",
+   "date": "2026-11-03T22:00",
+   "intro": "Dinsdagochtend, de stembureaus aan de Amerikaanse oostkust waren net open, gaf Donald Trump een interview aan Fox & Friends. Daarin kondigde hij aan dat de Verenigde Staten na dit jaar stoppen met de jaarlijkse militaire steun van 4 miljard dollar aan Israël. Als reden noemde hij één man: Abdul El-Sayed, de Democratische Senaatskandidaat in Michigan. Een paar uur eerder, om 00.52 uur, had Trumps Truth Social-account over dezelfde man geschreven dat hij “Joden haat en zwarten haat”.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3435962_amerikaanse-midterms-2-nieuws-artikel-03-11-2026",
+   "source": "site",
+   "dossiers": [
+    "vs"
+   ]
+  },
+  {
+   "id": "3434999",
+   "cat": "nieuws",
+   "series": "Amerikaanse midterms",
+   "part": 1,
+   "title": "Een vijver in Washington, een golf in de peilingen",
+   "date": "2026-11-03T10:00",
+   "intro": "Maandag, de dag voor de verkiezingen, hield Donald Trump zijn slotspeech bij de Reflecting Pool van het Lincoln Memorial. Hij noemde het land “booming” en besteedde ongeveer 25 minuten aan de renovatie van die vijver en aan zijn andere bouwprojecten in Washington. Pas daarna kwam hij bij de verkiezingen zelf, en toen klonk hij niet optimistisch: midterms vallen meestal tegen de partij van de president uit, zei hij. Dezelfde dag wees het Hooggerechtshof zijn poging af om de telling van ruim 20.000 Californische poststemmen te blokkeren.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3434999_amerikaanse-midterms-2026-1-nieuws-artikel-03-11-2026",
+   "source": "site",
+   "dossiers": [
+    "vs"
+   ]
+  },
+  {
+   "id": "3433169",
+   "cat": "nieuws",
+   "title": "Een datum voor de Golf, een vraagteken voor Kyiv",
+   "date": "2026-11-02T09:30",
+   "intro": "Op vrijdag 31 oktober opende Marco Rubio in Atlanta de G20-ministersvergadering met een waarschuwing over bedreigde scheepvaart en energievoorziening. Bij de monding van de Straat van Hormuz lag die dag volgens de Iraanse Revolutionaire Garde een supertanker met ruim twee miljoen vaten olie verlaten te branden. Drie Arabische functionarissen uit de Golf vertelden de Amerikaanse zender MS NOW dat Washington hun landen had gevraagd zich voor te bereiden op ‘een korte, intensieve aanvalsronde’ op Iran, al op 4 november. Op dezelfde bijeenkomst zei Rubio over Oekraïne: ‘Ik weet niet of een onderhandelde vrede haalbaar is.’",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3433169_nieuws-artikel-02-11-2026-een-datum-voor-de-golf-een-vraagteken-voor-kyiv",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "oekraine"
+   ]
+  },
+  {
+   "id": "3428984",
+   "cat": "nieuws",
+   "title": "Alle klokken staan op 4 november",
+   "date": "2026-10-29T13:00",
+   "intro": "Woensdag 28 oktober bedankte Volodymyr Zelensky in Den Haag premier Rob Jetten voor een nieuw militair pakket van 500 miljoen euro, met luchtverdediging en drones. Dezelfde dag zei Kremlin-adviseur Joeri Oesjakov in Moskou dat Europese deelname aan de komende vredesgesprekken “absoluut niet aan de orde” is. Die gesprekken komen er volgens hem pas “na 4 november”, en ook dat hangt af van de situatie op het slagveld. De volgende ochtend trof een Russische drone een trein op het station van Dnipro. Minstens dertien mensen kwamen om.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3428984_nieuws-artikel-29-10-2026-alle-klokken-staan-op-4-november",
+   "source": "site",
+   "dossiers": [
+    "oekraine",
+    "europa"
+   ]
+  },
+  {
+   "id": "3426362",
+   "cat": "analyse",
+   "title": "Parijs leent duurder dan Athene",
+   "date": "2026-10-28T08:00",
+   "intro": "Op zaterdag 17 oktober klimmen demonstranten op het Monument à la République in Parijs. Eén van hen draagt een geel hesje met twee jaartallen erop: 1961, het jaar waarin de Parijse politie Algerijnse betogers in de Seine dreef, en 2026, het jaar waarin een scholier in Saint-Étienne zijn hand verloor door een granaat van de oproerpolitie. Vijf dagen later sluit de Franse tienjaarsrente op 5,05 procent, het hoogste niveau sinds 2002. Frankrijk, de tweede economie van de eurozone, betaalt dan al drie weken meer voor zijn schuld dan Italië en Griekenland.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3426362_analyse-artikel-28-10-2026-parijs-leent-duurder-dan-athene",
+   "source": "site",
+   "dossiers": [
+    "europa"
+   ]
+  },
+  {
+   "id": "3425594",
+   "cat": "nieuws",
+   "title": "Eerst de stembus, dan de oorlog",
+   "date": "2026-10-27T08:00",
+   "intro": "Zondag stond Benjamin Netanyahu naast een Arrow-batterij op de luchtmachtbasis Palmahim en richtte zich tot Teheran: “Don’t test us.” Diezelfde avond riep Donald Trump de Israëliërs op dinsdag op Netanyahu te stemmen, want “we have to finish the job that we started”. Achter die woorden ligt een ander verhaal. Volgens CNN weigerde Trump juist een gezamenlijke aanval op Iran vóór de Israëlische verkiezingen. Israël schoof zijn plannen door naar na de Amerikaanse midterms van 3 november.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3425594_nieuws-artikel-26-10-2026-eerst-de-stembus-dan-de-oorlog",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "vs"
+   ]
+  },
+  {
+   "id": "3418372",
+   "cat": "nieuws",
+   "title": "Omhelzing in Oslo, raketten op Hegseths bureau",
+   "date": "2026-10-21T07:00",
+   "intro": "In Oslo sloeg Volodymyr Zelensky dinsdag zijn armen om Steve Witkoff, terwijl de Noorse premier Jonas Gahr Støre en de Finse president Alexander Stubb toekeken. Dezelfde dag stond de Amerikaanse minister van Buitenlandse Zaken Marco Rubio in India de pers te woord over Patriot-raketten die Oekraïne niet krijgt, hoewel Europese bondgenoten ze al hadden betaald. “Elk land ter wereld wil interceptors,” zei hij. “We hebben ook onze eigen behoeften.”",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3418372_nieuws-artikel-21-10-2026-omhelzing-in-oslo-raketten-op-hegseths-bureau",
+   "source": "site",
+   "dossiers": [
+    "oekraine",
+    "europa"
+   ]
+  },
+  {
+   "id": "3415832",
+   "cat": "nieuws",
+   "title": "Het voorstel ligt er, de dreiging ook",
+   "date": "2026-10-19T10:30",
+   "intro": "In Bagdad zei de Iraanse minister van Buitenlandse Zaken Abbas Araghchi zondag tegen Iraanse media dat het aanbod om de Straat van Hormuz binnen zeven dagen te heropenen nog altijd op tafel ligt. Op dezelfde dag schreef hij op X aan Donald Trump: “Be our guest. But be careful; we have unfinished jobs too.” Daartussen lag een steunbetuiging van Trump aan Benjamin Netanyahu, negen dagen voor de Israëlische verkiezingen, met de waarschuwing dat Washington “de klus afmaakt” als Teheran niet van koers verandert.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3415832_nieuws-artikel-19-10-2026-het-voorstel-ligt-er-de-dreiging-ook",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3413779",
+   "cat": "nieuws",
+   "title": "Eén mislukt bestand, twee tegengestelde conclusies",
+   "date": "2026-10-17T10:30",
+   "intro": "Vrijdagmiddag in Brussel kreeg Volodymyr Zelensky de vraag of Donald Trump hem gebruikt als zondebok voor de hoge energieprijzen. Hij zweeg lang, glimlachte en zei: “Dit is mijn antwoord.” De zaal lachte.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3413779_nieuws-artikel-17-10-2026-een-mislukt-bestand-twee-tegengestelde-conclusies",
+   "source": "site",
+   "dossiers": [
+    "oekraine",
+    "europa"
+   ]
+  },
+  {
+   "id": "3411611",
+   "cat": "nieuws",
+   "title": "Diesel uit Moskou, raketten op Riyad",
+   "date": "2026-10-15T15:00",
+   "intro": "Vrijdag 9 oktober zaten de Amerikaanse gezanten Witkoff en Kushner in Miami met Oekraïense onderhandelaars om een einde aan de oorlog te bespreken. Diezelfde dag meldde Donald Trump op Truth Social dat Rusland diesel gaat leveren aan “de Amerikaanse en wereldwijde markt”: 300.000 ton direct, 500.000 ton in november en daarna nog een miljoen. Drie weken eerder had hij een wet ondertekend die verplichte sancties oplegt op de aankoop van Russische olie. Volgens Zelensky werd zijn delegatie “simpelweg als dekmantel gebruikt”.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3411611_nieuws-artikel-15-10-2026-diesel-uit-moskou-raketten-op-riyad",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "oekraine"
+   ]
+  },
+  {
+   "id": "3409651",
+   "cat": "onderzoek",
+   "title": "Het debat wat Nederland overslaat",
+   "date": "2026-10-14T16:00",
+   "intro": "In 2016 staat in Amsterdam een klaslokaal dat voor specifiek voor Moskou is bedoeld. Tientallen jonge Oekraïense militairen leren er van de AIVD en de CIA hoe je een Rus rekruteert en hoe je uit het zicht blijft van de Russische inlichtingendienst. In diezelfde jaren tekent Shell, een van Nederlands grootste bedrijven, mee aan de financiering van Nord Stream 2, de gasleiding die Europa nog afhankelijker van Rusland maakt. Nederland bereidt Oekraïne in het geheim voor op een conflict met Rusland en bouwt tegelijk openlijk aan de energieband met Moskou. Het publiek hoort pas in 2025 van het eerste.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/onderzoeks-artikelen/3409651_onderzoeks-artikel-14-10-2026-het-debat-wat-nederland-overslaat",
+   "source": "site",
+   "dossiers": [
+    "oekraine",
+    "europa"
+   ]
+  },
+  {
+   "id": "3408179",
+   "cat": "nieuws",
+   "title": "Russische diesel, Oekraïense rekening",
+   "date": "2026-10-13T12:00",
+   "intro": "Op vrijdag 9 oktober bedankte Donald Trump Vladimir Poetin publiekelijk voor “massive amounts” Russische diesel. Twee dagen later kondigde hij een energiebestand aan tussen Rusland en Oekraïne. Kyiv hoorde het uit de media. Enkele uren later trof een Russische aanval de thermische centrale van Kharkiv. Op maandag stond Trump op het gazon van het Witte Huis en zei dat beide partijen akkoord waren, “because I said they agreed”.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3408179_nieuws-artikel-13-10-2026-russische-diesel-oekraiense-rekening",
+   "source": "site",
+   "dossiers": [
+    "oekraine"
+   ]
+  },
+  {
+   "id": "3405843",
+   "cat": "nieuws",
+   "title": "Trump kondigt een energiebestand af, en Hormuz dicht tot midterms",
+   "date": "2026-10-12T09:30",
+   "intro": "Zondagmiddag schreef Donald Trump op Truth Social dat er vanaf dat moment een energiebestand gold tussen Rusland en Oekraïne. “Beide partijen zijn akkoord,” schreef hij, met daaronder: “Niet schenden!” Verslaggevers van de Kyiv Independent hoorden op dat moment al de hele dag explosies in en rond de hoofdstad, waar Russische drones en raketten het energienet bestookten. Een hoge Oekraïense functionaris liet de krant weten dat Kyiv van geen akkoord wist.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3405843_nieuws-artikel-12-10-2026-trump-kondigt-een-energiebestand-af-en-hormuz-dicht-tot-midterms",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "oekraine",
+    "vs"
+   ]
+  },
+  {
+   "id": "3398556",
+   "cat": "nieuws",
+   "title": "Hormuz blijft dicht, en omwegen liggen onder vuur",
+   "date": "2026-10-07T11:00",
+   "intro": "Maandagavond noemde Donald Trump op een campagnepodium in Grand Island, Nebraska, de hoge brandstofprijzen “a small price to pay” voor de oorlog met Iran. Dezelfde dag schreef hij op Truth Social dat niet Hormuz de prijs opdrijft, maar Oekraïense aanvallen op Russische raffinaderijen. In dezelfde uren meldde een bron in de Saoedische energiesector aan AFP dat de pijpleiding die olie om Hormuz heen moet leiden, opnieuw was aangevallen.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3398556_nieuws-artikel-07-10-2026-hormuz-blijft-dicht-en-omwegen-liggen-onder-vuur",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "oekraine"
+   ]
+  },
+  {
+   "id": "3395893",
+   "cat": "analyse",
+   "title": "Oude kaarten, nieuwe oorlogen",
+   "date": "2026-10-05T15:00",
+   "intro": "Op 23 september 2026 stond Delcy Rodríguez als interim-president van Venezuela op het podium van de Algemene Vergadering van de Verenigde Naties. Op haar revers droeg ze een broche in de vorm van Venezuela, inclusief de Essequibo: ruim twee derde van het grondgebied van buurland Guyana. Caracas noemt de grens een koloniale vervalsing uit 1899. Washington noemt het halfrond sinds eind 2025 zijn eigen achtertuin. In die ene broche zitten de twee krachten waar dit stuk over gaat: oude kaarten, en machten die bepalen wie ze mag gebruiken.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3395893_analyse-artikel-05-10-2026-oude-kaarten-nieuwe-oorlogen",
+   "source": "site",
+   "dossiers": [
+    "vs"
+   ]
+  },
+  {
+   "id": "3395033",
+   "cat": "nieuws",
+   "title": "Een bijl in de cockpit en een oorlog die wacht op 3 november",
+   "date": "2026-10-05T08:00",
+   "intro": "Woensdagochtend 30 september viel de cockpit van flydubai-vlucht FZ1073, op weg van Dubai naar Tel Aviv, ten prooi aan een gevecht. De copiloot ging de gezagvoerder te lijf met de noodbijl en het toestel zakte volgens Israëlische functionarissen binnen dertig seconden bijna 14.000 voet. Passagiers en bemanning overmeesterden hem, het vliegtuig landde veilig in het Saoedische Tabuk. Twee dagen later zei Donald Trump dat hij “hoort” dat Iran erachter zat. Bewijs daarvoor heeft niemand gepresenteerd.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3395033_nieuws-artikel-04-10-2026-een-bijl-in-de-cockpit-en-een-oorlog-die-wacht-op-3-november",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3386783",
+   "cat": "nieuws",
+   "title": "Dezelfde tegoeden, omgekeerde volgorde",
+   "date": "2026-09-29T10:00",
+   "intro": "Op maandagochtend zette het Amerikaanse Centraal Commando één zin op X: “Iran has no navy because American forces sank it.” Een paar uur later vertelde een Amerikaanse functionaris aan Axios en CNN dat president Trump bereid is Iran sanctieverlichting en zijn bevroren tegoeden te geven. Op dezelfde dag rekende minister van Financiën Bessent voor dat Teheran binnen twee weken niets meer te verhandelen heeft. Dreigen, aanbieden en aftellen: alle drie vanuit Washington, alle drie op 28 september.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3386783_nieuws-artikel-29-09-2026-dezelfde-tegoeden-omgekeerde-volgorde",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3380709",
+   "cat": "analyse",
+   "title": "Iedereen waarschuwt, niemand remt",
+   "date": "2026-09-25T09:00",
+   "intro": "Dinsdagochtend 22 september, New York. In zijn laatste toespraak voor de Algemene Vergadering vraagt VN-chef António Guterres de wereld om grenzen te stellen aan kunstmatige intelligentie, en waarschuwt hij voor een ramp op wereldschaal. Even later staat Donald Trump achter hetzelfde spreekgestoelte. Hij kondigt aan dat Amerika het woord “kunstmatig” schrapt: voortaan heet het superintelligentie. Drie stemmen in één gebouw, binnen twee dagen, en niemand trapt op de rem.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3380709_analyse-artikel-25-09-2026-iedereen-waarschuwt-niemand-remt",
+   "source": "site",
+   "dossiers": []
+  },
+  {
+   "id": "3380121",
+   "cat": "analyse",
+   "title": "Trump belooft vernietiging in New York, rolt de rode loper uit in Washington",
+   "date": "2026-09-24T08:00",
+   "intro": "Op dinsdag 22 september staat Donald Trump voor de Algemene Vergadering van de Verenigde Naties en stelt hij Iran een keuze. Een deal die het land laat uitgroeien tot een van de grootste ter wereld, of vernietiging. Nog geen etmaal later staat diezelfde president op de landingsbaan van Joint Base Andrews, wachtend om Xi Jinping persoonlijk te verwelkomen. Binnen 24 uur schakelt Trump van vernietigingstaal naar staatsbezoek-pracht, en in die omschakeling zit de hele Algemene Vergadering van 2026 samengevat.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3380121_analyse-artikel-24-09-2026-trump-belooft-vernietiging-in-new-york-rolt-de-rode-loper-uit-in-washington",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "vs"
+   ]
+  },
+  {
+   "id": "3370078",
+   "cat": "analyse",
+   "title": "De BRICS-top: van honderdveertig paragrafen en geen namen genoemd",
+   "date": "2026-09-17T09:00",
+   "intro": "Op zaterdag stond de Iraanse president Masoud Pezeshkian in New Delhi tegenover de kroonprins van Abu Dhabi. Het was het hoogste contact tussen Iran en de Verenigde Arabische Emiraten sinds het begin van de oorlog. Een dag eerder hadden diplomaten van diezelfde landen tot diep in de nacht onderhandeld over de tekst waarin die oorlog beschreven moest worden. Wat ze eruit kregen, waren twee paragrafen waarin geen enkel land bij naam wordt genoemd.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3370078_analyse-artikel-16-09-2026-de-brics-top-van-honderdveertig-paragrafen-en-geen-namen-genoemd",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3368274",
+   "cat": "nieuws",
+   "title": "Stijgende benzineprijzen, twee oorlogen en een BRICS-top",
+   "date": "2026-09-15T18:00",
+   "intro": "Op één zondagmiddag, vanaf een Ierse golfbaan, vroeg de Amerikaanse president aan Oekraïne om Russische raffinaderijen met rust te laten, opperde hij dat de Verenigde Staten in Iran zouden kunnen blijven om de olie te houden, en voorspelde hij dat de benzineprijs zou instorten zodra de oorlog met Iran voorbij is. Diezelfde dag stelde Oman de enige vergadering uit waar de Golfstaten en Iran over heropening van de Straat van Hormuz zouden praten.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3368274_nieuws-artikel-15-09-2026-stijgende-benzineprijzen-2-oorlogen-en-een-brics-top",
+   "source": "site",
+   "dossiers": [
+    "iran",
+    "oekraine"
+   ]
+  },
+  {
+   "id": "3359067",
+   "cat": "nieuws",
+   "title": "Eén zeestraat, drie stel regels",
+   "date": "2026-09-09T10:00",
+   "intro": "Een kapitein die deze week de Straat van Hormuz nadert, krijgt van drie partijen te horen waar hij mag varen. De aanwijzingen spreken elkaar tegen, en alle drie worden ze gehandhaafd. Dat is de kern van de escalatie van deze week, en de reden dat de olieprijs richting de honderd dollar loopt.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3359067_nieuws-artikel-09-09-2026-een-zeestraat-drie-stel-regels",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3345898",
+   "cat": "nieuws",
+   "title": "Het eiland waar de rekening wordt geïnd",
+   "date": "2026-08-31T08:00",
+   "intro": "Zondagavond, 30 augustus, sloegen Amerikaanse strijdkrachten toe op Larak, een eiland voor de kust van de Iraanse havenstad Bandar Abbas, pal aan de Straat van Hormuz. Twee Iraanse lanceerinrichtingen werden vernietigd. Het is de eerste bekende Amerikaanse aanval op Iraans grondgebied sinds eind juli.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3345898_nieuws-artikel-31-08-2026-het-eiland-waar-de-rekening-wordt-geind",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3345729",
+   "cat": "analyse",
+   "title": "Noordoost-Azië, de eilanden van 1945 en de terugkeer van de open vraag",
+   "date": "2026-08-31T08:00",
+   "intro": "Op 13 augustus 2026 bezocht Vladimir Poetin het eiland Itoeroep. Volgens Russische staatsmedia sprak hij met de gouverneur, liep hij door een visverwerkingsfabriek, bezocht hij een ziekenhuis en een school, en proefde hij kaviaar. Het is, op het oog, de meest gewone vorm van politiek die er bestaat: een staatshoofd dat een afgelegen provincie bezoekt en laat zien dat de staat er is.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3345729_analyse-artikel-31-08-2026-noordoost-azie-de-eilanden-van-1945-en-de-terugkeer-van-de-open-vraag",
+   "source": "site",
+   "dossiers": []
+  },
+  {
+   "id": "3332680",
+   "cat": "anderekijk",
+   "deel": 19,
+   "title": "De zaak-Tupac en de lege waarheid",
+   "date": "2026-08-21T12:00",
+   "intro": "Bijna dertig jaar na de dood van Tupac Shakur staat voor het eerst iemand terecht. De hele wereld kijkt toe alsof nu eindelijk de bovenste steen bovenkomt. Maar de belangrijkste vraag in deze zaak is nooit “wie deed het” geweest. Het is de vraag waarom we het waarschijnlijk nooit zullen weten.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3332680_een-andere-kijk-deel-19-de-zaak-tupac-en-de-lege-waarheid",
+   "source": "site",
+   "dossiers": []
+  },
+  {
+   "id": "3319025",
+   "cat": "analyse",
+   "title": "Wie de tijd bezit",
+   "date": "2026-08-10T21:00",
+   "intro": "Er zijn oorlogen die een grootmacht begint om haar dominantie te tonen en die eindigen door haar de grenzen ervan te leren. De Britten ontdekten dat in 1956 bij Suez: een militaire operatie die op papier een overwinning was, maar die de wereld liet zien dat het imperium zijn eigen rekening niet meer kon betalen.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3319025_analyse-artikel-10-08-2026-wie-de-tijd-bezit",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3311042",
+   "cat": "onderzoek",
+   "title": "De spiegel van Ceuta en Melilla",
+   "date": "2026-08-05T08:00",
+   "intro": "Eind juli 2026 verplaatste het Europese migratiedebat zich naar een strook land van nog geen twintig vierkante kilometer. In Ceuta, de Spaanse exclave aan de Afrikaanse kant van de Straat van Gibraltar, braken op donderdag 30 en vrijdag 31 juli duizenden mensen door de grens. Sommigen door het hek te bestormen, de meesten zwemmend eromheen.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/onderzoeks-artikelen/3311042_onderzoeks-artikel-04-08-2026-de-spiegel-van-ceuta-en-melilla",
+   "source": "site",
+   "dossiers": [
+    "europa"
+   ]
+  },
+  {
+   "id": "3295506",
+   "cat": "anderekijk",
+   "deel": 18,
+   "title": "De eigen kweek",
+   "date": "2026-07-26T20:00",
+   "intro": "Er is een oud misverstand dat welvaart een bezit is. Alsof een land, eenmaal rijk geworden, over een voorraad beschikt waaruit het onbeperkt kan putten. De geschiedenis leert iets anders. Welvaart is geen voorraad maar een vaardigheid: het vermogen om te blijven maken wat de wereld nodig heeft, en om dat vermogen door te geven aan wie na ons komt.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3295506_een-andere-kijk-deel-18-de-eigen-kweek",
+   "source": "site",
+   "dossiers": [
+    "europa"
+   ]
+  },
+  {
+   "id": "3292529",
+   "cat": "analyse",
+   "title": "De zee als drukmiddel",
+   "date": "2026-07-24T11:02",
+   "intro": "Er is een aanname die zeventig jaar lang zo vanzelfsprekend was dat ze zelden werd uitgesproken: de zee is van iedereen. Handelsroutes golden als publiek goed, bewaakt door één zeemacht die er belang bij had dat alles bleef stromen. In 2026 is doorvaart geen gegeven meer, maar een onderhandelbare toestand: verzekerd, betwist, en in toenemende mate beprijsd.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3292529_analyse-artikel-24-07-2026-de-zee-als-drukmiddel",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3284563",
+   "cat": "analyse",
+   "title": "Hoe de chipoorlog tussen Washington en Peking Taiwan én Nederland tot instrument maakt",
+   "date": "2026-07-19T09:00",
+   "intro": "Toen TSMC op 16 juli 2026 aankondigde nog eens honderd miljard dollar in Amerikaanse productiecapaciteit te steken, werd dat in de financiële pers gelezen als bedrijfsnieuws. De AI-vraag is ontketend, de orderboeken puilen uit, de aandeelhouder juicht.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3284563_analyse-artikel-19-07-2026-hoe-de-chipoorlog-tussen-washington-en-peking-taiwan-en-nederland-tot-instrument-maakt",
+   "source": "site",
+   "dossiers": [
+    "europa"
+   ]
+  },
+  {
+   "id": "3270716",
+   "cat": "analyse",
+   "title": "Een dossier zonder visie",
+   "date": "2026-07-10T00:00",
+   "intro": "Wie het Westerse Oekraïnebeleid van de afgelopen jaren op afstand bekijkt, ziet vooral beweging. Toppen, verklaringen, wapenpakketten, nieuwe rode lijnen die telkens opschuiven. Wat men niet ziet, is een eindbeeld. De steun is oprecht, maar ze functioneert als reflex, niet als strategie. En een reflex is geen visie.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3270716_analyse-artikel-10-07-2026-een-dossier-zonder-visie",
+   "source": "site",
+   "dossiers": [
+    "oekraine"
+   ]
+  },
+  {
+   "id": "3230921",
+   "cat": "analyse",
+   "title": "De smalle zeestraat en het brede rijk: is dit het begin van het einde van de Amerikaanse hegemonie?",
+   "date": "2026-06-18T07:09",
+   "intro": "Er bestaan momenten waarop een wereldmacht een gevecht “wint” en toch iets verliest dat groter is dan het gevecht. Suez gold niet als een nederlaag op het slagveld, maar als het symbolische einde van het Britse wereldrijk. Pas jaren later zag men het zo. Op het moment zelf leek het slechts een crisis onder vele.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3230921_analyse-artikel-17-06-2026-de-smalle-zeestraat-en-het-brede-rijk-is-dit-het-begin-van-het-einde-van-de-amerikaanse-hegemonie",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3181131",
+   "cat": "anderekijk",
+   "deel": 17,
+   "title": "De terugkeer van de grote vragen: waarom de Amerikaanse UFO-onthullingen iets veel groters blootleggen dan ze zelf laten zien",
+   "date": "2026-05-21T14:16",
+   "intro": "Op 8 mei 2026 deed het Pentagon, sinds vorig jaar officieel hernoemd tot Department of War, iets wat decennialang ondenkbaar was. Het opende een speciale website en publiceerde in één klap meer dan 160 documenten over Unidentified Anomalous Phenomena, oftewel UAP.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3181131_een-andere-kijk-deel-17-de-terugkeer-van-de-grote-vragen-waarom-de-amerikaanse-ufo-onthullingen-iets-veel-groters-blootleggen-dan-ze-zelf-laten-zien",
+   "source": "site",
+   "dossiers": []
+  },
+  {
+   "id": "3128554",
+   "cat": "onderzoek",
+   "title": "Vrijspraak, maar geen geruststelling: wat de zaak rond Abderrahim El M. onthult over spionage, bewijs en de kwetsbaarheid van Nederland",
+   "date": "2026-03-13T09:00",
+   "intro": "Toen de Rotterdamse rechtbank oud-analist Abderrahim El M. vrijsprak van spionage voor Marokko, leek het op het eerste gezicht een juridisch eindpunt. Het Openbaar Ministerie had twaalf jaar cel geëist omdat hij staatsgeheime informatie zou hebben doorgespeeld aan de Marokkaanse inlichtingendienst. De rechter oordeelde echter dat daarvoor onvoldoende bewijs was. Wel stond vast dat El M. honderden geheime documenten van de Nationaal Coördinator Terrorismebestrijding en Veiligheid had meegenomen en thuis bewaarde.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/onderzoeks-artikelen/3128554_onderzoeks-artikel-13-03-2026-vrijspraak-maar-geen-geruststelling-wat-de-zaak-rond-abderrahim-el-m-onthult-over-spionage-bewijs-en-de-kwetsbaarheid-van-nederland",
+   "source": "site",
+   "dossiers": [
+    "europa"
+   ]
+  },
+  {
+   "id": "3128573",
+   "cat": "anderekijk",
+   "deel": 16,
+   "title": "Pax Judaica, profetie en geopolitiek: hoe religieuze eindtijdverhalen het denken over het Midden-Oosten beïnvloeden",
+   "date": "2026-03-04T09:00",
+   "intro": "Begin maart 2026 verschenen in verschillende internationale media berichten over religieuze retoriek binnen delen van het Amerikaanse leger in verband met spanningen rond Iran.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3128573_een-andere-kijk-deel-16-pax-judaica-profetie-en-geopolitiek-hoe-religieuze-eindtijdverhalen-het-denken-over-het-midden-oosten-beinvloeden",
+   "source": "site",
+   "dossiers": [
+    "iran"
+   ]
+  },
+  {
+   "id": "3128567",
+   "cat": "onderzoek",
+   "title": "Digitale afhankelijkheid onder de loep: hoe Europa balanceert tussen technologische efficiëntie en democratische controle",
+   "date": "2026-02-12T09:00",
+   "intro": "Door de razendsnelle digitalisering van overheid, economie en samenleving is digitale infrastructuur uitgegroeid tot een onzichtbare ruggengraat van de democratische rechtsstaat. Identiteitsbeheer, belastinginning, zorgsystemen, verkiezingsadministratie en communicatie verlopen grotendeels via digitale netwerken en cloudomgevingen. Maar wie beheert die infrastructuur?",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/onderzoeks-artikelen/3128567_onderzoeks-artikel-12-02-2026-digitale-afhankelijkheid-onder-de-loep-hoe-europa-balanceert-tussen-technologische-efficientie-en-democratische-controle",
+   "source": "site",
+   "dossiers": [
+    "europa"
+   ]
+  },
+  {
+   "id": "3128576",
+   "cat": "anderekijk",
+   "deel": 15,
+   "title": "De Epstein-zaak als venster op macht",
+   "date": "2026-02-02T09:00",
+   "intro": "De affaire rond Jeffrey Epstein is uitgegroeid tot veel meer dan een strafrechtelijk dossier. Ze is een cultureel en politiek referentiepunt geworden in discussies over macht, elites, instituties en vertrouwen.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3128576_een-andere-kijk-deel-15-de-epstein-zaak-als-venster-op-macht",
+   "source": "site",
+   "dossiers": []
+  },
+  {
+   "id": "3133141",
+   "cat": "onderzoek",
+   "title": "De NSS 2025 van Trump: breuk met Amerika’s rol en erkenning van een multipolaire wereldorde",
+   "date": "2025-12-09T09:00",
+   "intro": "Op 4 december 2025 publiceerde de regering-Trump haar nieuwe National Security Strategy (NSS 2025), een document dat een historisch breekpunt markeert in de Amerikaanse veiligheids- en buitenlandstrategie. Deze NSS breekt met decennialang beleid waarin de VS optrad als wereldwijde beschermer binnen een door Amerika gedomineerde wereldorde.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/onderzoeks-artikelen/3133141_onderzoeks-artikel-09-12-25-de-nss-2025-van-trump-breuk-met-amerika-s-rol-en-erkenning-van-een-multipolaire-wereldorde",
+   "source": "site",
+   "dossiers": [
+    "vs"
+   ]
+  },
+  {
+   "id": "3129316",
+   "cat": "anderekijk",
+   "deel": 14,
+   "title": "TikTok, data en de nieuwe wereldorde: hoe één platform de strijd om macht, waarheid en vrijheid vormgeeft",
+   "date": "2025-10-10T09:00",
+   "intro": "De wereld van vandaag is grenzeloos verbonden.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3129316_een-andere-kijk-deel-14-tiktok-data-en-de-nieuwe-wereldorde-hoe-een-platform-de-strijd-om-macht-waarheid-en-vrijheid-vormgeeft",
+   "source": "site",
+   "dossiers": []
+  },
+  {
+   "id": "3134910",
+   "cat": "anderekijk",
+   "deel": 13,
+   "title": "Onderwijs in crisis: hoe Nederland zijn jeugd en toekomst dreigt te verliezen",
+   "date": "2025-08-21T09:00",
+   "intro": "Het Nederlandse onderwijs stond decennialang bekend als degelijk, gelijkwaardig en vooruitstrevend. Maar wie vandaag de dag de cijfers van internationale onderzoeken leest, kan niet anders dan concluderen: ons onderwijssysteem kraakt in zijn voegen.",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3134910_een-andere-kijk-deel-13-onderwijs-in-crisis-hoe-nederland-zijn-jeugd-en-toekomst-dreigt-te-verliezen",
+   "source": "site",
+   "dossiers": [
+    "europa"
+   ]
+  },
+  {
+   "id": "3163695",
+   "cat": "anderekijk",
+   "deel": 12,
+   "title": "AI, stilte en de ziel van de mens: waarom we meer nodig hebben dan slimme machines",
+   "date": "2025-05-24T09:00",
+   "intro": "",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3163695_een-andere-kijk-deel-12-ai-stilte-en-de-ziel-van-de-mens-waarom-we-meer-nodig-hebben-dan-slimme-machines",
+   "source": "site",
+   "dossiers": []
+  },
+  {
+   "id": "3163685",
+   "cat": "anderekijk",
+   "deel": 10,
+   "title": "Macht in het digitale tijdperk: burger, staat en Big Tech in strijd om controle",
+   "date": "2025-03-30T09:00",
+   "intro": "",
+   "html": "",
+   "image": "",
+   "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3163685_een-andere-kijk-deel-10-macht-in-het-digitale-tijdperk-burger-staat-en-big-tech-in-strijd-om-controle",
+   "source": "site",
+   "dossiers": []
+  }
+ ]
+}

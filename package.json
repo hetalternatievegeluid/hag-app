@@ -1,0 +1,16 @@
+{
+  "name": "hag-app",
+  "private": true,
+  "type": "module",
+  "description": "App van Het Alternatieve Geluid",
+  "scripts": {
+    "update": "node scripts/update.mjs",
+    "import": "node scripts/update.mjs --import"
+  },
+  "dependencies": {
+    "@mozilla/readability": "0.5.0",
+    "fast-xml-parser": "4.4.1",
+    "jsdom": "24.1.0",
+    "sanitize-html": "2.13.0"
+  }
+}

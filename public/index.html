@@ -122,6 +122,35 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.bel{margin-left:auto;color:#fff;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%}
+.bel:hover{background:rgba(255,255,255,.1)}
+.brand p{margin-left:auto}
+.brand p + .bel{margin-left:12px}
+@media (max-width:520px){.brand .bel{margin-left:auto}}
+ul.aglist{list-style:none;margin:0;padding:0}
+.agitem{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.agitem:last-child{border-bottom:0}
+.agdag{text-align:center;border:1px solid var(--line);border-radius:6px;padding:6px 0;background:var(--surface);align-self:start}
+.agdag b{display:block;font-family:var(--serif);font-size:1.4rem;line-height:1}
+.agdag span{font-size:.72rem;color:var(--muted);text-transform:uppercase}
+.aginhoud strong{display:block;font-family:var(--serif);font-size:1.15rem;line-height:1.25;margin-top:2px}
+.aginhoud p{margin:6px 0 0;max-width:64ch;font-size:.93rem}
+.aginhoud p.ubron{font-size:.8rem;color:var(--muted)}
+.aginhoud p.ubron a{color:var(--accent)}
+.agstatus{font-size:.7rem;font-weight:700;border-radius:4px;padding:1px 7px;white-space:nowrap}
+.st-officieel .agstatus{background:var(--ink);color:var(--bg)}
+.st-deels .agstatus{border:1px solid var(--accent);color:var(--accent)}
+.st-speculatie .agstatus{border:1px dashed var(--muted);color:var(--muted)}
+.st-speculatie .aginhoud strong{font-style:italic}
+.agaftel{margin-left:auto;font-weight:600;color:var(--ink)}
+ul.aguitleg{list-style:none;padding:0;margin:10px 0 0;font-size:.85rem;color:var(--muted);display:grid;gap:6px}
+.onderwerpen{border:0;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 16px}
+.onderwerpen legend{margin:0 0 6px;padding:0}
+.rform .onderwerpen label{display:flex;align-items:center;gap:10px;font-weight:500;padding:8px 0;border-bottom:1px solid var(--line);margin:0}
+.rform .onderwerpen input{width:18px;height:18px;flex:none;padding:0;accent-color:var(--accent)}
+.voorlees{display:flex;gap:8px;align-items:center;margin:0 0 22px}
+.btn.small{padding:6px 12px;font-size:.84rem}
+.snelheid{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;font:inherit;font-size:.8rem;padding:5px 10px;cursor:pointer;font-variant-numeric:tabular-nums}
 .ticker{display:flex;align-items:stretch;background:var(--bar);color:#E9EAEE;border-bottom:1px solid #000;font-size:.86rem;height:34px;overflow:hidden}
 .tlabel{flex:none;display:flex;align-items:center;background:var(--accent);color:#fff;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:0 12px}
 .tvenster{flex:1;overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
@@ -303,6 +332,7 @@ footer .social a:hover{text-decoration:underline}
     <div class="brand">
       <h1><a href="#" id="home" class="home"><img src="/icons/logo.png" alt="">Het Alternatieve Geluid</a></h1>
       <p>Voor wie verder kijkt dan de krantenkop.</p>
+      <a class="bel" href="#meldingen" aria-label="Meldingen instellen" title="Meldingen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></a>
     </div>
   </div></div>
   <div class="ticker" id="ticker" hidden>
@@ -341,6 +371,7 @@ const CATS = [
   {id:"alles", name:"Alles"},
   {id:"stroom", name:"Nieuwsstroom"},
   {id:"wereld", name:"Wereldbol"},
+  {id:"agenda", name:"Agenda"},
   {id:"energie", name:"Energie"},
   {id:"gesprek", name:"Gesprekken"},
   {id:"nieuws", name:"Nieuws"},
@@ -388,13 +419,14 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = ["stroom","wereld","gesprek","energie"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    const n = ["stroom","wereld","gesprek","energie","agenda"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
     return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
 document.getElementById("tabs").addEventListener("click", e=>{
   const b = e.target.closest(".tab"); if(!b) return;
   state.cat = b.dataset.cat;
+  state.agendaFilter = state.agendaFilter || "";
   state.dossier = null; state.sectie = null; state.limit = 80;
   if(state.cat==="gesprek") RUIMTES = null;
   if(location.hash) location.hash = ""; else renderList();
@@ -425,6 +457,10 @@ function renderList(){
   stopBol();
   if(state.cat==="stroom"){ main.innerHTML = stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
+  if(state.cat==="agenda"){
+    if(!AGENDA){ main.innerHTML = `<p class="loading">Agenda laden…</p>`; laadAgenda(); return; }
+    main.innerHTML = agendaView(); return;
+  }
   if(state.cat==="energie"){
     if(!PRIJZEN){ main.innerHTML = `<p class="loading">Energieprijzen laden…</p>`; laadPrijzen(); return; }
     main.innerHTML = energieView(); tekenGrafiek(); return;
@@ -451,7 +487,7 @@ function renderList(){
   } else if(state.cat==="alles" && !state.q.trim()){
     const h = list[0];
     const d = new Date(h.date);
-    html += flitsenBlok() + `<section class="hero">
+    html += flitsenBlok() + agendaBlok() + `<section class="hero">
       <p class="meta"><span class="cat">${rubriekFull(h)}</span></p>
       ${h.image ? `<a href="#artikel-${h.id}" class="heroimg"><img src="${esc(h.image)}" alt="" loading="eager" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>` : ""}
       <h2><a href="#artikel-${h.id}">${esc(h.title)}</a></h2>
@@ -532,6 +568,7 @@ function renderReader(a){
     ${seriesNav}
     ${dossierLine(a)}
     ${a.image && !/<img/i.test(a.html || "") ? `<figure class="readimg"><img src="${esc(a.image)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></figure>` : ""}
+    ${"speechSynthesis" in window ? `<div class="voorlees" id="voorlees"><button class="btn ghost small" id="vl-start"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8a5 5 0 0 1 0 8" stroke="currentColor" stroke-width="2" fill="none"/></svg><span>Voorlezen</span></button><button class="btn ghost small" id="vl-stop" hidden>Stoppen</button><button class="snelheid" id="vl-snel" aria-label="Voorleessnelheid">1×</button></div>` : ""}
     ${a.html ? `<div class="body">${a.html}</div>` : `${a.intro ? `<p class="lead">${esc(a.intro)}</p>` : ""}<div class="note"><p>De volledige tekst van dit artikel staat (nog) niet in de app.</p></div>`}
     <div class="actions">
       <button class="btn" id="save" aria-pressed="${isSaved}">${isSaved ? "Bewaard" : "Bewaar"}</button>
@@ -541,6 +578,7 @@ function renderReader(a){
       ${others.map(o=>`<a href="#artikel-${o.id}"><span>${cap(fmtFull.format(new Date(o.date)))}</span>${esc(o.title)}</a>`).join("")}</section>` : ""}
   </article>`;
   document.getElementById("back").onclick = ()=>{ location.hash = ""; };
+  koppelVoorlezen(a);
   document.getElementById("save").onclick = (e)=>{
     if(saved.has(a.id)) saved.delete(a.id); else saved.add(a.id);
     persist();
@@ -1079,8 +1117,171 @@ document.getElementById("tpauze").addEventListener("click", e => {
   b.setAttribute("aria-label", aan ? "Nieuwsbalk hervatten" : "Nieuwsbalk pauzeren");
 });
 
+/* ---------- agenda ---------- */
+let AGENDA = null;
+const STATUS = {
+  officieel: {naam:"Officieel aangekondigd", kort:"Officieel", uitleg:"aangekondigd door de organisator of alle betrokken partijen"},
+  deels: {naam:"Aangekondigd door één partij", kort:"Niet door alle partijen bevestigd", uitleg:"aangekondigd door één partij, nog niet door alle betrokkenen bevestigd"},
+  speculatie: {naam:"Speculatie", kort:"Speculatie", uitleg:"verwacht op basis van berichtgeving of anonieme bronnen, niet aangekondigd"}
+};
+async function laadAgenda(){
+  try { const r = await fetch("/api/agenda", {cache:"no-cache"}); AGENDA = r.ok ? (await r.json()).items : []; } catch(e){ AGENDA = []; }
+  if(!location.hash && (state.cat==="agenda" || state.cat==="alles")) renderList();
+}
+const vandaagIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
+function aftellen(i){
+  const v = vandaagIso();
+  if(i.start <= v && (i.eind || i.start) >= v) return "nu bezig";
+  if((i.eind || i.start) < v) return "afgelopen";
+  const dagen = Math.round((new Date(i.start) - new Date(v)) / 864e5);
+  return dagen===1 ? "morgen" : `over ${dagen} dagen`;
+}
+function datumKort(i){
+  if(i.datumTekst) return i.datumTekst;
+  const f = d => fmtShort.format(new Date(d + "T12:00:00"));
+  if(i.eind && i.eind !== i.start){
+    const a = new Date(i.start), b = new Date(i.eind);
+    return a.getMonth()===b.getMonth() ? `${a.getDate()}–${b.getDate()} ${new Intl.DateTimeFormat("nl-NL",{month:"long"}).format(b)}` : `${f(i.start)} – ${f(i.eind)}`;
+  }
+  return f(i.start);
+}
+function agendaItemHTML(i, compact){
+  const st = STATUS[i.status] || STATUS.speculatie;
+  const d = new Date(i.start + "T12:00:00");
+  return `<li class="agitem st-${esc(i.status)}">
+    <div class="agdag"><b>${i.datumTekst ? "±" : d.getDate()}</b><span>${new Intl.DateTimeFormat("nl-NL",{month:"short"}).format(d).replace(".","")}</span></div>
+    <div class="aginhoud">
+      <div class="nmeta"><span class="agstatus">${esc(st.kort)}</span><span>${esc(datumKort(i))}${i.plaats ? " · " + esc(i.plaats) : ""}</span><span class="agaftel">${aftellen(i)}</span></div>
+      <strong>${esc(i.titel)}</strong>
+      ${!compact && i.toelichting ? `<p>${esc(i.toelichting)}</p>` : ""}
+      ${!compact && i.bron?.naam ? `<p class="ubron">Bron: ${i.bron.url ? `<a href="${esc(i.bron.url)}" target="_blank" rel="noopener">${esc(i.bron.naam)}</a>` : esc(i.bron.naam)}${sectieNaam(i.sectie) ? " · " + esc(sectieNaam(i.sectie)) : ""}</p>` : ""}
+    </div></li>`;
+}
+function agendaBlok(){
+  if(!AGENDA){ laadAgenda(); return ""; }
+  const v = vandaagIso();
+  const komend = AGENDA.filter(i => (i.eind || i.start) >= v).slice(0, 3);
+  if(!komend.length) return "";
+  return `<section class="stroomblok"><h2>Binnenkort</h2><ul class="aglist">${komend.map(i => agendaItemHTML(i, true)).join("")}</ul>
+    <p><button class="btn ghost" data-act="naaragenda">Hele agenda</button></p></section>`;
+}
+function agendaView(){
+  const v = vandaagIso(), f = state.agendaFilter || "";
+  let html = `<section class="dhead"><h2>Agenda</h2><p>Aangekondigde toppen, onderhandelingen en vaststaande momenten, en wat er op basis van het nieuws wordt verwacht. Elk punt heeft een label:</p>
+    <ul class="aguitleg">${Object.entries(STATUS).map(([k,s]) => `<li class="st-${k}"><span class="agstatus">${esc(s.kort)}</span> ${esc(s.uitleg)}</li>`).join("")}</ul></section>`;
+  html += `<div class="chips">${[["","Alles"],["officieel","Alleen officieel"],["deels","Niet door alle partijen bevestigd"],["speculatie","Speculatie"]].map(([k,t]) => `<button class="chip" data-act="agendafilter" data-id="${k}" aria-pressed="${f===k}">${t}</button>`).join("")}</div>`;
+  const lijst = AGENDA.filter(i => !f || i.status===f);
+  const komend = lijst.filter(i => (i.eind || i.start) >= v), voorbij = lijst.filter(i => (i.eind || i.start) < v).reverse();
+  if(!komend.length) html += `<div class="empty"><strong>Geen komende punten</strong></div>`;
+  let maand = "";
+  html += komend.map(i => {
+    const m = cap(new Intl.DateTimeFormat("nl-NL",{month:"long", year:"numeric"}).format(new Date(i.start + "T12:00:00")));
+    const kop = m !== maand ? `${maand ? "</ul>" : ""}<h3 class="daykop">${m}</h3><ul class="aglist">` : "";
+    maand = m; return kop + agendaItemHTML(i, false);
+  }).join("") + (komend.length ? "</ul>" : "");
+  if(voorbij.length) html += `<details class="opbouw"><summary>Afgelopen (${voorbij.length})</summary><ul class="aglist">${voorbij.map(i => agendaItemHTML(i, false)).join("")}</ul></details>`;
+  return html;
+}
+
+/* ---------- meldingen ---------- */
+const b64naarBytes = b => { const p = "=".repeat((4 - b.length % 4) % 4); const r = atob((b + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(r, c => c.charCodeAt(0)); };
+async function renderMeldingen(){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = true; document.getElementById("tabs").hidden = true;
+  window.scrollTo(0,0);
+  const kan = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent), standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  let html = `<article class="reader"><button class="back" id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Terug</button>
+    <h1>Meldingen</h1><p class="aanleiding">Kies waarover je een melding wilt krijgen: een nieuw artikel, of een nieuwe ontwikkeling in een flits of op de agenda binnen een onderwerp. Je kunt dit altijd weer aanpassen.</p>`;
+  if(ios && !standalone){
+    main.innerHTML = html + `<div class="note"><p>Op een iPhone of iPad werken meldingen alleen als je de app eerst op je beginscherm zet: tik in Safari op <b>Deel</b> en kies <b>Zet op beginscherm</b>. Open de app daarna vanaf je beginscherm en kom hier terug.</p></div></article>`;
+    document.getElementById("back").onclick = () => history.back(); return;
+  }
+  if(!kan){ main.innerHTML = html + `<div class="note"><p>Deze browser ondersteunt geen pushmeldingen.</p></div></article>`; document.getElementById("back").onclick = () => history.back(); return; }
+  main.innerHTML = html + `<p class="loading">Laden…</p></article>`;
+  let info, sub = null, huidig = [];
+  try {
+    info = await (await fetch("/api/push")).json();
+    const reg = await navigator.serviceWorker.ready;
+    sub = await reg.pushManager.getSubscription();
+    if(sub) huidig = (await (await fetch("/api/push", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({actie:"onderwerpen", endpoint:sub.endpoint})})).json()).onderwerpen || [];
+  } catch(e){ main.innerHTML = html + `<div class="note"><p>Meldingen zijn nu niet bereikbaar. Probeer het later opnieuw.</p></div></article>`; document.getElementById("back").onclick = () => history.back(); return; }
+  const geweigerd = Notification.permission === "denied";
+  main.innerHTML = html + `
+    ${geweigerd ? `<div class="note"><p>Je hebt meldingen voor deze site geblokkeerd. Zet ze eerst weer aan in de instellingen van je browser of telefoon.</p></div>` : ""}
+    <div class="rform"><fieldset class="onderwerpen"><legend class="daykop">Onderwerpen</legend>
+      ${info.onderwerpen.map(o => `<label><input type="checkbox" value="${esc(o.id)}" ${huidig.includes(o.id) ? "checked" : ""}> ${esc(o.naam)}</label>`).join("")}
+    </fieldset>
+    <div class="actions"><button class="btn" id="mbewaar" ${geweigerd ? "disabled" : ""}>${sub && huidig.length ? "Opslaan" : "Meldingen aanzetten"}</button>${sub && huidig.length ? `<button class="btn ghost" id="muit">Alle meldingen uit</button>` : ""}</div>
+    <div id="mmsg" role="status"></div>
+    <p class="stroom-intro privacy">Voor meldingen bewaren we alleen het technische adres dat je browser hiervoor aanmaakt en de onderwerpen die je kiest. Geen naam, e-mailadres of telefoonnummer.</p></div>`;
+  document.getElementById("back").onclick = () => history.back();
+  const msg = t => document.getElementById("mmsg").innerHTML = `<div class="note"><p>${esc(t)}</p></div>`;
+  document.getElementById("mbewaar").onclick = async () => {
+    const gekozen = [...document.querySelectorAll(".onderwerpen input:checked")].map(i => i.value);
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      if(!gekozen.length){ if(sub){ await fetch("/api/push", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({actie:"afmelden", endpoint:sub.endpoint})}); await sub.unsubscribe(); } msg("Je ontvangt geen meldingen meer."); return; }
+      if(await Notification.requestPermission() !== "granted"){ msg("Je hebt geen toestemming gegeven voor meldingen."); return; }
+      sub = sub || await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:b64naarBytes(info.sleutel)});
+      const r = await fetch("/api/push", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({actie:"abonneer", abonnement:sub.toJSON(), onderwerpen:gekozen})});
+      if(!r.ok) throw new Error();
+      msg("Opgeslagen. Je krijgt voortaan meldingen over de gekozen onderwerpen.");
+    } catch(e){ msg("Het aanzetten van meldingen is niet gelukt. Probeer het opnieuw."); }
+  };
+  const uit = document.getElementById("muit");
+  if(uit) uit.onclick = async () => { document.querySelectorAll(".onderwerpen input").forEach(i => i.checked = false); document.getElementById("mbewaar").click(); };
+}
+
+/* ---------- voorlezen ---------- */
+let VL = null;
+function voorleesTekst(a){
+  const delen = [a.title];
+  if(a.html){ const d = document.createElement("div"); d.innerHTML = a.html; d.querySelectorAll("p, h2, h3, h4, li, blockquote").forEach(el => { if(!el.closest("li") || el.tagName==="LI") { const t = el.textContent.replace(/\s+/g, " ").trim(); if(t) delen.push(t); } }); }
+  else if(a.intro) delen.push(a.intro);
+  const zinnen = [];
+  for(const blok of delen){ for(const z of blok.match(/[^.!?…]+[.!?…]+[”’"')]*\s*|[^.!?…]+$/g) || [blok]){ let t = z.trim(); while(t.length > 220){ const knip = t.lastIndexOf(" ", 220); zinnen.push(t.slice(0, knip)); t = t.slice(knip + 1); } if(t) zinnen.push(t); } }
+  return zinnen;
+}
+function stem(){ const s = speechSynthesis.getVoices(); return s.find(v => /^nl(-|_)NL/i.test(v.lang)) || s.find(v => /^nl/i.test(v.lang)) || null; }
+function koppelVoorlezen(a){
+  const start = document.getElementById("vl-start"); if(!start) return;
+  const stop = document.getElementById("vl-stop"), snel = document.getElementById("vl-snel");
+  let tempo = 1; try { tempo = +localStorage.getItem("hag-tempo") || 1; } catch(e) {}
+  snel.textContent = String(tempo).replace(".", ",") + "×";
+  const label = t => start.querySelector("span").textContent = t;
+  const spreek = () => {
+    if(!VL || VL.i >= VL.zinnen.length){ stopVoorlezen(); return; }
+    const u = new SpeechSynthesisUtterance(VL.zinnen[VL.i]);
+    u.lang = "nl-NL"; const v = stem(); if(v) u.voice = v; u.rate = tempo;
+    u.onend = () => { if(VL && !VL.gepauzeerd){ VL.i++; spreek(); } };
+    u.onerror = () => { if(VL && !VL.gepauzeerd){ VL.i++; spreek(); } };
+    speechSynthesis.speak(u);
+  };
+  start.onclick = () => {
+    if(!VL){ speechSynthesis.cancel(); VL = {zinnen: voorleesTekst(a), i:0, gepauzeerd:false, knop:start, stop}; stop.hidden = false; label("Pauzeren"); spreek(); return; }
+    if(VL.gepauzeerd){ VL.gepauzeerd = false; label("Pauzeren"); speechSynthesis.cancel(); spreek(); }
+    else { VL.gepauzeerd = true; label("Verder lezen"); speechSynthesis.cancel(); }
+  };
+  stop.onclick = () => stopVoorlezen();
+  snel.onclick = () => {
+    tempo = tempo >= 1.5 ? 0.8 : tempo >= 1.25 ? 1.5 : tempo >= 1 ? 1.25 : 1;
+    snel.textContent = String(tempo).replace(".", ",") + "×";
+    try { localStorage.setItem("hag-tempo", tempo); } catch(e) {}
+    if(VL && !VL.gepauzeerd){ speechSynthesis.cancel(); spreek(); }
+  };
+}
+function stopVoorlezen(){
+  if("speechSynthesis" in window) speechSynthesis.cancel();
+  if(VL){ const k = VL.knop; if(k?.isConnected){ k.querySelector("span").textContent = "Voorlezen"; VL.stop.hidden = true; } VL = null; }
+}
+if("speechSynthesis" in window) speechSynthesis.onvoiceschanged = () => {};
+
 /* ---------- routing ---------- */
 function route(){
+  stopVoorlezen();
+  if(location.hash==="#meldingen"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderMeldingen(); return; }
+  if(location.hash==="#agenda"){ location.hash = ""; state.cat = "agenda"; renderTabs(); return; }
   clearInterval(flitsTimer);
   clearInterval(ruimteTimer);
   const rm = location.hash.match(/^#ruimte-([a-z0-9-]+)$/);
@@ -1106,6 +1307,8 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="naaragenda"){ state.cat = "agenda"; renderTabs(); renderList(); window.scrollTo(0,0); return; }
+  if(act==="agendafilter"){ state.agendaFilter = b.dataset.id || ""; renderList(); return; }
   if(act==="reeks"){ state.reeks = b.dataset.id; document.querySelectorAll('[data-act="reeks"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenGrafiek(); return; }
   if(act==="bereik"){ state.bereik = +b.dataset.id; document.querySelectorAll('[data-act="bereik"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenGrafiek(); return; }
   if(act==="beweging"){ const el = document.getElementById("b-" + b.dataset.id); if(el){ el.scrollIntoView({behavior:"smooth", block:"center"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"), 1600); } return; }

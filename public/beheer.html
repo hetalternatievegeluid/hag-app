@@ -66,6 +66,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
 .update{border-top:1px solid var(--line);padding:12px 0}
 .update:first-child{border-top:0}
 .quote{white-space:pre-wrap;margin:6px 0}
+.vink{display:flex;align-items:center;gap:8px;font-weight:500;margin-top:14px}
+.vink input{width:auto;margin:0}
 </style>
 </head>
 <body>
@@ -75,7 +77,9 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
   <nav id="nav" hidden>
     <button data-view="flitsen" aria-pressed="true">Flitsen</button>
     <button data-view="gesprekken" aria-pressed="false">Gesprekken</button>
+    <button data-view="agenda" aria-pressed="false">Agenda</button>
     <button data-view="energie" aria-pressed="false">Energie</button>
+    <button data-view="meldingen" aria-pressed="false">Meldingen</button>
     <button data-view="moderatie" aria-pressed="false">Moderatie <span id="wachtteller"></span></button>
     <button data-view="uit" aria-pressed="false">Uitloggen</button>
   </nav>
@@ -125,7 +129,7 @@ document.getElementById("nav").addEventListener("click", e=>{
 function kies(view){
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
   main.onclick = null; main.onchange = null;
-  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else toonFlitsen();
+  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else toonFlitsen();
 }
 
 /* ---------- flitsen-overzicht ---------- */
@@ -171,6 +175,7 @@ async function toonEditor(id){
         <div><label for="status">Status</label><select id="status"><option value="actief" ${f.status==="actief"?"selected":""}>Actief (staat bovenaan de app)</option><option value="archief" ${f.status==="archief"?"selected":""}>Archief</option></select></div>
         <div><label for="chat">Gesprek</label><select id="chat">${Object.entries(CHAT).map(([k,v])=>`<option value="${k}" ${f.chat===k?"selected":""}>${v}</option>`).join("")}</select></div>
       </div>
+      ${id ? "" : `<label class="vink"><input type="checkbox" id="fpush" checked> Pushmelding sturen naar wie deze sectie volgt</label>`}
       <div class="actions"><button class="btn" id="bewaar">${id ? "Opslaan" : "Flits aanmaken"}</button>${id ? `<a class="btn ghost" href="/#flits-${id}" target="_blank">Bekijk in app</a><button class="btn ghost" id="weg">Verwijderen</button>` : ""}</div>
       <div id="fmsg"></div>
     </div>
@@ -179,6 +184,7 @@ async function toonEditor(id){
       <label for="utekst">Wat is er gebeurd?</label><textarea id="utekst" maxlength="1500"></textarea>
       <label>Label</label><div class="labels">${Object.entries(LABELS).map(([k,v],i)=>`<label><input type="radio" name="ulabel" value="${k}" ${i===2?"checked":""}>${v}</label>`).join("")}</div>
       <div class="row"><div><label for="ubnaam">Bron</label><input id="ubnaam"></div><div><label for="uburl">Link</label><input id="uburl" placeholder="https://"></div></div>
+      <label class="vink"><input type="checkbox" id="upush" checked> Pushmelding sturen naar wie deze sectie volgt</label>
       <div class="actions"><button class="btn" id="plaats">Update plaatsen</button></div><div id="umsg"></div>
     </div>
     <h2>Tijdlijn</h2><div class="card" id="tijdlijn">${tijdlijnHTML(f)}</div>` : ""}`;
@@ -186,7 +192,7 @@ async function toonEditor(id){
   document.getElementById("terug").onclick = () => kies("flitsen");
   const lees = () => ({ id, titel:val("titel"), context:val("context"), sectie:val("sectie"), community:val("community"), status:val("status"), chat:val("chat"), bron:{naam:val("bnaam"), url:val("burl"), label:val("blabel")} });
   document.getElementById("bewaar").onclick = async () => {
-    try { const n = await api("opslaan", lees()); if(!id) toonEditor(n.id); else melding(document.getElementById("fmsg"), "Opgeslagen."); }
+    try { const n = await api("opslaan", {...lees(), push: !id && document.getElementById("fpush")?.checked}); if(!id) toonEditor(n.id); else melding(document.getElementById("fmsg"), "Opgeslagen."); }
     catch(e){ melding(document.getElementById("fmsg"), e.message, "fout"); }
   };
   if(id){
@@ -197,10 +203,10 @@ async function toonEditor(id){
     document.getElementById("plaats").onclick = async () => {
       const label = document.querySelector('input[name="ulabel"]:checked')?.value;
       try {
-        const n = await api("update", {flits:id, tekst:val("utekst"), label, bron:{naam:val("ubnaam"), url:val("uburl")}});
+        const n = await api("update", {flits:id, tekst:val("utekst"), label, bron:{naam:val("ubnaam"), url:val("uburl")}, push: document.getElementById("upush").checked});
         ["utekst","ubnaam","uburl"].forEach(i=>document.getElementById(i).value="");
         document.getElementById("tijdlijn").innerHTML = tijdlijnHTML(n); koppelTijdlijn(n);
-        melding(document.getElementById("umsg"), "Update geplaatst.");
+        melding(document.getElementById("umsg"), "Update geplaatst." + (n.push?.verstuurd !== undefined ? ` Melding verstuurd naar ${n.push.verstuurd} ${n.push.verstuurd===1?"lezer":"lezers"}.` : ""));
       } catch(e){ melding(document.getElementById("umsg"), e.message, "fout"); }
     };
     koppelTijdlijn(f);
@@ -322,6 +328,63 @@ async function toonEnergie(){
       const c = b.closest("[data-sleutel]");
       try { await api("energie-duiding", {sleutel:c.dataset.sleutel, tekst:c.querySelector("[data-tekst]").value}); melding(c.querySelector("[data-uit]"), "Opgeslagen."); }
       catch(err){ melding(c.querySelector("[data-uit]"), err.message, "fout"); }
+    };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
+/* ---------- agenda ---------- */
+const STATUS = {officieel:"Officieel (organisator of alle partijen)", deels:"Aangekondigd door één partij", speculatie:"Speculatie (verwacht op basis van berichtgeving)"};
+async function toonAgenda(bewerk){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const {items} = await api("agenda");
+    const i = bewerk ? items.find(x => x.id===bewerk) || {} : {};
+    const sOpt = SECTIES.map(x => `<option value="${esc(x.id)}" ${x.id===i.sectie?"selected":""}>${esc(x.naam)}</option>`).join("");
+    main.innerHTML = `<h1>Agenda</h1><p class="hint">Toppen, onderhandelingen en vaststaande momenten. Kies eerlijk het label: officieel alleen als de organisator of alle betrokken partijen het hebben aangekondigd.</p>
+      <div class="card" id="agform"><h2 style="margin:0 0 6px">${bewerk ? "Punt bewerken" : "Nieuw punt"}</h2>
+        <label for="atitel">Titel</label><input id="atitel" value="${esc(i.titel||"")}" maxlength="200">
+        <div class="row"><div><label for="astart">Begindatum (of vermoedelijke datum)</label><input id="astart" type="date" value="${esc(i.start||"")}"></div><div><label for="aeind">Einddatum (optioneel)</label><input id="aeind" type="date" value="${esc(i.eind||"")}"></div></div>
+        <div class="row"><div><label for="adtekst">Datum als tekst, als die niet vaststaat (bijv. "eind november")</label><input id="adtekst" value="${esc(i.datumTekst||"")}" maxlength="60"></div><div><label for="aplaats">Plaats</label><input id="aplaats" value="${esc(i.plaats||"")}" maxlength="80"></div></div>
+        <div class="row"><div><label for="asectie">Sectie</label><select id="asectie">${sOpt}</select></div><div><label for="astatus">Label</label><select id="astatus">${Object.entries(STATUS).map(([k,v]) => `<option value="${k}" ${i.status===k?"selected":""}>${v}</option>`).join("")}</select></div></div>
+        <label for="atoel">Toelichting: wie heeft wat aangekondigd, en wat is nog onzeker?</label><textarea id="atoel" maxlength="1500">${esc(i.toelichting||"")}</textarea>
+        <div class="row"><div><label for="abnaam">Bron</label><input id="abnaam" value="${esc(i.bron?.naam||"")}"></div><div><label for="aburl">Link</label><input id="aburl" value="${esc(i.bron?.url||"")}" placeholder="https://"></div></div>
+        <label class="vink"><input type="checkbox" id="apush"> Pushmelding sturen naar wie deze sectie volgt</label>
+        <div class="actions"><button class="btn" id="abewaar">${bewerk ? "Opslaan" : "Toevoegen"}</button>${bewerk ? `<button class="btn ghost" id="anieuw">Nieuw punt</button><button class="btn ghost" id="aweg">Verwijderen</button>` : ""}</div><div id="amsg"></div>
+      </div>
+      <h2>Alle punten</h2>
+      ${items.map(x => `<div class="card"><span class="tag ${x.status==="officieel"?"actief":""}">${esc(STATUS[x.status]?.split(" (")[0] || x.status)}</span><span class="meta">${esc(x.datumTekst || x.start)}${x.eind ? " t/m " + esc(x.eind) : ""} · ${esc(x.plaats||"")}</span>
+        <h2 style="margin:6px 0 4px">${esc(x.titel)}</h2><div class="actions"><button class="btn small" data-bewerk="${esc(x.id)}">Bewerken</button></div></div>`).join("")}`;
+    document.getElementById("abewaar").onclick = async () => {
+      try {
+        const r = await api("agenda-opslaan", {id:bewerk, titel:val("atitel"), start:val("astart"), eind:val("aeind"), datumTekst:val("adtekst"), plaats:val("aplaats"), sectie:val("asectie"), status:val("astatus"), toelichting:val("atoel"), bron:{naam:val("abnaam"), url:val("aburl")}, push:document.getElementById("apush").checked});
+        await toonAgenda(r.id);
+        melding(document.getElementById("amsg"), "Opgeslagen." + (r.push?.verstuurd !== undefined ? ` Melding verstuurd naar ${r.push.verstuurd} lezers.` : ""));
+      } catch(e){ melding(document.getElementById("amsg"), e.message, "fout"); }
+    };
+    if(bewerk){
+      document.getElementById("anieuw").onclick = () => toonAgenda();
+      document.getElementById("aweg").onclick = async () => { if(!confirm("Dit punt verwijderen?")) return; await api("agenda-weg", {id:bewerk}); toonAgenda(); };
+    }
+    main.onclick = e => { const b = e.target.closest("[data-bewerk]"); if(b){ toonAgenda(b.dataset.bewerk); window.scrollTo(0,0); } };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
+/* ---------- meldingen ---------- */
+async function toonMeldingen(){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const info = await api("push-info");
+    main.innerHTML = `<h1>Meldingen</h1><p class="hint">${info.totaal} ${info.totaal===1?"lezer heeft":"lezers hebben"} meldingen aanstaan. Nieuwe artikelen gaan automatisch; bij flitsen en de agenda kies je het zelf met het vinkje. Hier stuur je een losse melding, bijvoorbeeld bij groot nieuws. Gebruik dit spaarzaam: te veel meldingen en lezers zetten ze uit.</p>
+      <div class="card"><label>Naar wie?</label><div class="labels" id="pond">${info.onderwerpen.map(o => `<label><input type="checkbox" value="${esc(o.id)}"> ${esc(o.naam)} (${o.aantal})</label>`).join("")}</div>
+      <label for="ptitel">Titel</label><input id="ptitel" maxlength="120">
+      <label for="ptekst">Tekst</label><textarea id="ptekst" maxlength="240" style="min-height:70px"></textarea>
+      <label for="purl">Waar gaat de melding heen? (bijv. /#flits-… of /#artikel-…, leeg = startpagina)</label><input id="purl" placeholder="/">
+      <div class="actions"><button class="btn" id="pstuur">Versturen</button></div><div id="pmsg"></div></div>`;
+    document.getElementById("pstuur").onclick = async () => {
+      const ond = [...document.querySelectorAll("#pond input:checked")].map(i => i.value);
+      if(!confirm("Deze melding nu versturen?")) return;
+      try { const r = await api("push-handmatig", {onderwerpen:ond, titel:val("ptitel"), tekst:val("ptekst"), url:val("purl") || "/"}); melding(document.getElementById("pmsg"), r.fout ? r.fout : `Verstuurd naar ${r.verstuurd} van ${r.bereik} lezers.`, r.fout ? "fout" : "ok"); }
+      catch(e){ melding(document.getElementById("pmsg"), e.message, "fout"); }
     };
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
 }

@@ -3,6 +3,10 @@ import { json, schoon, schoonUrl, nieuwId, LABELS, isBeheerder, leesIndex, leesF
 
 import { ruimtes, zetModus, leesBerichten, bewaarBerichten, bestaat } from "../lib/gesprek.mjs";
 import { leesPrijzen, bewegingen, leesDuiding, bewaarDuiding, REEKSEN } from "../lib/energie.mjs";
+import { leesAgenda, bewaarAgenda, STATUSSEN } from "../lib/agenda.mjs";
+import { stuur, ONDERWERPEN, leesAbonnees } from "../lib/push.mjs";
+
+async function meld(opties) { try { return await stuur(opties); } catch (e) { console.warn("Push mislukt: " + e.message); return { fout: e.message }; } }
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const bron = b => ({ naam: schoon(b?.naam, 80), url: schoonUrl(b?.url), label: schoon(b?.label, 80) });
@@ -37,7 +41,10 @@ export default async (req) => {
       f.community = schoonUrl(b.community);
       f.status = b.status === "archief" ? "archief" : "actief";
       f.chat = ["open", "gemodereerd", "gesloten"].includes(b.chat) ? b.chat : "gemodereerd";
-      return json(await bewaarFlits(f));
+      const nieuw = !b.id;
+      const opgeslagen = await bewaarFlits(f);
+      if (nieuw && b.push) opgeslagen.push = await meld({ onderwerpen: [f.sectie], titel: `Nieuwe flits: ${f.titel}`, tekst: f.context, url: `/#flits-${f.id}`, tag: `flits-${f.id}` });
+      return json(opgeslagen);
     }
 
     case "verwijder":
@@ -61,7 +68,9 @@ export default async (req) => {
       } else {
         f.updates.unshift({ id: nieuwId(), tijd: new Date().toISOString(), label, tekst, bron: bron(b.bron) });
       }
-      return json(await bewaarFlits(f));
+      const opgeslagen = await bewaarFlits(f);
+      if (b.push && !b.id) opgeslagen.push = await meld({ onderwerpen: [f.sectie], titel: `Flits: ${f.titel}`, tekst, url: `/#flits-${f.id}`, tag: `flits-${f.id}` });
+      return json(opgeslagen);
     }
 
     case "update-weg": {
@@ -145,6 +154,43 @@ export default async (req) => {
       if (b.sleutel) { const t = schoon(b.tekst, 1500); if (t) d.bewegingen[b.sleutel] = { tekst: t, tijd: new Date().toISOString() }; else delete d.bewegingen[b.sleutel]; }
       await bewaarDuiding(d);
       return json({ ok: true });
+    }
+
+    case "agenda":
+      return json({ items: await leesAgenda(), statussen: STATUSSEN });
+
+    case "agenda-opslaan": {
+      const lijst = await leesAgenda();
+      const datum = v => /^\d{4}-\d{2}-\d{2}$/.test(v || "") ? v : null;
+      const item = b.id ? lijst.find(i => i.id === b.id) : { id: nieuwId() };
+      if (!item) return json({ fout: "Niet gevonden" }, 404);
+      const startDatum = datum(b.start);
+      if (!schoon(b.titel, 200) || !startDatum) return json({ fout: "Titel en (vermoedelijke) begindatum zijn verplicht." }, 400);
+      Object.assign(item, {
+        titel: schoon(b.titel, 200), start: startDatum, eind: datum(b.eind) || undefined, datumTekst: schoon(b.datumTekst, 60) || undefined,
+        plaats: schoon(b.plaats, 80), sectie: schoon(b.sectie, 40), status: STATUSSEN.includes(b.status) ? b.status : "speculatie",
+        toelichting: schoon(b.toelichting, 1500), bron: bron(b.bron), bijgewerkt: new Date().toISOString()
+      });
+      if (!b.id) lijst.push(item);
+      await bewaarAgenda(lijst);
+      const res = { ok: true, id: item.id };
+      if (b.push) res.push = await meld({ onderwerpen: [item.sectie], titel: `Agenda: ${item.titel}`, tekst: `${item.datumTekst || item.start}${item.plaats ? ", " + item.plaats : ""}. ${item.toelichting}`.slice(0, 200), url: "/#agenda", tag: `agenda-${item.id}` });
+      return json(res);
+    }
+
+    case "agenda-weg":
+      await bewaarAgenda((await leesAgenda()).filter(i => i.id !== b.id));
+      return json({ ok: true });
+
+    case "push-info": {
+      const ab = await leesAbonnees();
+      return json({ onderwerpen: ONDERWERPEN.map(o => ({ ...o, aantal: ab.filter(a => a.onderwerpen.includes(o.id)).length })), totaal: ab.length });
+    }
+
+    case "push-handmatig": {
+      const ond = (b.onderwerpen || []).filter(o => ONDERWERPEN.some(x => x.id === o));
+      if (!ond.length || !schoon(b.titel, 120)) return json({ fout: "Kies minstens één onderwerp en vul een titel in." }, 400);
+      return json(await meld({ onderwerpen: ond, titel: schoon(b.titel, 120), tekst: schoon(b.tekst, 240), url: (b.url || "/").startsWith("/") ? b.url : "/" }));
     }
 
     default:

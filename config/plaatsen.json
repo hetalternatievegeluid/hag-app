@@ -1,0 +1,1276 @@
+{
+ "_uitleg": "Plaatsen voor de wereldbol. Een bericht krijgt de plaats waarvan een naam het eerst in de kop staat (anders in de samenvatting). Specifieke plaatsen staan bovenaan. Voeg gerust plaatsen toe: naam, breedtegraad (lat), lengtegraad (lon) en de namen waarop gezocht wordt.",
+ "plaatsen": [
+  {
+   "naam": "Kyiv",
+   "lat": 50.45,
+   "lon": 30.52,
+   "namen": [
+    "Kyiv",
+    "Kiev",
+    "Kyjiv"
+   ]
+  },
+  {
+   "naam": "Charkiv",
+   "lat": 49.99,
+   "lon": 36.23,
+   "namen": [
+    "Charkiv",
+    "Kharkiv"
+   ]
+  },
+  {
+   "naam": "Odesa",
+   "lat": 46.48,
+   "lon": 30.72,
+   "namen": [
+    "Odesa",
+    "Odessa"
+   ]
+  },
+  {
+   "naam": "Zaporizja",
+   "lat": 47.84,
+   "lon": 35.14,
+   "namen": [
+    "Zaporizja",
+    "Zaporizhzhia",
+    "Zaporizhia"
+   ]
+  },
+  {
+   "naam": "Donetsk",
+   "lat": 48.0,
+   "lon": 37.8,
+   "namen": [
+    "Donetsk"
+   ]
+  },
+  {
+   "naam": "Donbas",
+   "lat": 48.3,
+   "lon": 38.4,
+   "namen": [
+    "Donbas",
+    "Donbass"
+   ]
+  },
+  {
+   "naam": "Krim",
+   "lat": 45.0,
+   "lon": 34.1,
+   "namen": [
+    "Krim",
+    "Crimea",
+    "Sebastopol",
+    "Sevastopol"
+   ]
+  },
+  {
+   "naam": "Dnipro",
+   "lat": 48.46,
+   "lon": 35.04,
+   "namen": [
+    "Dnipro"
+   ]
+  },
+  {
+   "naam": "Lviv",
+   "lat": 49.84,
+   "lon": 24.03,
+   "namen": [
+    "Lviv",
+    "Lwiw"
+   ]
+  },
+  {
+   "naam": "Cherson",
+   "lat": 46.64,
+   "lon": 32.61,
+   "namen": [
+    "Cherson",
+    "Kherson"
+   ]
+  },
+  {
+   "naam": "Pokrovsk",
+   "lat": 48.28,
+   "lon": 37.18,
+   "namen": [
+    "Pokrovsk"
+   ]
+  },
+  {
+   "naam": "Soemy",
+   "lat": 50.91,
+   "lon": 34.8,
+   "namen": [
+    "Soemy",
+    "Sumy"
+   ]
+  },
+  {
+   "naam": "Moskou",
+   "lat": 55.76,
+   "lon": 37.62,
+   "namen": [
+    "Moskou",
+    "Moscow",
+    "Kremlin"
+   ]
+  },
+  {
+   "naam": "Sint-Petersburg",
+   "lat": 59.93,
+   "lon": 30.34,
+   "namen": [
+    "Sint-Petersburg",
+    "St Petersburg",
+    "St. Petersburg"
+   ]
+  },
+  {
+   "naam": "Koersk",
+   "lat": 51.73,
+   "lon": 36.19,
+   "namen": [
+    "Koersk",
+    "Kursk"
+   ]
+  },
+  {
+   "naam": "Belgorod",
+   "lat": 50.6,
+   "lon": 36.6,
+   "namen": [
+    "Belgorod"
+   ]
+  },
+  {
+   "naam": "Minsk",
+   "lat": 53.9,
+   "lon": 27.56,
+   "namen": [
+    "Minsk"
+   ]
+  },
+  {
+   "naam": "Teheran",
+   "lat": 35.69,
+   "lon": 51.39,
+   "namen": [
+    "Teheran",
+    "Tehran"
+   ]
+  },
+  {
+   "naam": "Straat van Hormuz",
+   "lat": 26.57,
+   "lon": 56.25,
+   "namen": [
+    "Hormuz",
+    "Hormoz"
+   ]
+  },
+  {
+   "naam": "Bandar Abbas",
+   "lat": 27.18,
+   "lon": 56.27,
+   "namen": [
+    "Bandar Abbas"
+   ]
+  },
+  {
+   "naam": "Isfahan",
+   "lat": 32.65,
+   "lon": 51.67,
+   "namen": [
+    "Isfahan",
+    "Esfahan"
+   ]
+  },
+  {
+   "naam": "Natanz",
+   "lat": 33.72,
+   "lon": 51.73,
+   "namen": [
+    "Natanz"
+   ]
+  },
+  {
+   "naam": "Fordow",
+   "lat": 34.88,
+   "lon": 50.99,
+   "namen": [
+    "Fordow",
+    "Fordo"
+   ]
+  },
+  {
+   "naam": "Riyad",
+   "lat": 24.71,
+   "lon": 46.68,
+   "namen": [
+    "Riyad",
+    "Riyadh"
+   ]
+  },
+  {
+   "naam": "Djedda",
+   "lat": 21.49,
+   "lon": 39.19,
+   "namen": [
+    "Djedda",
+    "Jeddah"
+   ]
+  },
+  {
+   "naam": "Doha",
+   "lat": 25.29,
+   "lon": 51.53,
+   "namen": [
+    "Doha"
+   ]
+  },
+  {
+   "naam": "Dubai",
+   "lat": 25.2,
+   "lon": 55.27,
+   "namen": [
+    "Dubai"
+   ]
+  },
+  {
+   "naam": "Abu Dhabi",
+   "lat": 24.45,
+   "lon": 54.38,
+   "namen": [
+    "Abu Dhabi"
+   ]
+  },
+  {
+   "naam": "Muscat",
+   "lat": 23.59,
+   "lon": 58.41,
+   "namen": [
+    "Muscat",
+    "Masqat"
+   ]
+  },
+  {
+   "naam": "Sanaa",
+   "lat": 15.37,
+   "lon": 44.19,
+   "namen": [
+    "Sanaa",
+    "Sana'a"
+   ]
+  },
+  {
+   "naam": "Hodeida",
+   "lat": 14.8,
+   "lon": 42.95,
+   "namen": [
+    "Hodeida",
+    "Hodeidah",
+    "Hudaydah"
+   ]
+  },
+  {
+   "naam": "Aden",
+   "lat": 12.79,
+   "lon": 45.02,
+   "namen": [
+    "Aden"
+   ]
+  },
+  {
+   "naam": "Rode Zee",
+   "lat": 20.0,
+   "lon": 38.5,
+   "namen": [
+    "Rode Zee",
+    "Red Sea",
+    "Bab el-Mandeb"
+   ]
+  },
+  {
+   "naam": "Bagdad",
+   "lat": 33.31,
+   "lon": 44.36,
+   "namen": [
+    "Bagdad",
+    "Baghdad"
+   ]
+  },
+  {
+   "naam": "Damascus",
+   "lat": 33.51,
+   "lon": 36.29,
+   "namen": [
+    "Damascus"
+   ]
+  },
+  {
+   "naam": "Beiroet",
+   "lat": 33.89,
+   "lon": 35.5,
+   "namen": [
+    "Beiroet",
+    "Beirut"
+   ]
+  },
+  {
+   "naam": "Jeruzalem",
+   "lat": 31.77,
+   "lon": 35.21,
+   "namen": [
+    "Jeruzalem",
+    "Jerusalem"
+   ]
+  },
+  {
+   "naam": "Tel Aviv",
+   "lat": 32.08,
+   "lon": 34.78,
+   "namen": [
+    "Tel Aviv"
+   ]
+  },
+  {
+   "naam": "Gaza",
+   "lat": 31.5,
+   "lon": 34.47,
+   "namen": [
+    "Gaza",
+    "Rafah",
+    "Khan Younis"
+   ]
+  },
+  {
+   "naam": "Westelijke Jordaanoever",
+   "lat": 31.95,
+   "lon": 35.3,
+   "namen": [
+    "Westelijke Jordaanoever",
+    "West Bank",
+    "Jenin",
+    "Ramallah"
+   ]
+  },
+  {
+   "naam": "Amman",
+   "lat": 31.95,
+   "lon": 35.93,
+   "namen": [
+    "Amman"
+   ]
+  },
+  {
+   "naam": "Caïro",
+   "lat": 30.04,
+   "lon": 31.24,
+   "namen": [
+    "Caïro",
+    "Cairo"
+   ]
+  },
+  {
+   "naam": "Ankara",
+   "lat": 39.93,
+   "lon": 32.86,
+   "namen": [
+    "Ankara"
+   ]
+  },
+  {
+   "naam": "Istanbul",
+   "lat": 41.01,
+   "lon": 28.98,
+   "namen": [
+    "Istanbul"
+   ]
+  },
+  {
+   "naam": "Peking",
+   "lat": 39.9,
+   "lon": 116.4,
+   "namen": [
+    "Peking",
+    "Beijing"
+   ]
+  },
+  {
+   "naam": "Shanghai",
+   "lat": 31.23,
+   "lon": 121.47,
+   "namen": [
+    "Shanghai"
+   ]
+  },
+  {
+   "naam": "Hongkong",
+   "lat": 22.32,
+   "lon": 114.17,
+   "namen": [
+    "Hongkong",
+    "Hong Kong"
+   ]
+  },
+  {
+   "naam": "Taipei",
+   "lat": 25.03,
+   "lon": 121.56,
+   "namen": [
+    "Taipei"
+   ]
+  },
+  {
+   "naam": "Straat van Taiwan",
+   "lat": 24.5,
+   "lon": 119.5,
+   "namen": [
+    "Straat van Taiwan",
+    "Taiwan Strait"
+   ]
+  },
+  {
+   "naam": "Zuid-Chinese Zee",
+   "lat": 12.0,
+   "lon": 114.0,
+   "namen": [
+    "Zuid-Chinese Zee",
+    "South China Sea",
+    "Spratly",
+    "Scarborough"
+   ]
+  },
+  {
+   "naam": "Tokio",
+   "lat": 35.68,
+   "lon": 139.69,
+   "namen": [
+    "Tokio",
+    "Tokyo"
+   ]
+  },
+  {
+   "naam": "Seoul",
+   "lat": 37.57,
+   "lon": 126.98,
+   "namen": [
+    "Seoul"
+   ]
+  },
+  {
+   "naam": "Pyongyang",
+   "lat": 39.04,
+   "lon": 125.76,
+   "namen": [
+    "Pyongyang"
+   ]
+  },
+  {
+   "naam": "Manilla",
+   "lat": 14.6,
+   "lon": 120.98,
+   "namen": [
+    "Manilla",
+    "Manila"
+   ]
+  },
+  {
+   "naam": "New Delhi",
+   "lat": 28.61,
+   "lon": 77.21,
+   "namen": [
+    "New Delhi",
+    "Delhi"
+   ]
+  },
+  {
+   "naam": "Islamabad",
+   "lat": 33.68,
+   "lon": 73.05,
+   "namen": [
+    "Islamabad"
+   ]
+  },
+  {
+   "naam": "Kaboel",
+   "lat": 34.56,
+   "lon": 69.21,
+   "namen": [
+    "Kaboel",
+    "Kabul"
+   ]
+  },
+  {
+   "naam": "Hanoi",
+   "lat": 21.03,
+   "lon": 105.85,
+   "namen": [
+    "Hanoi"
+   ]
+  },
+  {
+   "naam": "Jakarta",
+   "lat": -6.2,
+   "lon": 106.85,
+   "namen": [
+    "Jakarta"
+   ]
+  },
+  {
+   "naam": "Singapore",
+   "lat": 1.35,
+   "lon": 103.82,
+   "namen": [
+    "Singapore"
+   ]
+  },
+  {
+   "naam": "Brussel",
+   "lat": 50.85,
+   "lon": 4.35,
+   "namen": [
+    "Brussel",
+    "Brussels"
+   ]
+  },
+  {
+   "naam": "Den Haag",
+   "lat": 52.08,
+   "lon": 4.3,
+   "namen": [
+    "Den Haag",
+    "The Hague"
+   ]
+  },
+  {
+   "naam": "Amsterdam",
+   "lat": 52.37,
+   "lon": 4.9,
+   "namen": [
+    "Amsterdam"
+   ]
+  },
+  {
+   "naam": "Rotterdam",
+   "lat": 51.92,
+   "lon": 4.48,
+   "namen": [
+    "Rotterdam"
+   ]
+  },
+  {
+   "naam": "Berlijn",
+   "lat": 52.52,
+   "lon": 13.4,
+   "namen": [
+    "Berlijn",
+    "Berlin"
+   ]
+  },
+  {
+   "naam": "Parijs",
+   "lat": 48.86,
+   "lon": 2.35,
+   "namen": [
+    "Parijs",
+    "Paris"
+   ]
+  },
+  {
+   "naam": "Londen",
+   "lat": 51.51,
+   "lon": -0.13,
+   "namen": [
+    "Londen",
+    "London",
+    "Downing Street"
+   ]
+  },
+  {
+   "naam": "Rome",
+   "lat": 41.9,
+   "lon": 12.5,
+   "namen": [
+    "Rome"
+   ]
+  },
+  {
+   "naam": "Madrid",
+   "lat": 40.42,
+   "lon": -3.7,
+   "namen": [
+    "Madrid"
+   ]
+  },
+  {
+   "naam": "Warschau",
+   "lat": 52.23,
+   "lon": 21.01,
+   "namen": [
+    "Warschau",
+    "Warsaw"
+   ]
+  },
+  {
+   "naam": "Boedapest",
+   "lat": 47.5,
+   "lon": 19.04,
+   "namen": [
+    "Boedapest",
+    "Budapest"
+   ]
+  },
+  {
+   "naam": "Wenen",
+   "lat": 48.21,
+   "lon": 16.37,
+   "namen": [
+    "Wenen",
+    "Vienna"
+   ]
+  },
+  {
+   "naam": "Genève",
+   "lat": 46.2,
+   "lon": 6.14,
+   "namen": [
+    "Genève",
+    "Geneva"
+   ]
+  },
+  {
+   "naam": "Oslo",
+   "lat": 59.91,
+   "lon": 10.75,
+   "namen": [
+    "Oslo"
+   ]
+  },
+  {
+   "naam": "Stockholm",
+   "lat": 59.33,
+   "lon": 18.07,
+   "namen": [
+    "Stockholm"
+   ]
+  },
+  {
+   "naam": "Helsinki",
+   "lat": 60.17,
+   "lon": 24.94,
+   "namen": [
+    "Helsinki"
+   ]
+  },
+  {
+   "naam": "Ceuta",
+   "lat": 35.89,
+   "lon": -5.32,
+   "namen": [
+    "Ceuta",
+    "Melilla"
+   ]
+  },
+  {
+   "naam": "Washington",
+   "lat": 38.9,
+   "lon": -77.04,
+   "namen": [
+    "Washington",
+    "Witte Huis",
+    "White House",
+    "Pentagon",
+    "Capitol Hill"
+   ]
+  },
+  {
+   "naam": "New York",
+   "lat": 40.71,
+   "lon": -74.01,
+   "namen": [
+    "New York"
+   ]
+  },
+  {
+   "naam": "Miami",
+   "lat": 25.76,
+   "lon": -80.19,
+   "namen": [
+    "Miami",
+    "Mar-a-Lago"
+   ]
+  },
+  {
+   "naam": "Caracas",
+   "lat": 10.48,
+   "lon": -66.9,
+   "namen": [
+    "Caracas"
+   ]
+  },
+  {
+   "naam": "Havana",
+   "lat": 23.11,
+   "lon": -82.37,
+   "namen": [
+    "Havana",
+    "Havanna"
+   ]
+  },
+  {
+   "naam": "Mexico-Stad",
+   "lat": 19.43,
+   "lon": -99.13,
+   "namen": [
+    "Mexico-Stad",
+    "Mexico City"
+   ]
+  },
+  {
+   "naam": "Ottawa",
+   "lat": 45.42,
+   "lon": -75.7,
+   "namen": [
+    "Ottawa"
+   ]
+  },
+  {
+   "naam": "Brasília",
+   "lat": -15.79,
+   "lon": -47.88,
+   "namen": [
+    "Brasília",
+    "Brasilia"
+   ]
+  },
+  {
+   "naam": "Khartoem",
+   "lat": 15.5,
+   "lon": 32.56,
+   "namen": [
+    "Khartoem",
+    "Khartoum",
+    "Darfur",
+    "El Fasher"
+   ]
+  },
+  {
+   "naam": "Addis Abeba",
+   "lat": 9.03,
+   "lon": 38.74,
+   "namen": [
+    "Addis Abeba",
+    "Addis Ababa"
+   ]
+  },
+  {
+   "naam": "Nairobi",
+   "lat": -1.29,
+   "lon": 36.82,
+   "namen": [
+    "Nairobi"
+   ]
+  },
+  {
+   "naam": "Mogadishu",
+   "lat": 2.05,
+   "lon": 45.32,
+   "namen": [
+    "Mogadishu"
+   ]
+  },
+  {
+   "naam": "Tripoli",
+   "lat": 32.89,
+   "lon": 13.19,
+   "namen": [
+    "Tripoli"
+   ]
+  },
+  {
+   "naam": "Oekraïne",
+   "lat": 49.0,
+   "lon": 31.4,
+   "namen": [
+    "Oekraïne",
+    "Ukraine"
+   ]
+  },
+  {
+   "naam": "Rusland",
+   "lat": 56.0,
+   "lon": 45.0,
+   "namen": [
+    "Rusland",
+    "Russia"
+   ]
+  },
+  {
+   "naam": "Belarus",
+   "lat": 53.7,
+   "lon": 27.95,
+   "namen": [
+    "Belarus",
+    "Wit-Rusland"
+   ]
+  },
+  {
+   "naam": "Moldavië",
+   "lat": 47.4,
+   "lon": 28.4,
+   "namen": [
+    "Moldavië",
+    "Moldova",
+    "Transnistrië",
+    "Transnistria"
+   ]
+  },
+  {
+   "naam": "Armenië",
+   "lat": 40.07,
+   "lon": 45.04,
+   "namen": [
+    "Armenië",
+    "Armenia"
+   ]
+  },
+  {
+   "naam": "Azerbeidzjan",
+   "lat": 40.14,
+   "lon": 47.58,
+   "namen": [
+    "Azerbeidzjan",
+    "Azerbaijan"
+   ]
+  },
+  {
+   "naam": "Iran",
+   "lat": 32.4,
+   "lon": 53.7,
+   "namen": [
+    "Iran"
+   ]
+  },
+  {
+   "naam": "Israël",
+   "lat": 31.4,
+   "lon": 35.0,
+   "namen": [
+    "Israël",
+    "Israel"
+   ]
+  },
+  {
+   "naam": "Libanon",
+   "lat": 33.9,
+   "lon": 35.9,
+   "namen": [
+    "Libanon",
+    "Lebanon"
+   ]
+  },
+  {
+   "naam": "Syrië",
+   "lat": 35.0,
+   "lon": 38.5,
+   "namen": [
+    "Syrië",
+    "Syria"
+   ]
+  },
+  {
+   "naam": "Irak",
+   "lat": 33.2,
+   "lon": 43.7,
+   "namen": [
+    "Irak",
+    "Iraq"
+   ]
+  },
+  {
+   "naam": "Jemen",
+   "lat": 15.6,
+   "lon": 48.5,
+   "namen": [
+    "Jemen",
+    "Yemen"
+   ]
+  },
+  {
+   "naam": "Saoedi-Arabië",
+   "lat": 23.9,
+   "lon": 45.1,
+   "namen": [
+    "Saoedi-Arabië",
+    "Saudi-Arabië",
+    "Saudi Arabia"
+   ]
+  },
+  {
+   "naam": "Qatar",
+   "lat": 25.35,
+   "lon": 51.18,
+   "namen": [
+    "Qatar"
+   ]
+  },
+  {
+   "naam": "Verenigde Arabische Emiraten",
+   "lat": 23.4,
+   "lon": 53.8,
+   "namen": [
+    "Verenigde Arabische Emiraten",
+    "United Arab Emirates",
+    "Emiraten",
+    "UAE"
+   ]
+  },
+  {
+   "naam": "Oman",
+   "lat": 21.5,
+   "lon": 55.9,
+   "namen": [
+    "Oman"
+   ]
+  },
+  {
+   "naam": "Turkije",
+   "lat": 39.0,
+   "lon": 35.0,
+   "namen": [
+    "Turkije",
+    "Turkey",
+    "Türkiye"
+   ]
+  },
+  {
+   "naam": "Egypte",
+   "lat": 26.8,
+   "lon": 30.8,
+   "namen": [
+    "Egypte",
+    "Egypt"
+   ]
+  },
+  {
+   "naam": "Jordanië",
+   "lat": 31.2,
+   "lon": 36.5,
+   "namen": [
+    "Jordanië",
+    "Jordan"
+   ]
+  },
+  {
+   "naam": "China",
+   "lat": 35.9,
+   "lon": 104.2,
+   "namen": [
+    "China"
+   ]
+  },
+  {
+   "naam": "Taiwan",
+   "lat": 23.7,
+   "lon": 121.0,
+   "namen": [
+    "Taiwan"
+   ]
+  },
+  {
+   "naam": "Japan",
+   "lat": 36.2,
+   "lon": 138.3,
+   "namen": [
+    "Japan"
+   ]
+  },
+  {
+   "naam": "Noord-Korea",
+   "lat": 40.3,
+   "lon": 127.5,
+   "namen": [
+    "Noord-Korea",
+    "North Korea"
+   ]
+  },
+  {
+   "naam": "Zuid-Korea",
+   "lat": 35.9,
+   "lon": 127.8,
+   "namen": [
+    "Zuid-Korea",
+    "South Korea"
+   ]
+  },
+  {
+   "naam": "Filipijnen",
+   "lat": 12.9,
+   "lon": 121.8,
+   "namen": [
+    "Filipijnen",
+    "Philippines"
+   ]
+  },
+  {
+   "naam": "India",
+   "lat": 21.0,
+   "lon": 78.0,
+   "namen": [
+    "India"
+   ]
+  },
+  {
+   "naam": "Pakistan",
+   "lat": 30.4,
+   "lon": 69.3,
+   "namen": [
+    "Pakistan"
+   ]
+  },
+  {
+   "naam": "Afghanistan",
+   "lat": 33.9,
+   "lon": 67.7,
+   "namen": [
+    "Afghanistan"
+   ]
+  },
+  {
+   "naam": "Vietnam",
+   "lat": 14.1,
+   "lon": 108.3,
+   "namen": [
+    "Vietnam"
+   ]
+  },
+  {
+   "naam": "Indonesië",
+   "lat": -0.8,
+   "lon": 113.9,
+   "namen": [
+    "Indonesië",
+    "Indonesia"
+   ]
+  },
+  {
+   "naam": "Australië",
+   "lat": -25.3,
+   "lon": 133.8,
+   "namen": [
+    "Australië",
+    "Australia"
+   ]
+  },
+  {
+   "naam": "Nederland",
+   "lat": 52.1,
+   "lon": 5.3,
+   "namen": [
+    "Nederland",
+    "Netherlands"
+   ]
+  },
+  {
+   "naam": "Duitsland",
+   "lat": 51.2,
+   "lon": 10.4,
+   "namen": [
+    "Duitsland",
+    "Germany"
+   ]
+  },
+  {
+   "naam": "Frankrijk",
+   "lat": 46.2,
+   "lon": 2.2,
+   "namen": [
+    "Frankrijk",
+    "France"
+   ]
+  },
+  {
+   "naam": "Verenigd Koninkrijk",
+   "lat": 53.5,
+   "lon": -2.0,
+   "namen": [
+    "Verenigd Koninkrijk",
+    "United Kingdom",
+    "Britain",
+    "Groot-Brittannië"
+   ]
+  },
+  {
+   "naam": "Polen",
+   "lat": 51.9,
+   "lon": 19.1,
+   "namen": [
+    "Polen",
+    "Poland"
+   ]
+  },
+  {
+   "naam": "Hongarije",
+   "lat": 47.2,
+   "lon": 19.5,
+   "namen": [
+    "Hongarije",
+    "Hungary"
+   ]
+  },
+  {
+   "naam": "Italië",
+   "lat": 41.9,
+   "lon": 12.6,
+   "namen": [
+    "Italië",
+    "Italy"
+   ]
+  },
+  {
+   "naam": "Spanje",
+   "lat": 40.5,
+   "lon": -3.7,
+   "namen": [
+    "Spanje",
+    "Spain"
+   ]
+  },
+  {
+   "naam": "Venezuela",
+   "lat": 6.4,
+   "lon": -66.6,
+   "namen": [
+    "Venezuela"
+   ]
+  },
+  {
+   "naam": "Cuba",
+   "lat": 21.5,
+   "lon": -77.8,
+   "namen": [
+    "Cuba"
+   ]
+  },
+  {
+   "naam": "Mexico",
+   "lat": 23.6,
+   "lon": -102.6,
+   "namen": [
+    "Mexico"
+   ]
+  },
+  {
+   "naam": "Canada",
+   "lat": 56.1,
+   "lon": -106.3,
+   "namen": [
+    "Canada"
+   ]
+  },
+  {
+   "naam": "Brazilië",
+   "lat": -14.2,
+   "lon": -51.9,
+   "namen": [
+    "Brazilië",
+    "Brazil"
+   ]
+  },
+  {
+   "naam": "Groenland",
+   "lat": 71.7,
+   "lon": -42.6,
+   "namen": [
+    "Groenland",
+    "Greenland"
+   ]
+  },
+  {
+   "naam": "Guyana",
+   "lat": 4.9,
+   "lon": -58.9,
+   "namen": [
+    "Guyana",
+    "Essequibo"
+   ]
+  },
+  {
+   "naam": "Soedan",
+   "lat": 12.9,
+   "lon": 30.2,
+   "namen": [
+    "Soedan",
+    "Sudan"
+   ]
+  },
+  {
+   "naam": "Ethiopië",
+   "lat": 9.1,
+   "lon": 40.5,
+   "namen": [
+    "Ethiopië",
+    "Ethiopia"
+   ]
+  },
+  {
+   "naam": "Somalië",
+   "lat": 5.2,
+   "lon": 46.2,
+   "namen": [
+    "Somalië",
+    "Somalia"
+   ]
+  },
+  {
+   "naam": "Libië",
+   "lat": 26.3,
+   "lon": 17.2,
+   "namen": [
+    "Libië",
+    "Libya"
+   ]
+  },
+  {
+   "naam": "Mali",
+   "lat": 17.6,
+   "lon": -4.0,
+   "namen": [
+    "Mali"
+   ]
+  },
+  {
+   "naam": "Nigeria",
+   "lat": 9.1,
+   "lon": 8.7,
+   "namen": [
+    "Nigeria"
+   ]
+  },
+  {
+   "naam": "Marokko",
+   "lat": 31.8,
+   "lon": -7.1,
+   "namen": [
+    "Marokko",
+    "Morocco"
+   ]
+  },
+  {
+   "naam": "Verenigde Staten",
+   "lat": 39.8,
+   "lon": -98.6,
+   "namen": [
+    "Verenigde Staten",
+    "United States",
+    "Amerika"
+   ]
+  }
+ ]
+}

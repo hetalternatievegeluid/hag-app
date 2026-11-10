@@ -2,6 +2,7 @@
 import { XMLParser } from "fast-xml-parser";
 import { getStore } from "@netlify/blobs";
 import config from "../../config/nieuws.json";
+import plaatsen from "../../config/plaatsen.json";
 
 const BEWAAR_DAGEN = 7;
 const MAX_BERICHTEN = 800;
@@ -36,6 +37,34 @@ const sectieRegels = config.secties.map(s => ({
   re: new RegExp(`(^|[^\\p{L}])(${s.trefwoorden.map(escRe).join("|")})`, "iu"),
 }));
 
+// Plaats bepalen voor de wereldbol: de plaatsnaam die het eerst in de kop staat, anders in de samenvatting.
+const plaatsRegels = (plaatsen.plaatsen || []).map(p => ({
+  naam: p.naam, lat: p.lat, lon: p.lon,
+  re: new RegExp(`(^|[^\\p{L}])(${p.namen.map(escRe).join("|")})(?![\\p{L}])`, "iu"),
+}));
+function vindPlaats(titel, samenvatting) {
+  for (const tekst of [titel, samenvatting]) {
+    let beste = null, pos = Infinity;
+    for (const p of plaatsRegels) {
+      const m = p.re.exec(tekst || "");
+      if (m && m.index < pos) { pos = m.index; beste = p; }
+    }
+    if (beste) return { naam: beste.naam, lat: beste.lat, lon: beste.lon };
+  }
+  return null;
+}
+function beeld(it) {
+  const kandidaten = [].concat(it["media:content"] || [], it["media:thumbnail"] || [], it["media:group"]?.["media:content"] || [], it.enclosure || []);
+  for (const k of kandidaten) {
+    const url = k?.["@_url"] || k?.["@_href"];
+    const type = k?.["@_type"] || k?.["@_medium"] || "";
+    if (url && /^https?:/.test(url) && (!type || /image/.test(type))) return url;
+  }
+  const html = String(it["content:encoded"] || it.description || it.content?.["#text"] || it.content || "");
+  const m = /<img[^>]+src=["']([^"']+)["']/i.exec(html);
+  return m && /^https?:/.test(m[1]) ? m[1] : "";
+}
+
 async function haalBron(bron) {
   const r = await fetch(bron.feed, {
     headers: { "user-agent": "Mozilla/5.0 (compatible; HAG-nieuwsstroom/1.0; +https://www.hetalternatievegeluid.nl)", accept: "application/rss+xml, application/xml, text/xml, */*" },
@@ -54,7 +83,7 @@ async function haalBron(bron) {
     const hooi = ` ${titel} ${samenvatting} `;
     const secties = new Set(sectieRegels.filter(s => s.re.test(hooi)).map(s => s.id));
     if (bron.sectie) secties.add(bron.sectie);
-    return { id: url, bron: bron.naam, bronId: bron.id, label: bron.label, staat: !!bron.staat, titel, samenvatting, url, tijd, secties: [...secties] };
+    return { id: url, bron: bron.naam, bronId: bron.id, label: bron.label, staat: !!bron.staat, titel, samenvatting, url, tijd, secties: [...secties], plaats: vindPlaats(titel, samenvatting), beeld: beeld(it) };
   }).filter(b => b.titel && b.url && b.tijd);
 }
 

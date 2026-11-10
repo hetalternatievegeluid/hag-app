@@ -122,6 +122,27 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.heroimg{display:block;margin:0 0 18px;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:var(--line)}
+.heroimg img{width:100%;height:100%;object-fit:cover;display:block}
+.irow{display:flex;gap:14px;align-items:flex-start}
+.irow>div{flex:1;min-width:0}
+.thumb{flex:none;width:92px;height:92px;border-radius:6px;overflow:hidden;background:var(--line);margin-top:4px}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:520px){.thumb{width:72px;height:72px}}
+.readimg{margin:0 0 26px}
+.readimg img{width:100%;max-height:440px;object-fit:cover;border-radius:8px;display:block}
+.news.heeftbeeld{display:grid;grid-template-columns:1fr 76px;column-gap:12px}
+.news.heeftbeeld>*{grid-column:1}
+.nthumb{grid-column:2!important;grid-row:1 / span 4;width:76px;height:76px;object-fit:cover;border-radius:6px;background:var(--line)}
+.nplaats{display:inline-block;margin-top:4px;font-size:.74rem;color:var(--muted)}
+.nplaats::before{content:"● ";color:var(--accent)}
+.periode{margin-top:0}
+.bolvak{position:relative;display:flex;justify-content:center;margin:10px 0 6px}
+.bolvak canvas{cursor:grab;max-width:100%;touch-action:none}
+.bolvak canvas:active{cursor:grabbing}
+.bolstatus{position:absolute;inset:auto 0 45% 0;text-align:center;color:var(--muted);font-size:.9rem;margin:0;pointer-events:none}
+.plekchips{display:flex;gap:6px;flex-wrap:wrap}
+.plekchips .n{font-size:.75rem;opacity:.7;margin-left:2px}
 .flitsen{padding:22px 0 18px;border-bottom:1px solid var(--line)}
 .flitsen h2{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:700;font-size:1.15rem;margin:0 0 12px}
 .pulse{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent)}
@@ -251,6 +272,7 @@ const SITE = "https://www.hetalternatievegeluid.nl";
 const CATS = [
   {id:"alles", name:"Alles"},
   {id:"stroom", name:"Nieuwsstroom"},
+  {id:"wereld", name:"Wereldbol"},
   {id:"nieuws", name:"Nieuws"},
   {id:"onderzoek", name:"Onderzoek"},
   {id:"analyse", name:"Analyse"},
@@ -275,7 +297,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {cat:"alles", q:"", dossier:null, sectie:null, limit:80};
+const state = {cat:"alles", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -296,7 +318,7 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = c.id==="stroom" ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    const n = (c.id==="stroom" || c.id==="wereld") ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
     return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
@@ -329,7 +351,9 @@ function renderList(){
   const main = document.getElementById("main");
   document.getElementById("tools").hidden = false;
   document.getElementById("tabs").hidden = false;
+  stopBol();
   if(state.cat==="stroom"){ main.innerHTML = stroomView(); return; }
+  if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
   let list = filtered();
   let html = "";
 
@@ -350,6 +374,7 @@ function renderList(){
     const d = new Date(h.date);
     html += flitsenBlok() + `<section class="hero">
       <p class="meta"><span class="cat">${rubriekFull(h)}</span></p>
+      ${h.image ? `<a href="#artikel-${h.id}" class="heroimg"><img src="${esc(h.image)}" alt="" loading="eager" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>` : ""}
       <h2><a href="#artikel-${h.id}">${esc(h.title)}</a></h2>
       <p class="lead">${esc(h.intro)}</p>
       <a class="btn" href="#artikel-${h.id}">Lees meer »</a>
@@ -393,10 +418,13 @@ function renderList(){
     }
     html += `<li class="item${saved.has(a.id)?" saved":""}">
       <time datetime="${a.date}"><b>${fmtDay.format(d)}</b>${fmtMon.format(d).replace(".","")}</time>
-      <div>
-        <span class="cat">${rubriekShort(a)}</span> ${seriesLabel(a)}
-        <h3><a href="#artikel-${a.id}">${esc(a.title)}</a></h3>
-        ${a.intro ? `<p>${esc(a.intro)}</p>` : ""}
+      <div class="irow">
+        <div>
+          <span class="cat">${rubriekShort(a)}</span> ${seriesLabel(a)}
+          <h3><a href="#artikel-${a.id}">${esc(a.title)}</a></h3>
+          ${a.intro ? `<p>${esc(a.intro)}</p>` : ""}
+        </div>
+        ${a.image ? `<a href="#artikel-${a.id}" class="thumb" tabindex="-1" aria-hidden="true"><img src="${esc(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>` : ""}
       </div>
     </li>`;
   }
@@ -424,6 +452,7 @@ function renderReader(a){
     <h1>${esc(a.title)}</h1>
     ${seriesNav}
     ${dossierLine(a)}
+    ${a.image && !/<img/i.test(a.html || "") ? `<figure class="readimg"><img src="${esc(a.image)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></figure>` : ""}
     ${a.html ? `<div class="body">${a.html}</div>` : `${a.intro ? `<p class="lead">${esc(a.intro)}</p>` : ""}<div class="note"><p>De volledige tekst van dit artikel staat (nog) niet in de app.</p></div>`}
     <div class="actions">
       <button class="btn" id="save" aria-pressed="${isSaved}">${isSaved ? "Bewaard" : "Bewaar"}</button>
@@ -466,7 +495,7 @@ function nTijd(iso){
 }
 function newsItem(b, alleenTijd){
   const d = new Date(b.tijd);
-  return `<li class="news"><div class="nmeta"><time datetime="${esc(b.tijd)}">${alleenTijd ? fmtTime.format(d) : nTijd(b.tijd)}</time><b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></div><a class="ntitle" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a>${b.samenvatting ? `<p>${esc(b.samenvatting)}</p>` : ""}</li>`;
+  return `<li class="news${b.beeld ? " heeftbeeld" : ""}">${b.beeld ? `<img class="nthumb" src="${esc(b.beeld)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<div class="nmeta"><time datetime="${esc(b.tijd)}">${alleenTijd ? fmtTime.format(d) : nTijd(b.tijd)}</time><b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></div><a class="ntitle" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a>${b.samenvatting ? `<p>${esc(b.samenvatting)}</p>` : ""}${b.plaats ? `<span class="nplaats">${esc(b.plaats.naam)}</span>` : ""}</li>`;
 }
 function stroomBlok(sectie, n){
   if(!NIEUWS) return `<section class="stroomblok"><h2>Nieuwsstroom</h2><p class="stroom-intro">Laden…</p></section>`;
@@ -605,9 +634,123 @@ async function verversReacties(id){
   try { const r = await fetch(`/api/reacties?flits=${id}`, {cache:"no-cache"}); if(!r.ok) return; const j = await r.json(); const box = document.getElementById("reacties"); if(box) box.innerHTML = reactiesHTML(j.reacties); } catch(e) {}
 }
 
+/* ---------- wereldbol ---------- */
+const BIB = {
+  d3: "https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js",
+  topo: "https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js",
+  land: "https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json"
+};
+let bol = null, LAND = null;
+function laadScript(src){ return new Promise((ok, nee) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = nee; document.head.appendChild(s); }); }
+async function laadBolBibliotheken(){
+  if(!window.d3) await laadScript(BIB.d3);
+  if(!window.topojson) await laadScript(BIB.topo);
+  if(!LAND){ const w = await (await fetch(BIB.land)).json(); LAND = topojson.feature(w, w.objects.countries); }
+}
+function bolBerichten(){
+  if(!NIEUWS) return [];
+  const grens = Date.now() - state.periode * 36e5;
+  return NIEUWS.berichten.filter(b => b.plaats && new Date(b.tijd).getTime() > grens && (!state.sectie || b.secties.includes(state.sectie)));
+}
+function bolPlekken(){
+  const m = new Map();
+  for(const b of bolBerichten()){
+    const k = b.plaats.naam;
+    if(!m.has(k)) m.set(k, {naam:k, lat:b.plaats.lat, lon:b.plaats.lon, berichten:[], nieuwste:0});
+    const p = m.get(k); p.berichten.push(b); p.nieuwste = Math.max(p.nieuwste, new Date(b.tijd).getTime());
+  }
+  return [...m.values()].sort((a,b) => b.berichten.length - a.berichten.length);
+}
+function wereldView(){
+  const per = [[6,"6 uur"],[24,"24 uur"],[72,"3 dagen"],[168,"7 dagen"]];
+  return `<section class="dhead"><h2>Wereldbol</h2><p>Waar het nieuws van dit moment over gaat. Elke stip is een plaats die in de koppen van de nieuwsstroom wordt genoemd; hoe groter de stip, hoe meer berichten. Sleep om te draaien, tik op een stip voor de berichten.</p></section>
+    <div class="chips">${[{id:"", naam:"Alles"}, ...(NIEUWS?.secties || [])].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("")}</div>
+    <div class="chips periode">${per.map(([u,t]) => `<button class="chip" data-act="periode" data-id="${u}" aria-pressed="${state.periode===u}">${t}</button>`).join("")}</div>
+    <div class="bolvak"><canvas id="bol" aria-label="Draaibare wereldbol met nieuwslocaties" role="img"></canvas><p class="bolstatus" id="bolstatus">Wereldbol laden…</p></div>
+    <div id="pleklijst"></div>`;
+}
+async function startBol(){
+  try { await laadBolBibliotheken(); }
+  catch(e){ const st = document.getElementById("bolstatus"); if(st) st.textContent = "De wereldbol kon niet worden geladen. Controleer je verbinding."; return; }
+  const canvas = document.getElementById("bol"); if(!canvas) return;
+  document.getElementById("bolstatus").textContent = "";
+  const css = getComputedStyle(document.documentElement);
+  const kleur = n => css.getPropertyValue(n).trim();
+  const plekken = bolPlekken();
+  const maat = () => Math.min(canvas.parentNode.clientWidth, 560);
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let w = maat();
+  canvas.width = w * dpr; canvas.height = w * dpr; canvas.style.width = w + "px"; canvas.style.height = w + "px";
+  const ctx = canvas.getContext("2d"); ctx.scale(dpr, dpr);
+  const proj = d3.geoOrthographic().scale(w/2 - 6).translate([w/2, w/2]).clipAngle(90);
+  const start = plekken[0] ? [-plekken[0].lon, -plekken[0].lat * 0.6] : [-20, -30];
+  proj.rotate([start[0], start[1], 0]);
+  const pad = d3.geoPath(proj, ctx);
+  const graticule = d3.geoGraticule10();
+  const maxN = Math.max(1, ...plekken.map(p => p.berichten.length));
+  let draait = true, laatsteActie = 0, frame = 0;
+  bol = {stop:false, raf:0, plekken};
+  function teken(){
+    const t = performance.now();
+    ctx.clearRect(0, 0, w, w);
+    ctx.beginPath(); pad({type:"Sphere"}); ctx.fillStyle = kleur("--bar") || "#16171C"; ctx.fill();
+    ctx.beginPath(); pad(graticule); ctx.strokeStyle = "rgba(255,255,255,.07)"; ctx.lineWidth = .6; ctx.stroke();
+    ctx.beginPath(); pad(LAND); ctx.fillStyle = "#3A3D47"; ctx.fill(); ctx.strokeStyle = "rgba(255,255,255,.18)"; ctx.lineWidth = .5; ctx.stroke();
+    const middel = [-proj.rotate()[0], -proj.rotate()[1]];
+    const rood = kleur("--accent") || "#C62A21";
+    for(const p of plekken){
+      if(d3.geoDistance([p.lon, p.lat], middel) > Math.PI/2 - .05){ p.xy = null; continue; }
+      const [x, y] = proj([p.lon, p.lat]); p.xy = [x, y];
+      const r = 3 + 9 * Math.sqrt(p.berichten.length / maxN);
+      p.r = r;
+      if(Date.now() - p.nieuwste < 2 * 36e5){
+        const fase = (t / 1600 + p.lon) % 1;
+        ctx.beginPath(); ctx.arc(x, y, r + fase * 14, 0, 2*Math.PI);
+        ctx.strokeStyle = `rgba(232,70,59,${(1 - fase) * .55})`; ctx.lineWidth = 2; ctx.stroke();
+      }
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 2*Math.PI);
+      ctx.fillStyle = state.plek===p.naam ? "#FFFFFF" : rood; ctx.globalAlpha = .9; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = 1; ctx.stroke();
+    }
+    ctx.beginPath(); pad({type:"Sphere"}); ctx.strokeStyle = "rgba(255,255,255,.25)"; ctx.lineWidth = 1; ctx.stroke();
+  }
+  function lus(){
+    if(bol.stop) return;
+    if(draait && Date.now() - laatsteActie > 4000){ const r = proj.rotate(); proj.rotate([r[0] + .12, r[1], r[2]]); }
+    teken();
+    bol.raf = requestAnimationFrame(lus);
+  }
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce) draait = false;
+  d3.select(canvas).call(d3.drag()
+    .on("start", () => { laatsteActie = Date.now(); })
+    .on("drag", e => { laatsteActie = Date.now(); const r = proj.rotate(), k = 75 / proj.scale(); proj.rotate([r[0] + e.dx * k, Math.max(-80, Math.min(80, r[1] - e.dy * k)), r[2]]); if(reduce) teken(); }));
+  canvas.addEventListener("click", e => {
+    const box = canvas.getBoundingClientRect(), x = e.clientX - box.left, y = e.clientY - box.top;
+    let beste = null, afstand = 18;
+    for(const p of plekken){ if(!p.xy) continue; const d = Math.hypot(p.xy[0]-x, p.xy[1]-y) - p.r; if(d < afstand){ afstand = d; beste = p; } }
+    if(beste){ state.plek = beste.naam; laatsteActie = Date.now(); tekenPlekLijst(); document.getElementById("pleklijst").scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"}); if(reduce) teken(); }
+  });
+  tekenPlekLijst();
+  if(reduce) teken(); else lus();
+  if(!plekken.length) document.getElementById("bolstatus").textContent = "Nog geen berichten met een plaats in deze periode.";
+}
+function tekenPlekLijst(){
+  const box = document.getElementById("pleklijst"); if(!box || !bol) return;
+  const plekken = bol.plekken;
+  const gekozen = plekken.find(p => p.naam===state.plek);
+  let html = `<h3 class="daykop">Meeste nieuws</h3><div class="plekchips">${plekken.slice(0,12).map(p => `<button class="chip" data-act="plek" data-id="${esc(p.naam)}" aria-pressed="${state.plek===p.naam}">${esc(p.naam)} <span class="n">${p.berichten.length}</span></button>`).join("") || `<p class="stroom-intro">Geen berichten.</p>`}</div>`;
+  if(gekozen){
+    html += `<h3 class="daykop">${esc(gekozen.naam)}</h3><ul class="newslist">${gekozen.berichten.slice().sort((a,b)=>b.tijd.localeCompare(a.tijd)).slice(0,30).map(b => newsItem(b, false)).join("")}</ul>`;
+  }
+  box.innerHTML = html;
+}
+function stopBol(){ if(bol){ bol.stop = true; cancelAnimationFrame(bol.raf); bol = null; } }
+
 /* ---------- routing ---------- */
 function route(){
   clearInterval(flitsTimer);
+  stopBol();
   const fm = location.hash.match(/^#flits-([a-f0-9]{12})$/);
   if(fm){ renderFlits(fm[1]); return; }
   const m = location.hash.match(/^#artikel-(\d+)$/);
@@ -628,7 +771,9 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
-  if(act==="sectie"){ state.sectie = b.dataset.id || null; state.limit = 80; renderList(); return; }
+  if(act==="periode"){ state.periode = +b.dataset.id; state.plek = null; renderList(); return; }
+  if(act==="plek"){ state.plek = b.dataset.id || null; tekenPlekLijst(); return; }
+  if(act==="sectie"){ state.sectie = b.dataset.id || null; state.limit = 80; state.plek = null; renderList(); return; }
   if(act==="stroom"){ state.cat = "stroom"; state.sectie = b.dataset.id || null; state.dossier = null; state.limit = 80; }
   if(act==="dossier"){ state.dossier = b.dataset.id; state.cat = "alles"; state.q = ""; document.getElementById("q").value = ""; }
   if(act==="clear-dossier"){ state.dossier = null; }

@@ -59,10 +59,13 @@ async function main() {
     throw new Error("Synchronisatie afgebroken: artikelen ontbreken");
   }
 
-  if (inhoud(bestaand) === inhoud(bijgewerkt)) {
-    console.log("Geen wijzigingen. Geen upload nodig.");
-    return;
-  }
+  if (
+  inhoud(bestaand) === inhoud(bijgewerkt) &&
+  process.env.SYNC_FORCE_SEED !== "true"
+) {
+  console.log("Geen wijzigingen. Geen upload nodig.");
+  return;
+}
 
   console.log("Wijzigingen gevonden.");
 

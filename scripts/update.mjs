@@ -176,6 +176,31 @@ async function fetchSiteArticle(url, cat) {
   return art;
 }
 
+// ---------- nieuwe artikelen op de website (elke run, alleen de eerste overzichtspagina's) ----------
+async function checkSiteNieuw(bekend) {
+  const ids = new Set(bekend.map(a => a.id));
+  const nieuw = [];
+  for (const [path, cat] of Object.entries(CATS)) {
+    const start = `${SITE}/${path}`;
+    const html = await get(start);
+    if (!html) continue;
+    const doc = new JSDOM(html, { url: start, virtualConsole: quiet }).window.document;
+    const links = new Set();
+    for (const a of doc.querySelectorAll("a[href]")) {
+      const href = a.href.split("#")[0];
+      const m = new RegExp(`/${path}/(\\d+)_`).exec(href);
+      if (m && !ids.has(m[1])) links.add(href);
+    }
+    for (const url of links) {
+      const art = await fetchSiteArticle(url, cat);
+      if (art) { nieuw.push(art); ids.add(art.id); console.log(`  Nieuw op de website: ${art.title || url}`); }
+      await sleep(400);
+    }
+    await sleep(300);
+  }
+  return nieuw;
+}
+
 // ---------- Substack ----------
 async function fetchSubstack() {
   const xml = await get(FEED);
@@ -228,6 +253,13 @@ async function main() {
     } else {
       console.warn("Geen artikelen van de website gevonden; bestaande gegevens blijven staan.");
     }
+  }
+
+  if (!doImport) {
+    console.log("Website controleren op nieuwe artikelen...");
+    const nieuw = await checkSiteNieuw(articles);
+    articles.push(...nieuw);
+    console.log(`  ${nieuw.length} nieuwe artikelen van de website.`);
   }
 
   console.log("Substack-feed lezen...");

@@ -67,10 +67,13 @@ function beeld(it) {
   return m && /^https?:/.test(m[1]) ? m[1] : "";
 }
 
+// vacatures, advertenties en promotieberichten die sommige feeds meesturen
+const GEEN_NIEUWS = /(part-time|full-time|vacature|we're hiring|we are hiring|job opening|sponsored|advertorial|subscribe now|abonneer nu)/i;
+
 async function haalBron(bron) {
   const r = await fetch(bron.feed, {
     headers: { "user-agent": "Mozilla/5.0 (compatible; HAG-nieuwsstroom/1.0; +https://www.hetalternatievegeluid.nl)", accept: "application/rss+xml, application/xml, text/xml, */*" },
-    signal: AbortSignal.timeout(12000),
+    signal: AbortSignal.timeout(7000),
     redirect: "follow",
   });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -86,7 +89,7 @@ async function haalBron(bron) {
     const secties = new Set(sectieRegels.filter(s => s.re.test(hooi)).map(s => s.id));
     if (bron.sectie) secties.add(bron.sectie);
     return { id: url, bron: bron.naam, bronId: bron.id, label: bron.label, staat: !!bron.staat, titel, samenvatting, url, tijd, secties: [...secties], plaats: vindPlaats(titel, samenvatting), beeld: beeld(it) };
-  }).filter(b => b.titel && b.url && b.tijd);
+  }).filter(b => b.titel && b.url && b.tijd && !GEEN_NIEUWS.test(b.titel) && !/\/(jobs?|vacatures?|careers?)\//i.test(b.url));
 }
 
 // ---------- bronvergelijking: zelfde gebeurtenis, verschillende bronnen ----------

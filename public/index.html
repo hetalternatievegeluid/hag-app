@@ -1569,6 +1569,13 @@ function sparkline(punten, n = 60){
   const op = vs.at(-1) >= vs[0];
   return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${op ? "#2E7D5B" : "var(--accent)"}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
 }
+const TECH_RE = /(^|[^\p{L}])(nvidia|openai|anthropic|chatgpt|gemini|copilot|artificial intelligence|kunstmatige intelligentie|ai|agi|apple|iphone|microsoft|google|alphabet|meta|zuckerberg|amazon|tesla|musk|tsmc|asml|samsung|intel|amd|broadcom|huawei|bytedance|tiktok|deepseek|chips?|chipmaker|semiconductors?|halfgeleiders?|datacent(er|re)s?|data cent(er|re)s?|cyber\w*|hack\w*|quantum|robot\w*|big tech)(?![\p{L}])/iu;
+const BEDRIJF_WOORDEN = {NVDA:"nvidia|jensen huang", MSFT:"microsoft|nadella", AAPL:"apple|iphone|tim cook", GOOGL:"google|alphabet|pichai|gemini", AMZN:"amazon|aws|bezos|jassy", META:"meta|zuckerberg|facebook|instagram|whatsapp", TSLA:"tesla|musk", AVGO:"broadcom", TSM:"tsmc|taiwan semiconductor", "ASML.AS":"asml", AMD:"amd", INTC:"intel"};
+function bedrijfNieuws(g){
+  const w = BEDRIJF_WOORDEN[g.symbool]; if(!w) return [];
+  const re = new RegExp(`(^|[^\\p{L}])(${w})(?![\\p{L}])`, "iu");
+  return (NIEUWS?.berichten || []).filter(b => re.test(" " + b.titel + " ")).slice(0, 8);
+}
 function techView(){
   let html = `<section class="dhead"><h2>Tech &amp; AI</h2><p>De AI-race, chips, Big Tech en wat technologie met macht doet: het nieuws uit techmedia wereldwijd, naast de koersen van de grote techbedrijven. Koersen komen van Yahoo Finance, zijn indicatief en kunnen een kwartier vertraagd zijn. Dit is geen beleggingsadvies.</p></section>`;
   if(BEURS.fout || !BEURS.aandelen) html += `<div class="note"><p>De koersen zijn nu niet bereikbaar. Het nieuws hieronder werkt wel.</p></div>`;
@@ -1585,7 +1592,7 @@ function techView(){
         <div class="chips periode">${[[30,"1 maand"],[90,"3 maanden"],[365,"1 jaar"]].map(([d,t]) => `<button class="chip" data-act="koersbereik" data-id="${d}" aria-pressed="${state.koersBereik===d}">${t}</button>`).join("")}</div>
         <div class="grafiek" id="koersgrafiek"></div>
         <h4 class="daykop">Nieuws over ${esc(g.naam)}</h4>
-        ${g.nieuws?.length ? `<ul class="newslist compact">${g.nieuws.map(n => `<li class="news"><div class="nmeta"><time>${nTijd(n.tijd)}</time><b>${esc(n.bron)}</b><span class="lbl${n.staat?" staat":""}">${esc(n.label)}</span></div><a class="ntitle" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titel)}</a></li>`).join("")}</ul>` : `<p class="fmeta">Nog geen nieuws over ${esc(g.naam)} in het archief. Dat vult zich vanzelf naarmate de nieuwsstroom draait.</p>`}
+        ${(g.nieuws = g.nieuws?.length ? g.nieuws : bedrijfNieuws(g)).length ? `<ul class="newslist compact">${g.nieuws.map(n => `<li class="news"><div class="nmeta"><time>${nTijd(n.tijd)}</time><b>${esc(n.bron)}</b><span class="lbl${n.staat?" staat":""}">${esc(n.label)}</span></div><a class="ntitle" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titel)}</a></li>`).join("")}</ul>` : `<p class="fmeta">Nog geen nieuws over ${esc(g.naam)} in het archief. Dat vult zich vanzelf naarmate de nieuwsstroom draait.</p>`}
       </section>`;
     }
     if(BEURS.bewegingen?.length) html += `<h3 class="daykop">Opvallende koersbewegingen (afgelopen maand)</h3>
@@ -1597,7 +1604,9 @@ function techView(){
   if(vgl.length) html += `<h3 class="daykop">Bronvergelijking</h3>${vgl.map(c => `<article class="vgl"><div class="nmeta"><span class="ftag">${c.berichten.length} bronnen</span><span>laatst ${nTijd(c.laatst)}</span></div><h3>${esc(c.kop)}</h3>${c.berichten.slice(0,4).map(b => `<a class="vglitem" href="${esc(b.url)}" target="_blank" rel="noopener"><span class="nmeta"><b>${esc(b.bron)}</b><span class="lbl${b.staat?" staat":""}">${esc(b.label)}</span></span><span class="vgltitel">${esc(b.titel)}</span></a>`).join("")}</article>`).join("")}`;
   const ag = (AGENDA || []).filter(i => i.sectie==="tech" && (i.eind || i.start) >= vandaagIso()).slice(0,3);
   if(ag.length) html += `<h3 class="daykop">Op de agenda</h3><ul class="aglist">${ag.map(i => agendaItemHTML(i, true)).join("")}</ul>`;
-  const nw = (NIEUWS?.berichten || []).filter(b => b.secties.includes("tech")).slice(0, 15);
+  let nw = (NIEUWS?.berichten || []).filter(b => b.secties.includes("tech"));
+  if(!nw.length) nw = (NIEUWS?.berichten || []).filter(b => TECH_RE.test(" " + b.titel + " "));
+  nw = nw.slice(0, 15);
   html += `<h3 class="daykop">Laatste tech- en AI-nieuws</h3>${nw.length ? `<ul class="newslist">${nw.map(b => newsItem(b, false)).join("")}</ul><p><button class="btn ghost" data-act="stroom" data-id="tech">Alle tech- en AI-berichten</button></p>` : `<p class="stroom-intro">Nog geen berichten.</p>`}`;
   return html;
 }

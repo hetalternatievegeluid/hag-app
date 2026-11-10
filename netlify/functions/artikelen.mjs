@@ -34,7 +34,16 @@ export default async (req) => {
       let data = await store().get("actueel", { type: "json" });
 
       if (!data) {
-        const url = new URL("/data/articles.json", req.url);
+        const siteUrl =
+  env("DEPLOY_PRIME_URL") ||
+  env("DEPLOY_URL") ||
+  env("URL");
+
+if (!siteUrl) {
+  throw new Error("Geen Netlify-site-URL beschikbaar");
+}
+
+const url = new URL("/data/articles.json", siteUrl);
         const response = await fetch(url);
         if (!response.ok) {
           return Response.json(

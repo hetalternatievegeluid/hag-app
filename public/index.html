@@ -122,6 +122,35 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.chips.modus{margin-bottom:0}
+.vgl{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;margin:14px 0}
+.vgl h3{font-family:var(--serif);font-size:1.2rem;line-height:1.25;margin:6px 0 10px}
+.vglgroepen{display:grid;gap:12px}
+@media (min-width:700px){.vglgroepen{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}}
+.vglgroep{border-top:3px solid var(--line);padding-top:6px}
+.vglgroep.west{border-top-color:var(--ink)}
+.vglgroep.staat{border-top-color:var(--accent)}
+.vglkop{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 4px}
+.vglitem{display:block;padding:8px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.vglitem:last-child{border-bottom:0}
+.vgltitel{display:block;font-family:var(--serif);font-size:1rem;line-height:1.3;margin-top:3px}
+.vglitem:hover .vgltitel{text-decoration:underline}
+.zoekblok{margin-top:8px}
+.zoekblok .daykop .n{font-style:normal;font-size:.8rem}
+ul.zoeklijst{list-style:none;margin:0;padding:0}
+ul.zoeklijst li a{display:block;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+ul.zoeklijst strong{display:block;font-family:var(--serif);font-size:1.08rem;margin-top:2px}
+.installbalk{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:18px}
+.installbalk img{border-radius:10px;flex:none}
+.installbalk div{flex:1;min-width:0;display:flex;flex-direction:column}
+.installbalk strong{font-size:.95rem}
+.installbalk span{font-size:.8rem;color:var(--muted)}
+.installbalk .sluit{background:none;border:0;color:var(--muted);font-size:1.4rem;line-height:1;cursor:pointer;padding:0 4px}
+ol.stappen{padding-left:1.3em;max-width:60ch}
+ol.stappen li{margin:6px 0}
+.flinks{display:flex;gap:16px;flex-wrap:wrap}
+.flinks a{color:var(--muted)}
+.privacy-pagina .body{font-size:1.02rem}
 .landing{margin:0 calc(50% - 50vw);padding:44px 20px 38px;background:var(--bar);color:#fff;text-align:center;position:relative;overflow:hidden;border-bottom:3px solid var(--accent)}
 .landing::before{content:"";position:absolute;left:50%;top:50%;width:760px;height:760px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(255,255,255,.05);box-shadow:0 0 0 90px rgba(255,255,255,.015),0 0 0 180px rgba(255,255,255,.012);pointer-events:none}
 .landlogo{width:clamp(120px,32vw,160px);height:auto;display:block;margin:0 auto 18px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.45));position:relative}
@@ -375,7 +404,7 @@ footer .social a:hover{text-decoration:underline}
     <div class="tools" id="tools">
       <label class="search">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Zoek in artikelen" aria-label="Zoek in artikelen" autocomplete="off">
+        <input id="q" type="search" placeholder="Zoek in alles" aria-label="Zoek in alles" autocomplete="off">
       </label>
     </div>
     <nav class="tabs" id="tabs" aria-label="Categorieën"></nav>
@@ -392,6 +421,7 @@ footer .social a:hover{text-decoration:underline}
     <a href="https://hetalternatievegeluid.substack.com/" target="_blank" rel="noopener">Substack</a>
   </nav>
   <p>Contact: <a href="mailto:hetalternatievegeluid@gmail.com">hetalternatievegeluid@gmail.com</a></p>
+  <p class="flinks"><a href="#privacy">Privacyverklaring</a><a href="#installeren">App op je beginscherm</a><a href="#meldingen">Meldingen</a></p>
   <p id="updated"></p>
   <p>© 2024–2026 Het Alternatieve Geluid</p>
 </footer>
@@ -430,7 +460,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
+const state = {stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -487,7 +517,8 @@ function renderList(){
   document.getElementById("tools").hidden = false;
   document.getElementById("tabs").hidden = false;
   stopBol();
-  if(state.cat==="stroom"){ main.innerHTML = stroomView(); return; }
+  if(state.q.trim() && ["start","wereld","energie","gesprek","agenda"].includes(state.cat)){ main.innerHTML = zoekView(); return; }
+  if(state.cat==="stroom"){ main.innerHTML = state.stroomModus==="vergelijk" ? vergelijkView() : stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
   if(state.cat==="start"){ main.innerHTML = startView(); return; }
   if(state.cat==="agenda"){
@@ -662,6 +693,7 @@ function stroomView(){
   if(!NIEUWS) return `<p class="loading">Nieuwsstroom laden…</p>`;
   let html = `<section class="dhead"><h2>Nieuwsstroom</h2><p>Koppen uit andere media, elk kwartier automatisch verzameld. Deze berichten zijn niet door Het Alternatieve Geluid gecontroleerd. Bij elk bericht staat wie het meldt en wat voor bron dat is; staatsmedia zijn rood gemarkeerd.</p></section>`;
   if(NIEUWS.fout && !NIEUWS.berichten.length) return html + `<div class="empty"><strong>De nieuwsstroom is nu niet bereikbaar</strong>Probeer het over een paar minuten opnieuw.</div>`;
+  html += modusChips();
   html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...NIEUWS.secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
   const q = norm(state.q.trim());
   const lijst = NIEUWS.berichten.filter(b => (!state.sectie || b.secties.includes(state.sectie)) && (!q || norm(b.titel + " " + b.samenvatting + " " + b.bron).includes(q)));
@@ -744,7 +776,7 @@ async function renderFlits(id){
       <div class="hp" aria-hidden="true"><label>Laat leeg <input id="rweb" tabindex="-1" autocomplete="off"></label></div>
       <div class="actions"><button class="btn" type="submit">Plaatsen</button></div>
       <div id="rmsg" role="status"></div>
-      <p class="stroom-intro privacy">We bewaren alleen de naam die je kiest en je reactie, geen e-mailadres of IP-adres. Om spam te beperken gebruiken we een versleutelde code van je verbinding die na tien minuten niet meer meetelt.</p>
+      <p class="stroom-intro privacy">We bewaren alleen de naam die je kiest en je reactie, geen e-mailadres of IP-adres. Om spam te beperken gebruiken we een versleutelde code van je verbinding die na tien minuten niet meer meetelt. <a href="#privacy">Privacyverklaring</a></p>
     </form>` : `<p class="stroom-intro">Het gesprek bij deze flits is gesloten.</p>`}
   </article>`;
   document.getElementById("back").onclick = () => { location.hash = ""; };
@@ -959,7 +991,7 @@ async function renderRuimte(id){
       <div class="hp" aria-hidden="true"><label>Laat leeg <input id="rweb" tabindex="-1" autocomplete="off"></label></div>
       <div class="actions"><button class="btn" type="submit">Plaatsen</button></div>
       <div id="rmsg" role="status"></div>
-      <p class="stroom-intro privacy">We bewaren alleen de naam die je kiest en je bericht, geen e-mailadres of IP-adres. Om spam te beperken gebruiken we een versleutelde code van je verbinding die na tien minuten niet meer meetelt.</p>
+      <p class="stroom-intro privacy">We bewaren alleen de naam die je kiest en je bericht, geen e-mailadres of IP-adres. Om spam te beperken gebruiken we een versleutelde code van je verbinding die na tien minuten niet meer meetelt. <a href="#privacy">Privacyverklaring</a></p>
     </form>` : `<p class="note"><span>Deze ruimte is op dit moment gesloten.</span></p>`}
     <h2 class="kop">Berichten</h2>
     <div id="berichten">${berichtenHTML(RUIMTE_BERICHTEN)}</div>
@@ -1247,7 +1279,7 @@ async function renderMeldingen(){
     </fieldset>
     <div class="actions"><button class="btn" id="mbewaar" ${geweigerd ? "disabled" : ""}>${sub && huidig.length ? "Opslaan" : "Meldingen aanzetten"}</button>${sub && huidig.length ? `<button class="btn ghost" id="muit">Alle meldingen uit</button>` : ""}</div>
     <div id="mmsg" role="status"></div>
-    <p class="stroom-intro privacy">Voor meldingen bewaren we alleen het technische adres dat je browser hiervoor aanmaakt en de onderwerpen die je kiest. Geen naam, e-mailadres of telefoonnummer.</p></div>`;
+    <p class="stroom-intro privacy">Voor meldingen bewaren we alleen het technische adres dat je browser hiervoor aanmaakt en de onderwerpen die je kiest. Geen naam, e-mailadres of telefoonnummer. <a href="#privacy">Privacyverklaring</a></p></div>`;
   document.getElementById("back").onclick = () => history.back();
   const msg = t => document.getElementById("mmsg").innerHTML = `<div class="note"><p>${esc(t)}</p></div>`;
   document.getElementById("mbewaar").onclick = async () => {
@@ -1325,7 +1357,8 @@ const ICOON = {
   wereld:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
   energie:'<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/><path d="M12 11v6"/>',
   gesprek:'<path d="M4 5h16v11H9l-5 4z"/>',
-  bel:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'
+  bel:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+  vergelijk:'<rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/><path d="M5.5 9h2M5.5 13h2M16.5 9h2M16.5 13h2"/>'
 };
 const ico = k => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICOON[k]}</svg>`;
 function startView(){
@@ -1358,12 +1391,14 @@ function startView(){
       </div>
     </section>
     ${actief.length ? `<section class="nu"><h2 class="nukop"><span class="pulse" aria-hidden="true"></span>Nu</h2>${actief.slice(0,2).map(f => `<a class="nuflits" href="#flits-${f.id}"><span class="ftag">Flits${sectieNaam(f.sectie) ? " · " + esc(sectieNaam(f.sectie)) : ""}</span><strong>${esc(f.titel)}</strong>${f.laatste ? `<span>${nTijd(f.laatste.tijd)} · ${esc(f.laatste.tekst.slice(0,110))}${f.laatste.tekst.length>110?"…":""}</span>` : ""}</a>`).join("")}</section>` : ""}
+    ${installBalk()}
     <section class="tegels">
       ${laatste ? `<a class="tegel breed uitgelicht" href="#artikel-${laatste.id}">
         ${laatste.image ? `<img src="${esc(laatste.image)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}
         <span class="tinhoud"><span class="ftag">Nieuwste ${esc(rubriekShort(laatste))}</span><span class="ttitel groot">${esc(laatste.title)}</span><span class="tuitleg">${esc((laatste.intro || "").slice(0,160))}${(laatste.intro||"").length>160?"…":""}</span></span></a>` : ""}
       ${tegel("alles", "artikelen", "Artikelen", "", "Nieuws, onderzoek, analyse en Een Andere Kijk, met dossiers per onderwerp.")}
       ${tegel("stroom", "stroom", "Nieuwsstroom", vandaag[0] ? `<b>${esc(vandaag[0].bron)}</b> ${esc(vandaag[0].titel.slice(0,80))}${vandaag[0].titel.length>80?"…":""}` : "", "Koppen uit media wereldwijd, met bij elke bron wat voor bron het is.")}
+      ${tegel("vergelijk", "vergelijk", "Bronvergelijking", NIEUWS?.vergelijking?.[0] ? `<b>${NIEUWS.vergelijking[0].berichten.length} bronnen</b> ${esc(NIEUWS.vergelijking[0].kop.slice(0,70))}${NIEUWS.vergelijking[0].kop.length>70?"…":""}` : "", "Hetzelfde nieuws naast elkaar, zoals verschillende media het brengen.")}
       ${tegel("agenda", "agenda", "Agenda", volgende ? `<b>${aftellen(volgende)}</b> ${esc(volgende.titel)}` : "", "Toppen en onderhandelingen: officieel, deels bevestigd of speculatie.")}
       ${tegel("wereld", "wereld", "Wereldbol", top.length ? `Meeste nieuws: ${top.map(esc).join(", ")}` : "", "Interactieve wereldbol: waar het nieuws van dit moment over gaat.")}
       ${tegel("energie", "energie", "Energie", [prijs("brent"), prijs("diesel_nl")].filter(Boolean).join(" · "), "Olie, gas en de pompprijs, en het nieuws rond grote prijsbewegingen.")}
@@ -1373,10 +1408,116 @@ function startView(){
     ${DOSSIERS.length ? `<section class="stroomblok"><h2>Dossiers</h2><div class="dgrid">${DOSSIERS.map(ds => { const l = sorted.find(a => ds.ids.includes(a.id)); return `<button class="dcard" data-act="dossier" data-id="${ds.id}"><strong>${esc(ds.name)}</strong><span>${ds.ids.length} artikelen${l ? ", laatst op " + fmtShort.format(new Date(l.date)) : ""}</span></button>`; }).join("")}</div></section>` : ""}`;
 }
 
+/* ---------- bronvergelijking ---------- */
+function modusChips(){
+  const n = NIEUWS?.vergelijking?.length || 0;
+  return `<div class="chips modus"><button class="chip" data-act="modus" data-id="lijst" aria-pressed="${state.stroomModus!=="vergelijk"}">Alle berichten</button><button class="chip" data-act="modus" data-id="vergelijk" aria-pressed="${state.stroomModus==="vergelijk"}">Bronvergelijking${n ? ` <span class="n">${n}</span>` : ""}</button></div>`;
+}
+function vergelijkView(){
+  let html = `<section class="dhead"><h2>Bronvergelijking</h2><p>Gebeurtenissen van de afgelopen twee dagen waarover minstens drie verschillende bronnen berichten, met hun koppen naast elkaar. Zo zie je hoe westerse media, staatsmedia en regionale bronnen hetzelfde nieuws brengen: wat ze benadrukken, welke woorden ze kiezen en wat ze weglaten. De app groepeert automatisch op overeenkomende woorden in de koppen. Dat gaat meestal goed, maar soms belandt er een bericht in de verkeerde groep.</p></section>`;
+  if(!NIEUWS) return html + `<p class="loading">Laden…</p>`;
+  html += modusChips();
+  const secties = NIEUWS.secties || [];
+  html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
+  const lijst = (NIEUWS.vergelijking || []).filter(c => !state.sectie || c.secties.includes(state.sectie));
+  if(!lijst.length) return html + `<div class="empty"><strong>Nog geen vergelijkingen</strong>Zodra meerdere bronnen over hetzelfde voorval berichten, verschijnen ze hier.</div>`;
+  const groep = b => b.staat ? "staat" : /westerse mainstream/i.test(b.label) ? "west" : "overig";
+  const GROEP = {west:"Westerse mainstream media", staat:"Staatsmedia", overig:"Regionale en andere bronnen"};
+  return html + lijst.map(c => {
+    const g = {west:[], staat:[], overig:[]}; c.berichten.forEach(b => g[groep(b)].push(b));
+    return `<article class="vgl"><div class="nmeta"><span class="ftag">${c.berichten.length} bronnen</span>${c.plaats ? `<span class="nplaats">${esc(c.plaats)}</span>` : ""}<span>laatst ${nTijd(c.laatst)}</span></div>
+      <h3>${esc(c.kop)}</h3>
+      <div class="vglgroepen">${Object.entries(g).filter(([,l]) => l.length).map(([k,l]) => `<div class="vglgroep ${k}"><p class="vglkop">${GROEP[k]}</p>${l.map(b => `<a class="vglitem" href="${esc(b.url)}" target="_blank" rel="noopener"><span class="nmeta"><b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></span><span class="vgltitel">${esc(b.titel)}</span></a>`).join("")}</div>`).join("")}</div>
+    </article>`;
+  }).join("");
+}
+
+/* ---------- zoeken in alles ---------- */
+function zoekView(){
+  const q = norm(state.q.trim());
+  if(!AGENDA) laadAgenda();
+  const art = sorted.filter(a => norm(a.title + " " + a.intro + " " + (a.series || "")).includes(q));
+  const fl = (FLITSEN || []).filter(f => norm(f.titel + " " + (f.laatste?.tekst || "")).includes(q));
+  const ag = (AGENDA || []).filter(i => norm(i.titel + " " + (i.toelichting || "") + " " + (i.plaats || "")).includes(q));
+  const nw = (NIEUWS?.berichten || []).filter(b => norm(b.titel + " " + b.samenvatting + " " + b.bron).includes(q));
+  const totaal = art.length + fl.length + ag.length + nw.length;
+  let html = `<section class="dhead"><h2>Zoeken: “${esc(state.q.trim())}”</h2><p>${totaal ? `${totaal} ${totaal===1 ? "resultaat" : "resultaten"} in artikelen, flitsen, agenda en nieuwsstroom.` : "Geen resultaten. Probeer een ander woord."}</p></section>`;
+  const blok = (titel, n, inhoud, meer) => n ? `<section class="zoekblok"><h3 class="daykop">${titel} <span class="n">${n}</span></h3>${inhoud}${meer || ""}</section>` : "";
+  html += blok("Flitsen", fl.length, `<div class="fgrid">${fl.slice(0,4).map(f => `<a class="fcard" href="#flits-${f.id}"><span class="ftag">Flits</span><strong>${esc(f.titel)}</strong>${f.laatste ? `<span class="flast">${esc(f.laatste.tekst.slice(0,120))}</span>` : ""}</a>`).join("")}</div>`);
+  html += blok("Artikelen", art.length, `<ul class="zoeklijst">${art.slice(0,6).map(a => `<li><a href="#artikel-${a.id}"><span class="cat">${rubriekShort(a)}</span> <span class="fmeta">${fmtShort.format(new Date(a.date))}</span><strong>${esc(a.title)}</strong></a></li>`).join("")}</ul>`, art.length > 6 ? `<p><button class="btn ghost" data-act="ga" data-id="alles">Alle ${art.length} artikelen</button></p>` : "");
+  html += blok("Agenda", ag.length, `<ul class="aglist">${ag.slice(0,4).map(i => agendaItemHTML(i, true)).join("")}</ul>`, `<p><button class="btn ghost" data-act="ga" data-id="agenda">Naar de agenda</button></p>`);
+  html += blok("Nieuwsstroom", nw.length, `<ul class="newslist">${nw.slice(0,8).map(b => newsItem(b, false)).join("")}</ul>`, nw.length > 8 ? `<p><button class="btn ghost" data-act="ga" data-id="stroom">Alle ${nw.length} berichten</button></p>` : "");
+  return html;
+}
+
+/* ---------- installeren ---------- */
+let installPrompt = null;
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installPrompt = e; });
+window.addEventListener("appinstalled", () => { installPrompt = null; try { localStorage.setItem("hag-install-weg", "1"); } catch(e) {} });
+const isStandalone = () => window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+function installBalk(){
+  if(isStandalone()) return "";
+  try { if(localStorage.getItem("hag-install-weg")) return ""; } catch(e) {}
+  return `<div class="installbalk"><img src="/icons/icon-192.png" alt="" width="44" height="44"><div><strong>Zet de app op je beginscherm</strong><span>Altijd één tik weg, en nodig voor meldingen op de iPhone.</span></div>
+    <button class="btn small" data-act="installeer">Installeren</button><button class="sluit" data-act="installweg" aria-label="Niet meer tonen">×</button></div>`;
+}
+async function installeer(){
+  if(installPrompt){ installPrompt.prompt(); const k = await installPrompt.userChoice; installPrompt = null; if(k.outcome==="accepted"){ document.querySelector(".installbalk")?.remove(); } return; }
+  location.hash = "#installeren";
+}
+function renderInstalleren(){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = true; document.getElementById("tabs").hidden = true; window.scrollTo(0,0);
+  const ua = navigator.userAgent, ios = /iphone|ipad|ipod/i.test(ua), android = /android/i.test(ua);
+  main.innerHTML = `<article class="reader"><button class="back" id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Terug</button>
+    <h1>App op je beginscherm</h1>
+    ${isStandalone() ? `<div class="note"><p>Je gebruikt de app al vanaf je beginscherm.</p></div>` : ""}
+    <p class="aanleiding">Je hoeft niets te downloaden uit een appwinkel. Zet Het Alternatieve Geluid op je beginscherm, dan opent hij als een gewone app, met het logo als icoon.</p>
+    ${installPrompt ? `<p><button class="btn" data-act="installeer">Nu installeren</button></p>` : ""}
+    <h2 class="kop">${ios ? "Op je iPhone of iPad" : "iPhone en iPad"}</h2>
+    <ol class="stappen"><li>Open deze pagina in <b>Safari</b>.</li><li>Tik onderaan op het <b>deelicoon</b> (het vierkantje met de pijl omhoog).</li><li>Kies <b>Zet op beginscherm</b> en tik op <b>Voeg toe</b>.</li><li>Open de app voortaan vanaf je beginscherm. Pas dan werken ook de meldingen.</li></ol>
+    <h2 class="kop">${android ? "Op je Android-telefoon" : "Android"}</h2>
+    <ol class="stappen"><li>Open deze pagina in <b>Chrome</b>.</li><li>Tik rechtsboven op de <b>drie puntjes</b>.</li><li>Kies <b>App installeren</b> of <b>Toevoegen aan startscherm</b>.</li></ol>
+    <h2 class="kop">Op je computer</h2>
+    <ol class="stappen"><li>In Chrome of Edge staat rechts in de adresbalk een <b>installeer-icoon</b> (een schermpje met een pijl).</li><li>Klik erop en kies <b>Installeren</b>.</li></ol>
+  </article>`;
+  document.getElementById("back").onclick = () => history.back();
+}
+
+/* ---------- privacyverklaring ---------- */
+function renderPrivacy(){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = true; document.getElementById("tabs").hidden = true; window.scrollTo(0,0);
+  main.innerHTML = `<article class="reader privacy-pagina"><button class="back" id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Terug</button>
+  <h1>Privacyverklaring</h1>
+  <p class="meta">Laatst bijgewerkt: 10 november 2026</p>
+  <div class="body">
+  <p>Deze verklaring gaat over de app van Het Alternatieve Geluid. We verwerken zo weinig mogelijk gegevens. Je hebt geen account nodig, we plaatsen geen trackingcookies en we gebruiken geen advertenties of bezoekersstatistieken.</p>
+  <h2>Wie is verantwoordelijk?</h2>
+  <p>Het Alternatieve Geluid, Ilias Tahiri. Contact: <a href="mailto:hetalternatievegeluid@gmail.com">hetalternatievegeluid@gmail.com</a>.</p>
+  <h2>Welke gegevens en waarom?</h2>
+  <p><b>Reacties en gesprekken.</b> Als je reageert bij een flits of meepraat in Gesprekken, bewaren we de naam die je zelf kiest, je tekst en het tijdstip. Dat is nodig om je bericht te tonen en te modereren. We vragen geen e-mailadres. Kies dus gerust een naam die niet naar jou herleidbaar is. Grondslag: ons gerechtvaardigd belang bij een open en veilig gesprek.</p>
+  <p><b>Spambescherming.</b> Om te voorkomen dat iemand de app volspamt, maken we van je internetverbinding een versleutelde code die elke dag verandert. Je IP-adres zelf bewaren we niet. De code telt na tien minuten niet meer mee.</p>
+  <p><b>Meldingen.</b> Zet je meldingen aan, dan bewaren we het technische adres dat je browser daarvoor aanmaakt, en de onderwerpen die je kiest. Geen naam, e-mailadres of telefoonnummer. Grondslag: jouw toestemming. Je trekt die in door meldingen uit te zetten via het belletje. Daarna verwijderen we het adres.</p>
+  <p><b>Op je eigen toestel.</b> Sommige keuzes bewaart de app alleen op je eigen telefoon of computer: bewaarde artikelen, gevolgde dossiers, je gekozen naam voor reacties en je voorleessnelheid. Die gegevens komen niet bij ons.</p>
+  <h2>Hoe lang bewaren we het?</h2>
+  <p>Reacties en berichten bewaren we zolang de flits of gespreksruimte bestaat, tenzij je vraagt om verwijdering. Meldingsadressen bewaren we tot je je afmeldt, of tot ze niet meer werken. Wekelijks maken we een versleutelde back-up, waarvan we de laatste twaalf bewaren.</p>
+  <h2>Wie helpt ons daarbij?</h2>
+  <p>De app draait bij <b>Netlify</b> (hosting en opslag), en de broncode en versleutelde back-ups staan bij <b>GitHub</b>. Beide zijn Amerikaanse bedrijven, dus gegevens kunnen buiten de EU worden verwerkt. Meldingen worden afgeleverd via de dienst van de maker van je browser, zoals Google, Apple of Mozilla. Bij het laden van de app worden lettertypen opgehaald bij <b>Google Fonts</b> en voor de wereldbol en grafieken onderdelen bij <b>jsDelivr</b>. Daarbij ziet die dienst je IP-adres. Afbeeldingen bij berichten in de nieuwsstroom komen rechtstreeks van de nieuwsbron.</p>
+  <h2>Je rechten</h2>
+  <p>Je kunt ons vragen welke gegevens we van je hebben, en vragen om ze te verbeteren of te verwijderen. Mail ons, en noem erbij welke reactie of welk bericht het gaat. Omdat we geen accounts hebben, kunnen we je alleen helpen als je aangeeft om welke berichten het gaat. Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>
+  <h2>Wijzigingen</h2>
+  <p>Verandert er iets in hoe de app met gegevens omgaat, dan passen we deze verklaring aan. De datum bovenaan laat zien wanneer dat voor het laatst gebeurde.</p>
+  </div></article>`;
+  document.getElementById("back").onclick = () => history.back();
+}
+
 /* ---------- routing ---------- */
 function route(){
   stopVoorlezen();
   if(location.hash==="#meldingen"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderMeldingen(); return; }
+  if(location.hash==="#privacy"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderPrivacy(); return; }
+  if(location.hash==="#installeren"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderInstalleren(); return; }
   if(location.hash==="#agenda"){ location.hash = ""; state.cat = "agenda"; renderTabs(); return; }
   clearInterval(flitsTimer);
   clearInterval(ruimteTimer);
@@ -1403,6 +1544,10 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="modus"){ state.stroomModus = b.dataset.id; state.limit = 80; renderList(); return; }
+  if(act==="installeer"){ installeer(); return; }
+  if(act==="installweg"){ try { localStorage.setItem("hag-install-weg", "1"); } catch(err) {} b.closest(".installbalk")?.remove(); return; }
+  if(act==="ga" && b.dataset.id==="vergelijk"){ state.cat = "stroom"; state.stroomModus = "vergelijk"; state.sectie = null; renderTabs(); renderList(); window.scrollTo(0,0); return; }
   if(act==="ga"){ const doel = b.dataset.id; if(doel.startsWith("#")){ location.hash = doel; return; } state.cat = doel; state.dossier = null; state.sectie = null; renderTabs(); renderList(); window.scrollTo(0,0); return; }
   if(act==="naaragenda"){ state.cat = "agenda"; renderTabs(); renderList(); window.scrollTo(0,0); return; }
   if(act==="agendafilter"){ state.agendaFilter = b.dataset.id || ""; renderList(); return; }

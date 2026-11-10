@@ -5,6 +5,8 @@ import { ruimtes, zetModus, leesBerichten, bewaarBerichten, bestaat } from "../l
 import { leesPrijzen, bewegingen, leesDuiding, bewaarDuiding, REEKSEN } from "../lib/energie.mjs";
 import { leesAgenda, bewaarAgenda, STATUSSEN } from "../lib/agenda.mjs";
 import { stuur, ONDERWERPEN, leesAbonnees } from "../lib/push.mjs";
+import { ontsleutel, herstel, laatsteBackup } from "../lib/backup.mjs";
+import { leesNieuws } from "../lib/nieuws.mjs";
 
 async function meld(opties) { try { return await stuur(opties); } catch (e) { console.warn("Push mislukt: " + e.message); return { fout: e.message }; } }
 
@@ -191,6 +193,33 @@ export default async (req) => {
       const ond = (b.onderwerpen || []).filter(o => ONDERWERPEN.some(x => x.id === o));
       if (!ond.length || !schoon(b.titel, 120)) return json({ fout: "Kies minstens één onderwerp en vul een titel in." }, 400);
       return json(await meld({ onderwerpen: ond, titel: schoon(b.titel, 120), tekst: schoon(b.tekst, 240), url: (b.url || "/").startsWith("/") ? b.url : "/" }));
+    }
+
+    case "status": {
+      const env = n => globalThis.Netlify?.env?.get?.(n) ?? process.env[n] ?? "";
+      const [nieuws, prijzen, abonnees, agenda, backup] = await Promise.all([leesNieuws().catch(() => null), leesPrijzen().catch(() => null), leesAbonnees().catch(() => []), leesAgenda().catch(() => []), laatsteBackup().catch(() => null)]);
+      let artikelen = null;
+      try {
+        const r = await fetch(`${env("URL")}/data/articles.json`, { signal: AbortSignal.timeout(10000) });
+        const j = await r.json(); artikelen = { bijgewerkt: j.updated, aantal: j.articles?.length || 0, nieuwste: j.articles?.[0]?.date || null };
+      } catch (e) { artikelen = { fout: e.message }; }
+      let wacht = 0;
+      for (const f of await leesIndex()) wacht += (await leesReacties(f.id)).filter(r => r.status === "wacht").length;
+      for (const r of await ruimtes()) wacht += (await leesBerichten(r.id)).filter(m => m.status === "wacht").length;
+      const vandaag = new Date().toISOString().slice(0, 10);
+      return json({
+        nieuws: nieuws ? { bijgewerkt: nieuws.bijgewerkt, berichten: nieuws.berichten.length, vergelijkingen: nieuws.vergelijking?.length || 0, bronnen: nieuws.status } : null,
+        energie: prijzen ? { bijgewerkt: prijzen.bijgewerkt, bronnen: prijzen.status } : null,
+        artikelen, meldingen: { abonnees: abonnees.length },
+        agenda: { komend: agenda.filter(i => (i.eind || i.start) >= vandaag).length },
+        backup, wacht, eiaSleutel: !!env("EIA_API_KEY")
+      });
+    }
+
+    case "herstel": {
+      const ww = globalThis.Netlify?.env?.get?.("BEHEER_WACHTWOORD") ?? process.env.BEHEER_WACHTWOORD;
+      try { const n = await herstel(ontsleutel(b.bestand, ww)); return json({ ok: true, items: n }); }
+      catch (e) { return json({ fout: e.message }, 400); }
     }
 
     default:

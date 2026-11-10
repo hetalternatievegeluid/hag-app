@@ -66,6 +66,11 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
 .update{border-top:1px solid var(--line);padding:12px 0}
 .update:first-child{border-top:0}
 .quote{white-space:pre-wrap;margin:6px 0}
+.statusregel{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.statusregel:last-child{border-bottom:0}
+.statusregel .stip{width:12px;height:12px;border-radius:50%;flex:none;margin-top:5px;background:var(--ok)}
+.statusregel.mis .stip{background:var(--accent)}
+.statusregel p{margin:2px 0 0}
 .vink{display:flex;align-items:center;gap:8px;font-weight:500;margin-top:14px}
 .vink input{width:auto;margin:0}
 </style>
@@ -75,6 +80,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
   <img src="/icons/logo.png" alt="">
   <strong>Beheer</strong>
   <nav id="nav" hidden>
+    <button data-view="status" aria-pressed="false">Status</button>
     <button data-view="flitsen" aria-pressed="true">Flitsen</button>
     <button data-view="gesprekken" aria-pressed="false">Gesprekken</button>
     <button data-view="agenda" aria-pressed="false">Agenda</button>
@@ -129,7 +135,7 @@ document.getElementById("nav").addEventListener("click", e=>{
 function kies(view){
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
   main.onclick = null; main.onchange = null;
-  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else toonFlitsen();
+  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else if(view==="status") toonStatus(); else toonFlitsen();
 }
 
 /* ---------- flitsen-overzicht ---------- */
@@ -389,6 +395,55 @@ async function toonMeldingen(){
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
 }
 
+/* ---------- status en back-up ---------- */
+async function toonStatus(){
+  main.innerHTML = `<p class="hint">Status ophalen…</p>`;
+  try {
+    const s = await api("status");
+    const oud = (iso, uren) => !iso || (Date.now() - new Date(iso)) / 36e5 > uren;
+    const regel = (ok, titel, tekst) => `<div class="statusregel ${ok ? "ok" : "mis"}"><span class="stip"></span><div><strong>${titel}</strong><p class="meta">${tekst}</p></div></div>`;
+    const bronnen = st => { if(!st) return ""; const mis = Object.entries(st).filter(([,v]) => !v.ok); return mis.length ? `Werkt niet: ${mis.map(([k,v]) => `${esc(v.naam || k)} (${esc(v.fout)})`).join(", ")}` : "Alle bronnen werken."; };
+    const nOk = s.nieuws && !oud(s.nieuws.bijgewerkt, 1);
+    const eOk = s.energie && !oud(s.energie.bijgewerkt, 7) && s.eiaSleutel;
+    const aOk = s.artikelen && !s.artikelen.fout && !oud(s.artikelen.bijgewerkt, 3);
+    const bOk = s.backup && !oud(s.backup, 24*8);
+    main.innerHTML = `<h1>Status</h1><p class="hint">Of alle onderdelen van de app werken. Groen is in orde, rood vraagt aandacht.</p>
+      <div class="card">
+        ${regel(aOk, "Artikelen", s.artikelen?.fout ? "Niet bereikbaar: " + esc(s.artikelen.fout) : `${s.artikelen.aantal} artikelen, laatst bijgewerkt ${s.artikelen.bijgewerkt ? fmt(s.artikelen.bijgewerkt) : "onbekend"}. ${aOk ? "" : "De automatische update op GitHub lijkt niet te draaien: kijk bij Actions."}`)}
+        ${regel(nOk, "Nieuwsstroom", s.nieuws ? `${s.nieuws.berichten} berichten en ${s.nieuws.vergelijkingen} bronvergelijkingen, bijgewerkt ${fmt(s.nieuws.bijgewerkt)}. ${bronnen(s.nieuws.bronnen)}` : "Nog niet opgehaald.")}
+        ${regel(eOk, "Energie", s.energie ? `Bijgewerkt ${fmt(s.energie.bijgewerkt)}. ${s.eiaSleutel ? "" : "EIA_API_KEY ontbreekt in Netlify. "}${bronnen(s.energie.bronnen)}` : "Nog niet opgehaald. Open de energiepagina in de app één keer.")}
+        ${regel(true, "Meldingen", `${s.meldingen.abonnees} ${s.meldingen.abonnees===1 ? "lezer heeft" : "lezers hebben"} meldingen aanstaan.`)}
+        ${regel(true, "Agenda", `${s.agenda.komend} komende punten.`)}
+        ${regel(s.wacht === 0, "Moderatie", s.wacht ? `${s.wacht} ${s.wacht===1 ? "reactie wacht" : "reacties wachten"} op je beoordeling.` : "Niets te beoordelen.")}
+        ${regel(bOk, "Back-up", s.backup ? `Laatste back-up: ${fmt(s.backup)}.${bOk ? "" : " Dat is meer dan een week geleden: controleer de back-upwerkstroom op GitHub."}` : "Nog geen back-up gemaakt.")}
+      </div>
+      <h2>Back-up</h2>
+      <div class="card">
+        <p class="hint">Elke zondagnacht zet GitHub automatisch een versleutelde back-up in je repository (map <code>backups</code>). Hier maak je er ook zelf een, of zet je er een terug.</p>
+        <div class="actions"><button class="btn" id="bdown">Back-up nu downloaden</button></div>
+        <label for="bfile" style="margin-top:18px">Back-up terugzetten</label>
+        <input type="file" id="bfile" accept="application/json,.json">
+        <div class="actions"><button class="btn ghost" id="bherstel">Terugzetten</button></div>
+        <div id="bmsg"></div>
+      </div>`;
+    document.getElementById("bdown").onclick = async () => {
+      try {
+        const r = await fetch("/api/backup", {headers:{"x-beheer":WW}}); if(!r.ok) throw new Error("Downloaden mislukt");
+        const blob = await r.blob(), a = document.createElement("a");
+        a.href = URL.createObjectURL(blob); a.download = `hag-backup-${new Date().toISOString().slice(0,10)}.json`; a.click();
+        melding(document.getElementById("bmsg"), "Back-up gedownload.");
+      } catch(e){ melding(document.getElementById("bmsg"), e.message, "fout"); }
+    };
+    document.getElementById("bherstel").onclick = async () => {
+      const f = document.getElementById("bfile").files[0];
+      if(!f){ melding(document.getElementById("bmsg"), "Kies eerst een back-upbestand.", "fout"); return; }
+      if(!confirm("Weet je het zeker? Alles uit de back-up overschrijft wat er nu in de app staat.")) return;
+      try { const r = await api("herstel", {bestand: JSON.parse(await f.text())}); melding(document.getElementById("bmsg"), `Teruggezet: ${r.items} onderdelen.`); }
+      catch(e){ melding(document.getElementById("bmsg"), e.message, "fout"); }
+    };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
 /* ---------- moderatie ---------- */
 async function toonModeratie(){
   main.innerHTML = `<p class="hint">Laden…</p>`;
@@ -420,7 +475,7 @@ async function start(){
     SECTIES = n.secties || []; STROOM = n.berichten || [];
   } catch(e) {}
   if(!SECTIES.length) SECTIES = [{id:"oekraine",naam:"Oekraïne en Rusland"},{id:"iran",naam:"Iran en de Golf"},{id:"china",naam:"China en Azië-Pacific"},{id:"europa",naam:"Europa en Nederland"},{id:"vs",naam:"Amerikaanse macht"}];
-  kies("flitsen");
+  kies("status");
   api("wachtrij").then(r=>zetTeller(r.reacties.length)).catch(()=>{});
 }
 if(WW) api("controle").then(start).catch(e=>toonLogin()); else toonLogin();

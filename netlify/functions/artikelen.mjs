@@ -1,19 +1,11 @@
 
 import { getStore, getDeployStore } from "@netlify/blobs";
-import crypto from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
+import { gunzipSync } from "node:zlib";
 
 const env = (name) =>
   globalThis.Netlify?.env?.get?.(name) ??
-  process.env[name] ??
-  "";
-
-const isProduction = () => env("CONTEXT") === "production";
-
-function store() {
-  return isProduction()
-    ? getStore({ name: "artikelen", consistency: "strong" })
-    : getDeployStore({ name: "artikelen", consistency: "strong" });
-}
+  process.env[name] ?? "";
 
 function authorized(req) {
   const secret = env("ARTIKELEN_SYNC_TOKEN");
@@ -22,35 +14,41 @@ function authorized(req) {
 
   if (!secret || !supplied) return false;
 
-  const a = crypto.createHash("sha256").update(secret).digest();
-  const b = crypto.createHash("sha256").update(supplied).digest();
-
-  return crypto.timingSafeEqual(a, b);
+  const a = createHash("sha256").update(secret).digest();
+  const b = createHash("sha256").update(supplied).digest();
+  return timingSafeEqual(a, b);
 }
 
-export default async (req) => {
+export default async (req, context) => {
+  const production = context?.deploy?.context === "production";
+
+  const store = production
+    ? getStore({ name: "artikelen", consistency: "strong" })
+    : getDeployStore({ name: "artikelen", consistency: "strong" });
+
   try {
     if (req.method === "GET") {
-      let data = await store().get("actueel", { type: "json" });
+      let data = await store.get("actueel", { type: "json" });
 
       if (!data) {
         const siteUrl =
-  env("DEPLOY_PRIME_URL") ||
-  env("DEPLOY_URL") ||
-  env("URL");
+          env("DEPLOY_PRIME_URL") ||
+          env("DEPLOY_URL") ||
+          env("URL");
 
-if (!siteUrl) {
-  throw new Error("Geen Netlify-site-URL beschikbaar");
-}
+        if (!siteUrl) throw new Error("Site-URL ontbreekt");
 
-const url = new URL("/data/articles.json", siteUrl);
-        const response = await fetch(url);
+        const response = await fetch(
+          new URL("/data/articles.json", siteUrl)
+        );
+
         if (!response.ok) {
           return Response.json(
             { fout: "Artikelen niet beschikbaar" },
             { status: 503 }
           );
         }
+
         data = await response.json();
       }
 
@@ -60,7 +58,7 @@ const url = new URL("/data/articles.json", siteUrl);
     }
 
     if (req.method === "POST") {
-      if (!isProduction()) {
+      if (!production) {
         return Response.json(
           { fout: "Schrijven alleen toegestaan in productie" },
           { status: 403 }
@@ -74,20 +72,43 @@ const url = new URL("/data/articles.json", siteUrl);
         );
       }
 
-      const data = await req.json();
+      const payload = await req.json();
 
-      if (!data || !Array.isArray(data.articles)) {
+      if (
+        payload.encoding !== "gzip-base64" ||
+        typeof payload.data !== "string"
+      ) {
+        return Response.json(
+          { fout: "Ongeldig uploadformaat" },
+          { status: 400 }
+        );
+      }
+
+      const compressed = Buffer.from(payload.data, "base64");
+      const raw = gunzipSync(compressed, {
+        maxOutputLength: 25 * 1024 * 1024
+      });
+
+      const data = JSON.parse(raw.toString("utf8"));
+
+      if (
+        !Array.isArray(data.articles) ||
+        data.articles.length === 0 ||
+        !Array.isArray(data.dossiers) ||
+        typeof data.updated !== "string"
+      ) {
         return Response.json(
           { fout: "Ongeldige artikelgegevens" },
           { status: 400 }
         );
       }
 
-      await store().setJSON("actueel", data);
+      await store.setJSON("actueel", data);
 
       return Response.json({
         ok: true,
-        aantal: data.articles.length
+        aantal: data.articles.length,
+        bijgewerkt: data.updated
       });
     }
 
@@ -95,10 +116,11 @@ const url = new URL("/data/articles.json", siteUrl);
       { fout: "Methode niet toegestaan" },
       { status: 405 }
     );
+
   } catch (error) {
     console.error("Artikel-API:", error);
     return Response.json(
-      { fout: "Interne fout" },
+      { fout: "Verwerking mislukt" },
       { status: 500 }
     );
   }

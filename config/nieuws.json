@@ -306,6 +306,72 @@
     "Myanmar",
     "BRICS"
    ]
+  },
+  {
+   "id": "tech",
+   "naam": "Tech en AI",
+   "trefwoorden": [
+    "Nvidia",
+    "Jensen Huang",
+    "OpenAI",
+    "Anthropic",
+    "ChatGPT",
+    "Gemini",
+    "Copilot",
+    "kunstmatige intelligentie",
+    "artificial intelligence",
+    "AI=",
+    "A.I.",
+    "AGI=",
+    "Apple=",
+    "iPhone",
+    "Microsoft",
+    "Nadella",
+    "Google",
+    "Alphabet",
+    "Pichai",
+    "Meta=",
+    "Zuckerberg",
+    "Facebook",
+    "Instagram",
+    "WhatsApp",
+    "Amazon=",
+    "AWS=",
+    "Bezos",
+    "Tesla",
+    "Musk",
+    "xAI",
+    "SpaceX",
+    "Starlink",
+    "TSMC",
+    "ASML",
+    "Samsung",
+    "Intel=",
+    "AMD=",
+    "Broadcom",
+    "Qualcomm",
+    "Huawei",
+    "ByteDance",
+    "TikTok",
+    "DeepSeek",
+    "Alibaba",
+    "Baidu",
+    "Tencent",
+    "chip",
+    "halfgeleider",
+    "semiconductor",
+    "datacenter",
+    "data center",
+    "cyber",
+    "hack",
+    "ransomware",
+    "quantum",
+    "robot",
+    "Big Tech",
+    "techbedrijf",
+    "tech giant",
+    "Silicon Valley"
+   ]
   }
  ],
  "bronnen": [
@@ -557,6 +623,70 @@
    "label": "Pakistaanse media",
    "feed": "https://www.dawn.com/feeds/home",
    "sectie": "zuidazie",
+   "aan": true
+  },
+  {
+   "id": "tweakers",
+   "naam": "Tweakers",
+   "label": "Nederlandse techmedia",
+   "feed": "https://tweakers.net/feeds/mixed.xml",
+   "sectie": "tech",
+   "aan": true
+  },
+  {
+   "id": "verge",
+   "naam": "The Verge",
+   "label": "Amerikaanse techmedia",
+   "feed": "https://www.theverge.com/rss/index.xml",
+   "sectie": "tech",
+   "aan": true
+  },
+  {
+   "id": "ars",
+   "naam": "Ars Technica",
+   "label": "Amerikaanse techmedia",
+   "feed": "https://feeds.arstechnica.com/arstechnica/index",
+   "sectie": "tech",
+   "aan": true
+  },
+  {
+   "id": "techcrunch",
+   "naam": "TechCrunch",
+   "label": "Amerikaanse techmedia",
+   "feed": "https://techcrunch.com/feed/",
+   "sectie": "tech",
+   "aan": true
+  },
+  {
+   "id": "mittr",
+   "naam": "MIT Technology Review",
+   "label": "Amerikaans techtijdschrift",
+   "feed": "https://www.technologyreview.com/feed/",
+   "sectie": "tech",
+   "aan": true
+  },
+  {
+   "id": "wired",
+   "naam": "Wired",
+   "label": "Amerikaanse techmedia",
+   "feed": "https://www.wired.com/feed/rss",
+   "sectie": "tech",
+   "aan": true
+  },
+  {
+   "id": "cnbctech",
+   "naam": "CNBC Tech",
+   "label": "Amerikaanse zakenmedia",
+   "feed": "https://www.cnbc.com/id/19854910/device/rss/rss.html",
+   "sectie": "tech",
+   "aan": true
+  },
+  {
+   "id": "restofworld",
+   "naam": "Rest of World",
+   "label": "Techmedia over niet-westerse landen",
+   "feed": "https://restofworld.org/feed/latest",
+   "sectie": "tech",
    "aan": true
   }
  ]

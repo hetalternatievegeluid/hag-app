@@ -1,12 +1,53 @@
 {
-  "_uitleg": "De gespreksruimtes op de pagina Gesprekken. De volgorde hier is de volgorde in de app. 'modus' is de beginstand; je kunt hem daarna per ruimte wijzigen op de beheerpagina (gemodereerd, open of gesloten).",
-  "ruimtes": [
-    { "id": "algemeen", "naam": "Algemeen", "omschrijving": "Over de actualiteit, de artikelen en alles daartussen.", "modus": "gemodereerd" },
-    { "id": "oekraine", "naam": "Oekraïne en Rusland", "omschrijving": "De oorlog, de onderhandelingen en wat het voor Europa betekent.", "modus": "gemodereerd" },
-    { "id": "iran", "naam": "Iran en de Golf", "omschrijving": "Hormuz, de Golfstaten, Israël en de regio.", "modus": "gemodereerd" },
-    { "id": "china", "naam": "China en Azië-Pacific", "omschrijving": "Taiwan, de chipoorlog en de machtsverschuiving naar Azië.", "modus": "gemodereerd" },
-    { "id": "europa", "naam": "Europa en Nederland", "omschrijving": "Brussel, Den Haag en de Europese koers.", "modus": "gemodereerd" },
-    { "id": "vs", "naam": "Amerikaanse macht", "omschrijving": "Washington, de verkiezingen en de Amerikaanse rol in de wereld.", "modus": "gemodereerd" },
-    { "id": "tips", "naam": "Vragen en tips", "omschrijving": "Stel een vraag aan de redactie of tip een onderwerp dat meer aandacht verdient.", "modus": "gemodereerd" }
-  ]
+ "_uitleg": "De gespreksruimtes op de pagina Gesprekken. De volgorde hier is de volgorde in de app. 'modus' is de beginstand; je kunt hem daarna per ruimte wijzigen op de beheerpagina (gemodereerd, open of gesloten).",
+ "ruimtes": [
+  {
+   "id": "algemeen",
+   "naam": "Algemeen",
+   "omschrijving": "Over de actualiteit, de artikelen en alles daartussen.",
+   "modus": "gemodereerd"
+  },
+  {
+   "id": "oekraine",
+   "naam": "Oekraïne en Rusland",
+   "omschrijving": "De oorlog, de onderhandelingen en wat het voor Europa betekent.",
+   "modus": "gemodereerd"
+  },
+  {
+   "id": "iran",
+   "naam": "Iran en de Golf",
+   "omschrijving": "Hormuz, de Golfstaten, Israël en de regio.",
+   "modus": "gemodereerd"
+  },
+  {
+   "id": "china",
+   "naam": "China en Azië-Pacific",
+   "omschrijving": "Taiwan, de chipoorlog en de machtsverschuiving naar Azië.",
+   "modus": "gemodereerd"
+  },
+  {
+   "id": "europa",
+   "naam": "Europa en Nederland",
+   "omschrijving": "Brussel, Den Haag en de Europese koers.",
+   "modus": "gemodereerd"
+  },
+  {
+   "id": "vs",
+   "naam": "Amerikaanse macht",
+   "omschrijving": "Washington, de verkiezingen en de Amerikaanse rol in de wereld.",
+   "modus": "gemodereerd"
+  },
+  {
+   "id": "tech",
+   "naam": "Tech en AI",
+   "omschrijving": "Big Tech, de AI-race, chips en wat technologie met macht doet.",
+   "modus": "gemodereerd"
+  },
+  {
+   "id": "tips",
+   "naam": "Vragen en tips",
+   "omschrijving": "Stel een vraag aan de redactie of tip een onderwerp dat meer aandacht verdient.",
+   "modus": "gemodereerd"
+  }
+ ]
 }

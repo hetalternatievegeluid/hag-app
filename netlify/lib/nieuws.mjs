@@ -4,6 +4,7 @@ import { getStore } from "@netlify/blobs";
 import config from "../../config/nieuws.json";
 import plaatsen from "../../config/plaatsen.json";
 import { archiveerEnergie } from "./energie.mjs";
+import { archiveerTech } from "./beurs.mjs";
 
 const BEWAAR_DAGEN = 7;
 const MAX_BERICHTEN = 1500;
@@ -150,6 +151,7 @@ export async function verversNieuws() {
   const data = { bijgewerkt: new Date().toISOString(), secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status, vergelijking: vergelijk(berichten) };
   await store().setJSON("stroom", data);
   try { await archiveerEnergie(berichten); } catch (e) { console.warn("Energie-archief: " + e.message); }
+  try { await archiveerTech(berichten); } catch (e) { console.warn("Tech-archief: " + e.message); }
   return data;
 }
 

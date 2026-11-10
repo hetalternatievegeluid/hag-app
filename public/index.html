@@ -133,6 +133,25 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.beursmodus .pct.up{color:#2E7D5B}
+.beursmodus .pct.down{color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .beursmodus .pct.up{color:#4CC38A}:root:not([data-theme="light"]) .beursmodus .pct.down{color:var(--accent)}}
+.indexen{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.85rem;margin:16px 0 4px;color:var(--muted)}
+.indexen b{color:var(--ink)}
+.koersen{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+@media (min-width:640px){.koersen{grid-template-columns:repeat(4,1fr)}}
+.koers{display:grid;grid-template-columns:1fr auto;grid-template-areas:"naam sym" "koers koers" "pct pct" "spark spark";gap:2px 6px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;color:var(--ink);cursor:pointer}
+.koers.actief{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.knaam{grid-area:naam;font-weight:600;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ksym{grid-area:sym;font-size:.7rem;color:var(--muted);align-self:center}
+.koers .kkoers{grid-area:koers;font-size:1.15rem;font-weight:600;font-variant-numeric:tabular-nums}
+.kpct{grid-area:pct;font-size:.8rem}
+.kpct small{color:var(--muted)}
+.spark{grid-area:spark;width:100%;height:34px;margin-top:4px}
+.koersdetail{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;margin:6px 0 10px;scroll-margin-top:140px}
+.kdkop{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.kdkop h3{font-family:var(--serif);font-size:1.35rem;margin:0}
+.kdkop .kkoers{font-size:1.3rem;font-weight:600;font-variant-numeric:tabular-nums}
 .chips.modus{margin-bottom:0}
 .vgl{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;margin:14px 0}
 .vgl h3{font-family:var(--serif);font-size:1.2rem;line-height:1.25;margin:6px 0 10px}
@@ -446,6 +465,7 @@ const CATS = [
   {id:"wereld", name:"Wereldbol"},
   {id:"agenda", name:"Agenda"},
   {id:"energie", name:"Energie"},
+  {id:"tech", name:"Tech & AI"},
   {id:"gesprek", name:"Gesprekken"},
   {id:"nieuws", name:"Nieuws"},
   {id:"onderzoek", name:"Onderzoek"},
@@ -471,7 +491,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
+const state = {aandeel:"NVDA", koersBereik:90, stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -492,7 +512,7 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = ["start","stroom","wereld","gesprek","energie","agenda"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    const n = ["start","stroom","wereld","gesprek","energie","agenda","tech"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
     return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
@@ -528,13 +548,17 @@ function renderList(){
   document.getElementById("tools").hidden = false;
   document.getElementById("tabs").hidden = false;
   stopBol();
-  if(state.q.trim() && ["start","wereld","energie","gesprek","agenda"].includes(state.cat)){ main.innerHTML = zoekView(); return; }
+  if(state.q.trim() && ["start","wereld","energie","gesprek","agenda","tech"].includes(state.cat)){ main.innerHTML = zoekView(); return; }
   if(state.cat==="stroom"){ main.innerHTML = state.stroomModus==="vergelijk" ? vergelijkView() : stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
   if(state.cat==="start"){ main.innerHTML = startView(); return; }
   if(state.cat==="agenda"){
     if(!AGENDA){ main.innerHTML = `<p class="loading">Agenda laden…</p>`; laadAgenda(); return; }
     main.innerHTML = agendaView(); return;
+  }
+  if(state.cat==="tech"){
+    if(!BEURS){ main.innerHTML = `<p class="loading">Tech & AI laden…</p>`; laadBeurs(); return; }
+    main.innerHTML = `<div class="beursmodus">${techView()}</div>`; tekenKoers(); return;
   }
   if(state.cat==="energie"){
     if(!PRIJZEN){ main.innerHTML = `<p class="loading">Energieprijzen laden…</p>`; laadPrijzen(); return; }
@@ -1369,12 +1393,14 @@ const ICOON = {
   energie:'<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/><path d="M12 11v6"/>',
   gesprek:'<path d="M4 5h16v11H9l-5 4z"/>',
   bel:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+  tech:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>',
   vergelijk:'<rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/><path d="M5.5 9h2M5.5 13h2M16.5 9h2M16.5 13h2"/>'
 };
 const ico = k => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICOON[k]}</svg>`;
 function startView(){
   if(!AGENDA) laadAgenda();
   if(!KORT) laadKort();
+  if(!KORTB) laadKortB();
   if(!RUIMTES) laadRuimtes();
   const v = vandaagIso();
   const laatste = sorted[0];
@@ -1409,6 +1435,7 @@ function startView(){
         <span class="tinhoud"><span class="ftag">Nieuwste ${esc(rubriekShort(laatste))}</span><span class="ttitel groot">${esc(laatste.title)}</span><span class="tuitleg">${esc((laatste.intro || "").slice(0,160))}${(laatste.intro||"").length>160?"…":""}</span></span></a>` : ""}
       ${tegel("alles", "artikelen", "Artikelen", "", "Nieuws, onderzoek, analyse en Een Andere Kijk, met dossiers per onderwerp.")}
       ${tegel("stroom", "stroom", "Nieuwsstroom", vandaag[0] ? `<b>${esc(vandaag[0].bron)}</b> ${esc(vandaag[0].titel.slice(0,80))}${vandaag[0].titel.length>80?"…":""}` : "", "Koppen uit media wereldwijd, met bij elke bron wat voor bron het is.")}
+      ${tegel("tech", "tech", "Tech & AI", KORTB?.length ? KORTB.slice().sort((a,b) => Math.abs(b.pct||0) - Math.abs(a.pct||0)).slice(0,2).map(a => `<span class="beursmodus">${esc(a.naam)} ${pctHTML(a.pct)}</span>`).join(" · ") : "", "Big Tech, AI en chips: het nieuws en de koersen van de grote techbedrijven.")}
       ${tegel("vergelijk", "vergelijk", "Bronvergelijking", NIEUWS?.vergelijking?.[0] ? `<b>${NIEUWS.vergelijking[0].berichten.length} bronnen</b> ${esc(NIEUWS.vergelijking[0].kop.slice(0,70))}${NIEUWS.vergelijking[0].kop.length>70?"…":""}` : "", "Hetzelfde nieuws naast elkaar, zoals verschillende media het brengen.")}
       ${tegel("agenda", "agenda", "Agenda", volgende ? `<b>${aftellen(volgende)}</b> ${esc(volgende.titel)}` : "", "Toppen en onderhandelingen: officieel, deels bevestigd of speculatie.")}
       ${tegel("wereld", "wereld", "Wereldbol", top.length ? `Meeste nieuws: ${top.map(esc).join(", ")}` : "", "Interactieve wereldbol: waar het nieuws van dit moment over gaat.")}
@@ -1523,6 +1550,86 @@ function renderPrivacy(){
   document.getElementById("back").onclick = () => history.back();
 }
 
+/* ---------- tech & AI ---------- */
+let BEURS = null, KORTB = null, kortBBezig = false;
+async function laadBeurs(){
+  try { const r = await fetch("/api/beurs", {cache:"no-cache"}); BEURS = r.ok ? await r.json() : {fout:true}; } catch(e){ BEURS = {fout:true}; }
+  if(state.cat==="tech" && !location.hash) renderList();
+}
+async function laadKortB(){
+  if(kortBBezig) return; kortBBezig = true;
+  try { const r = await fetch("/api/beurs?kort=1"); KORTB = r.ok ? (await r.json()).aandelen : []; } catch(e){ KORTB = []; }
+  if(state.cat==="start" && !location.hash) renderList();
+}
+const valutaTeken = v => ({USD:"$", EUR:"€"}[v] || (v ? v + " " : ""));
+function sparkline(punten, n = 60){
+  const p = punten.slice(-n); if(p.length < 2) return "";
+  const vs = p.map(x => x[1]), min = Math.min(...vs), max = Math.max(...vs), w = 120, h = 34;
+  const pts = vs.map((v,i) => `${(i/(vs.length-1)*w).toFixed(1)},${(h - 2 - (max===min ? .5 : (v-min)/(max-min)) * (h-4)).toFixed(1)}`).join(" ");
+  const op = vs.at(-1) >= vs[0];
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${op ? "#2E7D5B" : "var(--accent)"}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function techView(){
+  let html = `<section class="dhead"><h2>Tech &amp; AI</h2><p>De AI-race, chips, Big Tech en wat technologie met macht doet: het nieuws uit techmedia wereldwijd, naast de koersen van de grote techbedrijven. Koersen komen van Yahoo Finance, zijn indicatief en kunnen een kwartier vertraagd zijn. Dit is geen beleggingsadvies.</p></section>`;
+  if(BEURS.fout || !BEURS.aandelen) html += `<div class="note"><p>De koersen zijn nu niet bereikbaar. Het nieuws hieronder werkt wel.</p></div>`;
+  else {
+    const idx = BEURS.aandelen.filter(a => a.soort==="index"), aand = BEURS.aandelen.filter(a => a.soort==="aandeel");
+    if(idx.length) html += `<div class="indexen">${idx.map(a => `<span><b>${esc(a.naam)}</b> ${nf(a.koers, 0)} ${pctHTML(a.pct)}</span>`).join("")}</div>`;
+    html += `<div class="koersen">${aand.map(a => `<button class="koers${state.aandeel===a.symbool ? " actief" : ""}" data-act="aandeel" data-id="${esc(a.symbool)}">
+        <span class="knaam">${esc(a.naam)}</span><span class="ksym">${esc(a.symbool.replace(".AS",""))}</span>
+        <span class="kkoers">${valutaTeken(a.valuta)}${nf(a.koers, 2)}</span><span class="kpct">${pctHTML(a.pct)} <small>vandaag</small></span>${sparkline(a.punten)}</button>`).join("")}</div>`;
+    const g = BEURS.aandelen.find(a => a.symbool===state.aandeel) || aand[0];
+    if(g){
+      html += `<section class="koersdetail" id="koersdetail"><div class="kdkop"><h3>${esc(g.naam)}</h3><span class="kkoers">${valutaTeken(g.valuta)}${nf(g.koers, 2)}</span>${pctHTML(g.pct)}</div>
+        <p class="fmeta">Maand ${g.maand!==null ? pctHTML(g.maand) : "–"} · Jaar ${g.jaar!==null ? pctHTML(g.jaar) : "–"}${g.tijd ? " · koers van " + nTijd(g.tijd) : ""}</p>
+        <div class="chips periode">${[[30,"1 maand"],[90,"3 maanden"],[365,"1 jaar"]].map(([d,t]) => `<button class="chip" data-act="koersbereik" data-id="${d}" aria-pressed="${state.koersBereik===d}">${t}</button>`).join("")}</div>
+        <div class="grafiek" id="koersgrafiek"></div>
+        <h4 class="daykop">Nieuws over ${esc(g.naam)}</h4>
+        ${g.nieuws?.length ? `<ul class="newslist compact">${g.nieuws.map(n => `<li class="news"><div class="nmeta"><time>${nTijd(n.tijd)}</time><b>${esc(n.bron)}</b><span class="lbl${n.staat?" staat":""}">${esc(n.label)}</span></div><a class="ntitle" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titel)}</a></li>`).join("")}</ul>` : `<p class="fmeta">Nog geen nieuws over ${esc(g.naam)} in het archief. Dat vult zich vanzelf naarmate de nieuwsstroom draait.</p>`}
+      </section>`;
+    }
+    if(BEURS.bewegingen?.length) html += `<h3 class="daykop">Opvallende koersbewegingen (afgelopen maand)</h3>
+      <p class="stroom-intro">Dagen waarop een aandeel meer dan 5 procent steeg of daalde, met het nieuws over dat bedrijf van rond dat moment. Gelijktijdig nieuws is niet per se de oorzaak: koersen bewegen ook door kwartaalcijfers, rentebesluiten en de stemming op de beurs als geheel.</p>
+      ${BEURS.bewegingen.slice(0,8).map(b => `<div class="bew"><div class="nmeta"><time>${fmtShort.format(new Date(b.datum))}</time><b>${esc(b.naam)}</b>${pctHTML(b.pct)}<span>van ${valutaTeken(b.valuta)}${nf(b.van,2)} naar ${valutaTeken(b.valuta)}${nf(b.naar,2)}</span></div>
+        ${b.nieuws.length ? `<ul class="newslist compact">${b.nieuws.map(n => `<li class="news"><div class="nmeta"><time>${nTijd(n.tijd)}</time><b>${esc(n.bron)}</b></div><a class="ntitle" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titel)}</a></li>`).join("")}</ul>` : `<p class="fmeta">Geen nieuws over dit bedrijf in het archief rond deze datum.</p>`}</div>`).join("")}`;
+  }
+  const vgl = (NIEUWS?.vergelijking || []).filter(c => c.secties.includes("tech")).slice(0,2);
+  if(vgl.length) html += `<h3 class="daykop">Bronvergelijking</h3>${vgl.map(c => `<article class="vgl"><div class="nmeta"><span class="ftag">${c.berichten.length} bronnen</span><span>laatst ${nTijd(c.laatst)}</span></div><h3>${esc(c.kop)}</h3>${c.berichten.slice(0,4).map(b => `<a class="vglitem" href="${esc(b.url)}" target="_blank" rel="noopener"><span class="nmeta"><b>${esc(b.bron)}</b><span class="lbl${b.staat?" staat":""}">${esc(b.label)}</span></span><span class="vgltitel">${esc(b.titel)}</span></a>`).join("")}</article>`).join("")}`;
+  const ag = (AGENDA || []).filter(i => i.sectie==="tech" && (i.eind || i.start) >= vandaagIso()).slice(0,3);
+  if(ag.length) html += `<h3 class="daykop">Op de agenda</h3><ul class="aglist">${ag.map(i => agendaItemHTML(i, true)).join("")}</ul>`;
+  const nw = (NIEUWS?.berichten || []).filter(b => b.secties.includes("tech")).slice(0, 15);
+  html += `<h3 class="daykop">Laatste tech- en AI-nieuws</h3>${nw.length ? `<ul class="newslist">${nw.map(b => newsItem(b, false)).join("")}</ul><p><button class="btn ghost" data-act="stroom" data-id="tech">Alle tech- en AI-berichten</button></p>` : `<p class="stroom-intro">Nog geen berichten.</p>`}`;
+  return html;
+}
+async function tekenKoers(){
+  const box = document.getElementById("koersgrafiek"); if(!box || !BEURS?.aandelen) return;
+  const g = BEURS.aandelen.find(a => a.symbool===state.aandeel) || BEURS.aandelen.find(a => a.soort==="aandeel"); if(!g) return;
+  try { if(!window.d3) await laadScript(BIB.d3); } catch(e){ box.innerHTML = `<p class="stroom-intro">De grafiek kon niet worden geladen.</p>`; return; }
+  const grens = new Date(); grens.setDate(grens.getDate() - state.koersBereik); const gs = grens.toISOString().slice(0,10);
+  const p = g.punten.filter(x => x[0] >= gs).map(([d,v]) => ({d:new Date(d), v}));
+  if(p.length < 2){ box.innerHTML = `<p class="stroom-intro">Te weinig gegevens.</p>`; return; }
+  const W = box.clientWidth || 600, H = Math.round(Math.min(300, Math.max(200, W * .5))), m = {t:12, r:12, b:26, l:50};
+  const x = d3.scaleTime().domain(d3.extent(p, q => q.d)).range([m.l, W - m.r]);
+  const y = d3.scaleLinear().domain(d3.extent(p, q => q.v)).nice().range([H - m.b, m.t]);
+  const svg = d3.create("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%").attr("role", "img").attr("aria-label", `Koers ${g.naam}`);
+  svg.append("g").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 480 ? 4 : 6).tickSizeOuter(0).tickFormat(d3.timeFormat(state.koersBereik > 200 ? "%b %y" : "%e %b")));
+  svg.append("g").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(v => valutaTeken(g.valuta) + nf(v, 0)));
+  svg.selectAll(".tick line").attr("stroke", "var(--line)"); svg.selectAll(".domain").attr("stroke", "var(--line)"); svg.selectAll("text").attr("fill", "var(--muted)").attr("font-size", 11);
+  const op = p.at(-1).v >= p[0].v, kleur = op ? "#2E7D5B" : "var(--accent)";
+  svg.append("path").attr("d", d3.area().x(q => x(q.d)).y0(H - m.b).y1(q => y(q.v))(p)).attr("fill", kleur).attr("opacity", .08);
+  svg.append("path").attr("d", d3.line().x(q => x(q.d)).y(q => y(q.v))(p)).attr("fill", "none").attr("stroke", kleur).attr("stroke-width", 2);
+  for(const b of (BEURS.bewegingen || []).filter(b => b.symbool===g.symbool && b.datum >= gs))
+    svg.append("circle").attr("cx", x(new Date(b.datum))).attr("cy", y(b.naar)).attr("r", 5).attr("fill", "var(--bg)").attr("stroke", "var(--accent)").attr("stroke-width", 2).append("title").text(`${fmtShort.format(new Date(b.datum))}: ${b.pct>0?"+":""}${nf(b.pct,1)}%`);
+  const hulp = svg.append("g").style("display", "none");
+  hulp.append("line").attr("y1", m.t).attr("y2", H - m.b).attr("stroke", "var(--muted)").attr("stroke-dasharray", "2 2");
+  const t = hulp.append("text").attr("y", m.t + 12).attr("font-size", 12).attr("font-weight", 600).attr("fill", "var(--ink)");
+  svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).attr("fill", "transparent")
+    .on("pointermove", e => { const [px] = d3.pointer(e), i = Math.min(p.length-1, d3.bisector(q => q.d).center(p, x.invert(px))); hulp.style("display", null).attr("transform", `translate(${px},0)`); t.attr("text-anchor", px > W/2 ? "end" : "start").attr("x", px > W/2 ? -6 : 6).text(`${d3.timeFormat("%e %b")(p[i].d)}: ${valutaTeken(g.valuta)}${nf(p[i].v, 2)}`); })
+    .on("pointerleave", () => hulp.style("display", "none"));
+  box.innerHTML = ""; box.append(svg.node());
+}
+window.addEventListener("resize", () => { clearTimeout(grafiekTimer); grafiekTimer = setTimeout(() => { if(state.cat==="tech" && !location.hash) tekenKoers(); }, 250); });
+
 /* ---------- routing ---------- */
 function route(){
   stopVoorlezen();
@@ -1555,6 +1662,8 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="aandeel"){ state.aandeel = b.dataset.id; renderList(); document.getElementById("koersdetail")?.scrollIntoView({behavior:"smooth", block:"start"}); return; }
+  if(act==="koersbereik"){ state.koersBereik = +b.dataset.id; document.querySelectorAll('[data-act="koersbereik"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenKoers(); return; }
   if(act==="modus"){ state.stroomModus = b.dataset.id; state.limit = 80; renderList(); return; }
   if(act==="installeer"){ installeer(); return; }
   if(act==="installweg"){ try { localStorage.setItem("hag-install-weg", "1"); } catch(err) {} b.closest(".installbalk")?.remove(); return; }

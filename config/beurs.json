@@ -1,0 +1,119 @@
+{
+ "_uitleg": "Aandelen op de pagina Tech & AI. 'symbool' is het Yahoo Finance-symbool; 'zoek' bepaalt welke nieuwskoppen bij het bedrijf horen (eindig op '=' voor een heel woord). 'drempel' is de dagbeweging in procenten vanaf wanneer een koersbeweging als opvallend geldt.",
+ "drempel": 5,
+ "aandelen": [
+  {
+   "symbool": "NVDA",
+   "naam": "Nvidia",
+   "zoek": [
+    "Nvidia",
+    "Jensen Huang"
+   ]
+  },
+  {
+   "symbool": "MSFT",
+   "naam": "Microsoft",
+   "zoek": [
+    "Microsoft",
+    "Nadella",
+    "Copilot"
+   ]
+  },
+  {
+   "symbool": "AAPL",
+   "naam": "Apple",
+   "zoek": [
+    "Apple=",
+    "iPhone",
+    "Tim Cook"
+   ]
+  },
+  {
+   "symbool": "GOOGL",
+   "naam": "Alphabet (Google)",
+   "zoek": [
+    "Google",
+    "Alphabet",
+    "Pichai",
+    "Gemini",
+    "YouTube"
+   ]
+  },
+  {
+   "symbool": "AMZN",
+   "naam": "Amazon",
+   "zoek": [
+    "Amazon=",
+    "AWS=",
+    "Jassy",
+    "Bezos"
+   ]
+  },
+  {
+   "symbool": "META",
+   "naam": "Meta",
+   "zoek": [
+    "Meta=",
+    "Zuckerberg",
+    "Facebook",
+    "Instagram",
+    "WhatsApp"
+   ]
+  },
+  {
+   "symbool": "TSLA",
+   "naam": "Tesla",
+   "zoek": [
+    "Tesla",
+    "Musk"
+   ]
+  },
+  {
+   "symbool": "AVGO",
+   "naam": "Broadcom",
+   "zoek": [
+    "Broadcom"
+   ]
+  },
+  {
+   "symbool": "TSM",
+   "naam": "TSMC",
+   "zoek": [
+    "TSMC",
+    "Taiwan Semiconductor"
+   ]
+  },
+  {
+   "symbool": "ASML.AS",
+   "naam": "ASML",
+   "zoek": [
+    "ASML"
+   ]
+  },
+  {
+   "symbool": "AMD",
+   "naam": "AMD",
+   "zoek": [
+    "AMD="
+   ]
+  },
+  {
+   "symbool": "INTC",
+   "naam": "Intel",
+   "zoek": [
+    "Intel=",
+    "Intel's"
+   ]
+  }
+ ],
+ "indexen": [
+  {
+   "symbool": "^IXIC",
+   "naam": "Nasdaq Composite"
+  },
+  {
+   "symbool": "^SOX",
+   "naam": "Halfgeleiderindex (SOX)"
+  }
+ ]
+}

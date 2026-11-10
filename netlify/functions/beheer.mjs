@@ -7,6 +7,7 @@ import { leesAgenda, bewaarAgenda, STATUSSEN } from "../lib/agenda.mjs";
 import { stuur, ONDERWERPEN, leesAbonnees } from "../lib/push.mjs";
 import { ontsleutel, herstel, laatsteBackup } from "../lib/backup.mjs";
 import { leesNieuws } from "../lib/nieuws.mjs";
+import { leesBeurs } from "../lib/beurs.mjs";
 
 async function meld(opties) { try { return await stuur(opties); } catch (e) { console.warn("Push mislukt: " + e.message); return { fout: e.message }; } }
 
@@ -198,6 +199,7 @@ export default async (req) => {
     case "status": {
       const env = n => globalThis.Netlify?.env?.get?.(n) ?? process.env[n] ?? "";
       const [nieuws, prijzen, abonnees, agenda, backup] = await Promise.all([leesNieuws().catch(() => null), leesPrijzen().catch(() => null), leesAbonnees().catch(() => []), leesAgenda().catch(() => []), laatsteBackup().catch(() => null)]);
+      const beurs = await leesBeurs().catch(() => null);
       let artikelen = null;
       try {
         const r = await fetch(`${env("URL")}/data/articles.json`, { signal: AbortSignal.timeout(10000) });
@@ -210,6 +212,7 @@ export default async (req) => {
       return json({
         nieuws: nieuws ? { bijgewerkt: nieuws.bijgewerkt, berichten: nieuws.berichten.length, vergelijkingen: nieuws.vergelijking?.length || 0, bronnen: nieuws.status } : null,
         energie: prijzen ? { bijgewerkt: prijzen.bijgewerkt, bronnen: prijzen.status } : null,
+        beurs: beurs ? { bijgewerkt: beurs.bijgewerkt, bronnen: Object.fromEntries(Object.entries(beurs.status).map(([k, v]) => [k, { ...v, naam: k }])) } : null,
         artikelen, meldingen: { abonnees: abonnees.length },
         agenda: { komend: agenda.filter(i => (i.eind || i.start) >= vandaag).length },
         backup, wacht, eiaSleutel: !!env("EIA_API_KEY")

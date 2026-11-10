@@ -75,6 +75,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
   <nav id="nav" hidden>
     <button data-view="flitsen" aria-pressed="true">Flitsen</button>
     <button data-view="gesprekken" aria-pressed="false">Gesprekken</button>
+    <button data-view="energie" aria-pressed="false">Energie</button>
     <button data-view="moderatie" aria-pressed="false">Moderatie <span id="wachtteller"></span></button>
     <button data-view="uit" aria-pressed="false">Uitloggen</button>
   </nav>
@@ -124,7 +125,7 @@ document.getElementById("nav").addEventListener("click", e=>{
 function kies(view){
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
   main.onclick = null; main.onchange = null;
-  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else toonFlitsen();
+  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else toonFlitsen();
 }
 
 /* ---------- flitsen-overzicht ---------- */
@@ -292,6 +293,35 @@ async function toonGesprekken(){
         const {berichten} = await api("ruimte-berichten", {ruimte});
         uit.innerHTML = berichten.length ? berichten.slice().reverse().map(m=>`<div class="update"><p class="meta">${esc(m.naam)}${m.redactie?" (redactie)":""} · ${fmt(m.tijd)}</p><p class="quote">${esc(m.tekst)}</p><button class="btn ghost small" data-weg="${esc(m.id)}">Verwijderen</button></div>`).join("") : `<p class="hint">Nog geen berichten.</p>`;
       } catch(err){ melding(uit, err.message, "fout"); }
+    };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
+/* ---------- energie ---------- */
+async function toonEnergie(){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const e = await api("energie");
+    const st = e.status ? Object.entries(e.status).map(([k,v]) => `<span class="tag ${v.ok ? "actief" : ""}">${esc(k)}: ${v.ok ? "ok" : esc(v.fout)}</span>`).join(" ") : "Nog niet opgehaald. Open de energiepagina in de app één keer.";
+    main.innerHTML = `<h1>Energie</h1><p class="hint">Jouw duiding bij de energiemarkt. In de app staat die bovenaan de energiepagina en bij de bewegingen, met het label "Duiding van de redactie".</p>
+      <div class="card"><label for="stand">Stand van de energiemarkt (één of twee zinnen)</label><textarea id="stand" maxlength="400">${esc(e.stand || "")}</textarea>
+      <div class="actions"><button class="btn" id="bewaarstand">Opslaan</button></div><div id="smsg"></div></div>
+      <h2>Opvallende bewegingen</h2>
+      ${e.bewegingen.length ? e.bewegingen.map(b => `<div class="card" data-sleutel="${esc(b.sleutel)}">
+        <p class="meta">${esc(b.datum)} · ${esc(b.naam || b.reeks)} · <strong>${b.pct>0?"+":""}${String(b.pct).replace(".",",")}%</strong> (van ${b.van} naar ${b.naar} ${esc(b.eenheid || "")})</p>
+        <label>Duiding: wat dreef deze beweging volgens jou? (leeg laten = geen duiding)</label><textarea data-tekst maxlength="1500">${esc(b.duiding?.tekst || "")}</textarea>
+        <div class="actions"><button class="btn small" data-bewaar>Opslaan</button></div><div data-uit></div>
+      </div>`).join("") : `<div class="card"><p class="hint" style="margin:0">Geen opvallende bewegingen gevonden.</p></div>`}
+      <h2>Bronnen</h2><div class="card"><p class="meta">Laatst opgehaald: ${e.bijgewerkt ? fmt(e.bijgewerkt) : "nog niet"}</p>${st}</div>`;
+    document.getElementById("bewaarstand").onclick = async () => {
+      try { await api("energie-duiding", {stand: val("stand")}); melding(document.getElementById("smsg"), "Opgeslagen."); }
+      catch(err){ melding(document.getElementById("smsg"), err.message, "fout"); }
+    };
+    main.onclick = async ev => {
+      const b = ev.target.closest("[data-bewaar]"); if(!b) return;
+      const c = b.closest("[data-sleutel]");
+      try { await api("energie-duiding", {sleutel:c.dataset.sleutel, tekst:c.querySelector("[data-tekst]").value}); melding(c.querySelector("[data-uit]"), "Opgeslagen."); }
+      catch(err){ melding(c.querySelector("[data-uit]"), err.message, "fout"); }
     };
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
 }

@@ -2,6 +2,7 @@
 import { json, schoon, schoonUrl, nieuwId, LABELS, isBeheerder, leesIndex, leesFlits, bewaarFlits, verwijderFlits, leesReacties, bewaarReacties } from "../lib/flitsen.mjs";
 
 import { ruimtes, zetModus, leesBerichten, bewaarBerichten, bestaat } from "../lib/gesprek.mjs";
+import { leesPrijzen, bewegingen, leesDuiding, bewaarDuiding, REEKSEN } from "../lib/energie.mjs";
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const bron = b => ({ naam: schoon(b?.naam, 80), url: schoonUrl(b?.url), label: schoon(b?.label, 80) });
@@ -128,6 +129,21 @@ export default async (req) => {
       const lijst = await leesBerichten(b.ruimte);
       const m = lijst.find(x => x.id === b.id);
       if (m) { m.status = "verwijderd"; await bewaarBerichten(b.ruimte, lijst); }
+      return json({ ok: true });
+    }
+
+    case "energie": {
+      const p = await leesPrijzen();
+      const d = await leesDuiding();
+      const bew = p ? bewegingen(p.reeksen).slice(0, 40).map(x => ({ ...x, naam: REEKSEN[x.reeks]?.naam, eenheid: REEKSEN[x.reeks]?.eenheid, duiding: d.bewegingen[x.sleutel] || "" })) : [];
+      return json({ stand: d.stand, standTijd: d.standTijd, bewegingen: bew, status: p?.status || null, bijgewerkt: p?.bijgewerkt || null });
+    }
+
+    case "energie-duiding": {
+      const d = await leesDuiding();
+      if (typeof b.stand === "string") { d.stand = schoon(b.stand, 400); d.standTijd = new Date().toISOString(); }
+      if (b.sleutel) { const t = schoon(b.tekst, 1500); if (t) d.bewegingen[b.sleutel] = { tekst: t, tijd: new Date().toISOString() }; else delete d.bewegingen[b.sleutel]; }
+      await bewaarDuiding(d);
       return json({ ok: true });
     }
 

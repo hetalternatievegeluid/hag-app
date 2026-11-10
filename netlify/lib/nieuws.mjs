@@ -3,6 +3,7 @@ import { XMLParser } from "fast-xml-parser";
 import { getStore } from "@netlify/blobs";
 import config from "../../config/nieuws.json";
 import plaatsen from "../../config/plaatsen.json";
+import { archiveerEnergie } from "./energie.mjs";
 
 const BEWAAR_DAGEN = 7;
 const MAX_BERICHTEN = 800;
@@ -109,6 +110,7 @@ export async function verversNieuws() {
     .slice(0, MAX_BERICHTEN);
   const data = { bijgewerkt: new Date().toISOString(), secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status };
   await store().setJSON("stroom", data);
+  try { await archiveerEnergie(berichten); } catch (e) { console.warn("Energie-archief: " + e.message); }
   return data;
 }
 

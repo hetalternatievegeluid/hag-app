@@ -1,0 +1,5 @@
+{
+  "_uitleg": "Instellingen voor de energiepagina. 'drempel' is de dagelijkse prijsverandering in procenten vanaf wanneer een beweging als opvallend wordt gemarkeerd (bij weekcijfers: verandering over 7 dagen). 'energiewoorden' bepalen welke koppen uit de nieuwsstroom in het energie-archief komen.",
+  "drempels": { "brent": 4, "ttf": 8, "henryhub": 8, "diesel_nl": 3, "euro95_nl": 3, "diesel_vs": 4 },
+  "energiewoorden": ["olie", "olieprijs", "oil", "crude", "Brent", "OPEC", "OPEC+", "aardgas", "gasprijs", "natural gas", "LNG", "TTF", "Hormuz", "tanker", "tankers", "raffinaderij", "raffinaderijen", "refinery", "refineries", "pijpleiding", "pipeline", "diesel", "benzine", "gasoline", "petrol", "energieprijs", "energy prices", "Nord Stream", "Druzhba", "oil sanctions", "oliesancties", "price cap", "prijsplafond"]
+}

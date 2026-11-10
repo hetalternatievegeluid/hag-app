@@ -122,6 +122,34 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.stand{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 14px;margin:18px 0 0}
+.stand p{font-family:var(--serif);font-size:1.12rem;line-height:1.5;margin:4px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:18px 0 6px}
+.kpi{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.ksoort{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.ksoort .ind{color:var(--accent)}
+.kpi strong{font-family:var(--serif);font-size:1rem;line-height:1.2}
+.kwaarde{font-size:1.45rem;font-weight:600;font-variant-numeric:tabular-nums}
+.kwaarde small,.kver small{font-size:.75rem;color:var(--muted);font-weight:400}
+.kver{font-size:.85rem;display:flex;gap:4px;align-items:baseline;flex-wrap:wrap}
+.pct{font-weight:700;font-variant-numeric:tabular-nums}
+.pct.up{color:var(--accent)}
+.pct.down{color:#2E7D5B}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pct.down{color:#4CC38A}}
+.grafiek{margin:6px 0 2px;min-height:220px}
+.grafiek svg{display:block;touch-action:pan-y}
+.legenda{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-bottom:4px}
+.legenda i{display:inline-block;width:14px;height:3px;margin-right:6px;vertical-align:middle;border-radius:2px}
+.bew{border-top:1px solid var(--line);padding:14px 0;transition:background .4s}
+.bew.flash{background:var(--accent-soft)}
+.bew .nmeta{font-size:.85rem}
+.duiding{border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:8px 0}
+.duiding p{margin:2px 0 0;font-family:var(--serif);font-size:1.02rem}
+.newslist.compact .news{padding:8px 0}
+.newslist.compact .ntitle{font-size:.98rem}
+.opbouw{margin:26px 0 0;border-top:1px solid var(--line);padding-top:14px}
+.opbouw summary{font-family:var(--serif);font-weight:600;font-size:1.1rem;cursor:pointer}
+.opbouw p{max-width:64ch;line-height:1.6}
 .rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px}
 .rcard{display:flex;flex-direction:column;gap:5px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:0 0 6px 6px;padding:12px 14px;text-decoration:none;color:var(--ink)}
 .rcard:hover{border-color:var(--accent)}
@@ -288,6 +316,7 @@ const CATS = [
   {id:"alles", name:"Alles"},
   {id:"stroom", name:"Nieuwsstroom"},
   {id:"wereld", name:"Wereldbol"},
+  {id:"energie", name:"Energie"},
   {id:"gesprek", name:"Gesprekken"},
   {id:"nieuws", name:"Nieuws"},
   {id:"onderzoek", name:"Onderzoek"},
@@ -313,7 +342,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {cat:"alles", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null};
+const state = {cat:"alles", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -334,7 +363,7 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = ["stroom","wereld","gesprek"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    const n = ["stroom","wereld","gesprek","energie"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
     return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
@@ -371,6 +400,10 @@ function renderList(){
   stopBol();
   if(state.cat==="stroom"){ main.innerHTML = stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
+  if(state.cat==="energie"){
+    if(!PRIJZEN){ main.innerHTML = `<p class="loading">Energieprijzen laden…</p>`; laadPrijzen(); return; }
+    main.innerHTML = energieView(); tekenGrafiek(); return;
+  }
   if(state.cat==="gesprek"){
     if(!RUIMTES){ main.innerHTML = `<p class="loading">Gesprekken laden…</p>`; laadRuimtes(); return; }
     main.innerHTML = gesprekView(); return;
@@ -886,6 +919,111 @@ async function verversRuimte(id){
   } catch(e) {}
 }
 
+/* ---------- energie ---------- */
+let PRIJZEN = null;
+const GRAFIEKEN = {
+  brent: {naam:"Brent", reeksen:["brent"]},
+  ttf: {naam:"TTF-gas", reeksen:["ttf"]},
+  pomp: {naam:"Pompprijzen NL", reeksen:["diesel_nl","euro95_nl"]},
+  olievspomp: {naam:"Olie vs pomp", reeksen:["diesel_nl","euro95_nl","brent_eur_l"]},
+  henryhub: {naam:"Henry Hub", reeksen:["henryhub"]},
+  diesel_vs: {naam:"Diesel VS", reeksen:["diesel_vs"]}
+};
+const KLEUREN = ["var(--accent)", "var(--ink)", "var(--muted)"];
+const nf = (v, d=2) => new Intl.NumberFormat("nl-NL", {minimumFractionDigits:d, maximumFractionDigits:d}).format(v);
+const decimalen = k => /_nl|brent_eur_l|diesel_vs/.test(k) ? 3 : 2;
+async function laadPrijzen(){
+  try { const r = await fetch("/api/prijzen", {cache:"no-cache"}); PRIJZEN = r.ok ? await r.json() : {fout:true}; }
+  catch(e){ PRIJZEN = {fout:true}; }
+  if(state.cat==="energie" && !location.hash) renderList();
+}
+function verandering(punten, dagen){
+  if(!punten || punten.length < 2) return null;
+  const [d, v] = punten[punten.length-1];
+  const grens = new Date(d); grens.setDate(grens.getDate() - dagen);
+  const g = grens.toISOString().slice(0,10);
+  let ref = null; for(let i = punten.length-2; i >= 0; i--){ if(punten[i][0] <= g){ ref = punten[i]; break; } }
+  if(!ref) return null;
+  return (v - ref[1]) / ref[1] * 100;
+}
+function pctHTML(p){ if(p===null || !isFinite(p)) return ""; const c = p > 0.05 ? "up" : p < -0.05 ? "down" : ""; return `<span class="pct ${c}">${p>0?"+":""}${nf(p,1)}%</span>`; }
+function energieView(){
+  let html = `<section class="dhead"><h2>Energie</h2><p>Wat olie, gas en brandstof kosten, in Nederland en op de wereldmarkt, en welk nieuws er speelde rond grote prijsbewegingen.</p></section>`;
+  if(PRIJZEN.fout || !PRIJZEN.reeksen) return html + `<div class="empty"><strong>De energieprijzen zijn nu niet bereikbaar</strong>Probeer het later opnieuw.</div>`;
+  const P = PRIJZEN.reeksen, I = PRIJZEN.info;
+  if(PRIJZEN.stand) html += `<div class="stand"><span class="ftag">Stand van de energiemarkt</span><p>${esc(PRIJZEN.stand.tekst)}</p><span class="fmeta">Duiding van de redactie${PRIJZEN.stand.tijd ? " · " + nTijd(PRIJZEN.stand.tijd) : ""}</span></div>`;
+  html += `<div class="kpis">${["brent","ttf","diesel_nl","euro95_nl","henryhub","diesel_vs"].filter(k => P[k]?.length).map(k => {
+    const p = P[k], [d, v] = p[p.length-1], pomp = /_nl|_vs/.test(k);
+    return `<div class="kpi"><span class="ksoort">${esc(I[k].soort)}${I[k].bron?.type==="indicatief" ? ` · <span class="ind">indicatief</span>` : ""}</span>
+      <strong>${esc(I[k].naam)}</strong>
+      <span class="kwaarde">${nf(v, decimalen(k))} <small>${esc(I[k].eenheid)}</small></span>
+      <span class="kver">${pctHTML(verandering(p, pomp ? 7 : 1))} <small>${pomp ? "week" : "dag"}</small> ${pctHTML(verandering(p, 30))} <small>maand</small></span>
+      <span class="fmeta">Stand ${fmtShort.format(new Date(d))}</span></div>`;
+  }).join("")}</div>`;
+  html += `<h3 class="daykop">Verloop</h3>
+    <div class="chips">${Object.entries(GRAFIEKEN).filter(([,g]) => g.reeksen.some(k => P[k]?.length)).map(([k,g]) => `<button class="chip" data-act="reeks" data-id="${k}" aria-pressed="${state.reeks===k}">${g.naam}</button>`).join("")}</div>
+    <div class="chips periode">${[[90,"3 maanden"],[365,"1 jaar"],[730,"2 jaar"]].map(([d,t]) => `<button class="chip" data-act="bereik" data-id="${d}" aria-pressed="${state.bereik===d}">${t}</button>`).join("")}</div>
+    <div class="grafiek" id="grafiek"><p class="stroom-intro">Grafiek laden…</p></div>
+    <p class="stroom-intro" id="bronregel"></p>`;
+  const bew = PRIJZEN.bewegingen || [];
+  html += `<h3 class="daykop">Opvallende bewegingen</h3>
+    <p class="stroom-intro">Dagen waarop een prijs sterk steeg of daalde, met het energienieuws uit de nieuwsstroom van rond dat moment. Dat nieuws gebeurde tegelijk, maar is niet per se de oorzaak: prijzen bewegen ook door vraag, voorraden, de dollarkoers, het weer en belastingen. Waar de redactie een duiding heeft gegeven, staat die erbij.${PRIJZEN.archiefVanaf ? ` Het nieuwsarchief loopt vanaf ${fmtShort.format(new Date(PRIJZEN.archiefVanaf))} ${new Date(PRIJZEN.archiefVanaf).getFullYear()}.` : ""}</p>
+    ${bew.length ? bew.slice(0,15).map(b => `<div class="bew" id="b-${esc(b.sleutel)}">
+      <div class="nmeta"><time datetime="${esc(b.datum)}">${fmtShort.format(new Date(b.datum))}</time><b>${esc(I[b.reeks]?.naam || b.reeks)}</b>${pctHTML(b.pct)}<span>van ${nf(b.van, decimalen(b.reeks))} naar ${nf(b.naar, decimalen(b.reeks))} ${esc(I[b.reeks]?.eenheid || "")}</span></div>
+      ${b.duiding ? `<div class="duiding"><span class="ftag">Duiding van de redactie</span><p>${esc(b.duiding.tekst)}</p></div>` : ""}
+      ${b.nieuws.length ? `<p class="fmeta">Nieuws rond dit moment</p><ul class="newslist compact">${b.nieuws.map(n => `<li class="news"><div class="nmeta"><time>${nTijd(n.tijd)}</time><b>${esc(n.bron)}</b><span class="lbl${n.staat?" staat":""}">${esc(n.label)}</span></div><a class="ntitle" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titel)}</a></li>`).join("")}</ul>` : `<p class="fmeta">Geen energienieuws in het archief rond deze datum.</p>`}
+    </div>`).join("") : `<p class="stroom-intro">Geen opvallende bewegingen in de afgelopen periode.</p>`}
+    <details class="opbouw"><summary>Hoe komt de pompprijs tot stand?</summary>
+      <p>De prijs aan de pomp bestaat uit vier delen: de inkoop van ruwe olie, het raffineren tot benzine of diesel, transport en de marge van het tankstation, en belastingen (accijns en btw). De accijns ligt per liter vast en is een groot deel van de pompprijs. Daardoor beweegt de pompprijs procentueel minder dan de olieprijs.</p>
+      <p>Een stijging van Brent komt meestal met enkele dagen tot weken vertraging aan de pomp aan. Diesel reageert daarnaast op de raffinagemarge: vallen raffinaderijen uit, bijvoorbeeld door aanvallen of sancties, dan kan diesel duurder worden terwijl ruwe olie gelijk blijft. In de grafiek “Olie vs pomp” zie je ruwe olie en de pompprijzen naast elkaar, alle drie in euro per liter.</p>
+    </details>`;
+  return html;
+}
+async function tekenGrafiek(){
+  const box = document.getElementById("grafiek"); if(!box || !PRIJZEN?.reeksen) return;
+  try { if(!window.d3) await laadScript(BIB.d3); } catch(e){ box.innerHTML = `<p class="stroom-intro">De grafiek kon niet worden geladen.</p>`; return; }
+  const g = GRAFIEKEN[state.reeks] || GRAFIEKEN.brent;
+  const grens = new Date(); grens.setDate(grens.getDate() - state.bereik);
+  const gs = grens.toISOString().slice(0,10);
+  const lijnen = g.reeksen.filter(k => PRIJZEN.reeksen[k]?.length).map((k,i) => ({k, kleur:KLEUREN[i], punten:PRIJZEN.reeksen[k].filter(p => p[0] >= gs).map(([d,v]) => ({d:new Date(d), v}))})).filter(l => l.punten.length);
+  if(!lijnen.length){ box.innerHTML = `<p class="stroom-intro">Geen gegevens voor deze periode.</p>`; return; }
+  const W = box.clientWidth || 600, H = Math.round(Math.min(340, Math.max(220, W * .55))), m = {t:12, r:12, b:26, l:46};
+  const alle = lijnen.flatMap(l => l.punten);
+  const x = d3.scaleTime().domain(d3.extent(alle, p => p.d)).range([m.l, W - m.r]);
+  const y = d3.scaleLinear().domain(d3.extent(alle, p => p.v)).nice().range([H - m.b, m.t]);
+  const eenheid = PRIJZEN.info[lijnen[0].k].eenheid;
+  const svg = d3.create("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%").attr("role", "img").attr("aria-label", `${g.naam} in ${eenheid}`);
+  svg.append("g").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 480 ? 4 : 7).tickSizeOuter(0).tickFormat(d3.timeFormat(state.bereik > 200 ? "%b %y" : "%e %b")));
+  svg.append("g").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(v => nf(v, eenheid.includes("liter") ? 2 : 0)));
+  svg.selectAll(".tick line").attr("stroke", "var(--line)"); svg.selectAll(".domain").attr("stroke", "var(--line)"); svg.selectAll("text").attr("fill", "var(--muted)").attr("font-size", 11);
+  const lijn = d3.line().x(p => x(p.d)).y(p => y(p.v));
+  for(const l of lijnen) svg.append("path").attr("d", lijn(l.punten)).attr("fill", "none").attr("stroke", l.kleur).attr("stroke-width", 2).attr("stroke-dasharray", l.k==="brent_eur_l" ? "4 3" : null);
+  const bew = (PRIJZEN.bewegingen || []).filter(b => g.reeksen.includes(b.reeks) && b.datum >= gs);
+  for(const b of bew){
+    const cx = x(new Date(b.datum)), cy = y(b.naar);
+    svg.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 5).attr("fill", "var(--bg)").attr("stroke", "var(--accent)").attr("stroke-width", 2).style("cursor", "pointer")
+      .attr("data-act", "beweging").attr("data-id", b.sleutel).append("title").text(`${fmtShort.format(new Date(b.datum))}: ${b.pct>0?"+":""}${nf(b.pct,1)}%`);
+  }
+  const hulp = svg.append("g").style("display", "none");
+  hulp.append("line").attr("y1", m.t).attr("y2", H - m.b).attr("stroke", "var(--muted)").attr("stroke-dasharray", "2 2");
+  const tekst = hulp.append("text").attr("y", m.t + 12).attr("font-size", 12).attr("fill", "var(--ink)").attr("font-weight", 600);
+  svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).attr("fill", "transparent")
+    .on("pointermove", e => {
+      const [px] = d3.pointer(e); const d = x.invert(px);
+      const delen = lijnen.map(l => { const i = Math.min(l.punten.length-1, d3.bisector(p => p.d).center(l.punten, d)); return `${nf(l.punten[i].v, decimalen(l.k))}`; });
+      hulp.style("display", null).attr("transform", `translate(${px},0)`);
+      tekst.attr("text-anchor", px > W/2 ? "end" : "start").attr("x", px > W/2 ? -6 : 6).text(`${d3.timeFormat("%e %b %Y")(d)}: ${delen.join(" / ")}`);
+    })
+    .on("pointerleave", () => hulp.style("display", "none"));
+  svg.selectAll("circle").raise();
+  box.innerHTML = "";
+  if(lijnen.length > 1) box.insertAdjacentHTML("beforeend", `<div class="legenda">${lijnen.map(l => `<span><i style="background:${l.kleur}"></i>${esc(PRIJZEN.info[l.k].naam)}</span>`).join("")}</div>`);
+  box.append(svg.node());
+  document.getElementById("bronregel").innerHTML = `In ${esc(eenheid)}. Bron: ${[...new Set(lijnen.map(l => PRIJZEN.info[l.k].bron?.naam).filter(Boolean))].map(esc).join("; ")}. Rode rondjes zijn opvallende bewegingen; tik erop voor het nieuws van dat moment.`;
+}
+let grafiekTimer = null;
+window.addEventListener("resize", () => { clearTimeout(grafiekTimer); grafiekTimer = setTimeout(() => { if(state.cat==="energie" && !location.hash) tekenGrafiek(); }, 250); });
+
 /* ---------- routing ---------- */
 function route(){
   clearInterval(flitsTimer);
@@ -913,6 +1051,9 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="reeks"){ state.reeks = b.dataset.id; document.querySelectorAll('[data-act="reeks"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenGrafiek(); return; }
+  if(act==="bereik"){ state.bereik = +b.dataset.id; document.querySelectorAll('[data-act="bereik"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenGrafiek(); return; }
+  if(act==="beweging"){ const el = document.getElementById("b-" + b.dataset.id); if(el){ el.scrollIntoView({behavior:"smooth", block:"center"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"), 1600); } return; }
   if(act==="periode"){ state.periode = +b.dataset.id; state.plek = null; renderList(); return; }
   if(act==="plek"){ state.plek = b.dataset.id || null; tekenPlekLijst(); return; }
   if(act==="sectie"){ state.sectie = b.dataset.id || null; state.limit = 80; state.plek = null; renderList(); return; }

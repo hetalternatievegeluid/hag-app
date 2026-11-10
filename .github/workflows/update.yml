@@ -2,7 +2,7 @@ name: Artikelen bijwerken
 
 on:
   schedule:
-    - cron: "17 * * * *"   # elk uur, op minuut 17
+    - cron: "17 6 * * *"   # elk uur, op minuut 17
   workflow_dispatch:
     inputs:
       archief:

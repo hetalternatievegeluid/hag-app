@@ -6,6 +6,15 @@ export default async (req) => {
   const url = new URL(req.url);
   let data = await leesPrijzen();
   if (!data || Date.now() - new Date(data.bijgewerkt).getTime() > 6 * 36e5) data = await verversPrijzen();
+  if (url.searchParams.has("kort")) {
+    const kort = {};
+    for (const k of ["brent", "ttf", "diesel_nl", "euro95_nl"]) {
+      const p = data.reeksen[k]; if (!p?.length) continue;
+      const [d, v] = p[p.length - 1], vorige = p[p.length - 2];
+      kort[k] = { naam: REEKSEN[k].naam, eenheid: REEKSEN[k].eenheid, waarde: v, datum: d, pct: vorige ? Math.round((v - vorige[1]) / vorige[1] * 1000) / 10 : null };
+    }
+    return Response.json({ kort }, { headers: { "cache-control": "public, max-age=600" } });
+  }
   if (url.searchParams.has("status")) return Response.json({ bijgewerkt: data.bijgewerkt, status: data.status }, { headers: { "cache-control": "no-store" } });
 
   const [archief, duiding] = await Promise.all([leesArchief(), leesDuiding()]);

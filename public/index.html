@@ -122,6 +122,37 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.landing{margin:0 calc(50% - 50vw);padding:44px 20px 38px;background:var(--bar);color:#fff;text-align:center;position:relative;overflow:hidden;border-bottom:3px solid var(--accent)}
+.landing::before{content:"";position:absolute;left:50%;top:50%;width:760px;height:760px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(255,255,255,.05);box-shadow:0 0 0 90px rgba(255,255,255,.015),0 0 0 180px rgba(255,255,255,.012);pointer-events:none}
+.landlogo{width:clamp(120px,32vw,160px);height:auto;display:block;margin:0 auto 18px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.45));position:relative}
+.landing h1{font-family:var(--serif);font-weight:700;font-size:clamp(2rem,7vw,3.2rem);letter-spacing:-.02em;line-height:1.05;margin:0 0 10px;position:relative}
+.landtag{font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,3.4vw,1.3rem);color:#D9DAE0;margin:0 0 8px;position:relative}
+.landvisie{color:#A9ACB6;font-size:.92rem;margin:0 auto 22px;max-width:44ch;position:relative}
+.landcijfers{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;position:relative}
+.landcijfers span{border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:5px 12px;font-size:.82rem;color:#C9CBD2}
+.landcijfers b{color:#fff;font-variant-numeric:tabular-nums}
+.nu{padding:22px 0 4px}
+.nukop{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:1.15rem;margin:0 0 10px}
+.nuflits{display:flex;flex-direction:column;gap:4px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 14px;margin-bottom:10px;text-decoration:none;color:var(--ink)}
+.nuflits strong{font-family:var(--serif);font-size:1.15rem;line-height:1.25}
+.nuflits>span:last-child{font-size:.86rem;color:var(--muted)}
+.tegels{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:20px 0 6px}
+@media (min-width:640px){.tegels{grid-template-columns:repeat(3,1fr)}}
+.tegel{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;font:inherit;color:var(--ink);cursor:pointer;text-decoration:none;min-height:150px;transition:border-color .15s,transform .15s}
+.tegel:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tegel.breed{grid-column:1 / -1}
+.tegel.klein{min-height:0;flex-direction:row;align-items:center;gap:12px}
+.tegel.klein .tuitleg{margin-left:4px}
+.ticoon{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center}
+.ttitel{font-family:var(--serif);font-weight:700;font-size:1.15rem}
+.ttitel.groot{font-size:clamp(1.3rem,4.5vw,1.7rem);line-height:1.15}
+.tlive{font-size:.82rem;line-height:1.35;color:var(--ink);background:var(--bg);border-radius:4px;padding:5px 8px;width:100%}
+.tlive .pct{font-size:.78rem}
+.tuitleg{font-size:.82rem;color:var(--muted);line-height:1.4}
+.tegel.uitgelicht{flex-direction:row;padding:0;overflow:hidden;min-height:0}
+.tegel.uitgelicht img{width:38%;max-width:260px;object-fit:cover;flex:none}
+.tinhoud{display:flex;flex-direction:column;gap:6px;padding:16px}
+@media (max-width:520px){.tegel.uitgelicht{flex-direction:column}.tegel.uitgelicht img{width:100%;max-width:none;aspect-ratio:16/9}}
 .bel{margin-left:auto;color:#fff;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%}
 .bel:hover{background:rgba(255,255,255,.1)}
 .brand p{margin-left:auto}
@@ -368,7 +399,8 @@ footer .social a:hover{text-decoration:underline}
 <script>
 const SITE = "https://www.hetalternatievegeluid.nl";
 const CATS = [
-  {id:"alles", name:"Alles"},
+  {id:"start", name:"Start"},
+  {id:"alles", name:"Artikelen"},
   {id:"stroom", name:"Nieuwsstroom"},
   {id:"wereld", name:"Wereldbol"},
   {id:"agenda", name:"Agenda"},
@@ -398,7 +430,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {cat:"alles", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
+const state = {cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -419,7 +451,7 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = ["stroom","wereld","gesprek","energie","agenda"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    const n = ["start","stroom","wereld","gesprek","energie","agenda"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
     return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
@@ -457,6 +489,7 @@ function renderList(){
   stopBol();
   if(state.cat==="stroom"){ main.innerHTML = stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
+  if(state.cat==="start"){ main.innerHTML = startView(); return; }
   if(state.cat==="agenda"){
     if(!AGENDA){ main.innerHTML = `<p class="loading">Agenda laden…</p>`; laadAgenda(); return; }
     main.innerHTML = agendaView(); return;
@@ -872,7 +905,7 @@ const HUISREGELS = `Reageer op de inhoud, niet op personen. Geen beledigingen, b
 async function laadRuimtes(){
   try { const r = await fetch("/api/gesprek", {cache:"no-cache"}); RUIMTES = r.ok ? (await r.json()).ruimtes : []; }
   catch(e){ RUIMTES = []; }
-  if(state.cat==="gesprek" && !location.hash) renderList();
+  if(["gesprek","start"].includes(state.cat) && !location.hash) renderList();
 }
 function gesprekView(){
   let html = `<section class="dhead"><h2>Gesprekken</h2><p>Praat mee met andere lezers over de grote ontwikkelingen. ${HUISREGELS}</p></section>`;
@@ -1126,7 +1159,7 @@ const STATUS = {
 };
 async function laadAgenda(){
   try { const r = await fetch("/api/agenda", {cache:"no-cache"}); AGENDA = r.ok ? (await r.json()).items : []; } catch(e){ AGENDA = []; }
-  if(!location.hash && (state.cat==="agenda" || state.cat==="alles")) renderList();
+  if(!location.hash && ["agenda","alles","start"].includes(state.cat)) renderList();
 }
 const vandaagIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
 function aftellen(i){
@@ -1277,6 +1310,69 @@ function stopVoorlezen(){
 }
 if("speechSynthesis" in window) speechSynthesis.onvoiceschanged = () => {};
 
+/* ---------- startpagina ---------- */
+let KORT = null, kortBezig = false;
+async function laadKort(){
+  if(kortBezig) return; kortBezig = true;
+  try { const r = await fetch("/api/prijzen?kort=1"); KORT = r.ok ? (await r.json()).kort : {}; } catch(e){ KORT = {}; }
+  if(state.cat==="start" && !location.hash) renderList();
+}
+const ICOON = {
+  artikelen:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/>',
+  stroom:'<path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="1.5"/>',
+  flits:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+  agenda:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  wereld:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+  energie:'<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/><path d="M12 11v6"/>',
+  gesprek:'<path d="M4 5h16v11H9l-5 4z"/>',
+  bel:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'
+};
+const ico = k => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICOON[k]}</svg>`;
+function startView(){
+  if(!AGENDA) laadAgenda();
+  if(!KORT) laadKort();
+  if(!RUIMTES) laadRuimtes();
+  const v = vandaagIso();
+  const laatste = sorted[0];
+  const actief = (FLITSEN || []).filter(f => f.status==="actief");
+  const volgende = (AGENDA || []).find(i => (i.eind || i.start) >= v);
+  const vandaag = (NIEUWS?.berichten || []).filter(b => Date.now() - new Date(b.tijd) < 864e5);
+  const bronnen = new Set((NIEUWS?.berichten || []).map(b => b.bron)).size;
+  const plekken = {}; vandaag.forEach(b => { if(b.plaats) plekken[b.plaats.naam] = (plekken[b.plaats.naam] || 0) + 1; });
+  const top = Object.entries(plekken).sort((a,b) => b[1]-a[1]).slice(0,3).map(([n]) => n);
+  const ruimte = (RUIMTES || []).filter(r => r.laatste).sort((a,b) => b.laatste.tijd.localeCompare(a.laatste.tijd))[0];
+  const prijs = k => KORT?.[k] ? `${esc(KORT[k].naam.split(" (")[0])} ${nf(KORT[k].waarde, /_nl/.test(k) ? 3 : 2)} ${pctHTML(KORT[k].pct)}` : "";
+  const tegel = (doel, icoon, titel, live, uitleg, breed) => `<button class="tegel${breed ? " breed" : ""}" data-act="ga" data-id="${doel}">
+      <span class="ticoon">${ico(icoon)}</span><span class="ttitel">${titel}</span>
+      ${live ? `<span class="tlive">${live}</span>` : ""}<span class="tuitleg">${uitleg}</span></button>`;
+  return `<section class="landing">
+      <img class="landlogo" src="/icons/logo-groot.png" alt="Logo Het Alternatieve Geluid" width="160" height="160">
+      <h1>Het Alternatieve Geluid</h1>
+      <p class="landtag">Voor wie verder kijkt dan de krantenkop.</p>
+      <p class="landvisie">Geopolitieke analyse, nieuws en duiding. Kritisch maar open, onafhankelijk maar verbonden.</p>
+      <div class="landcijfers">
+        <span><b>${ARTICLES.length}</b> artikelen</span>
+        <span><b>${vandaag.length || "–"}</b> berichten vandaag</span>
+        <span><b>${bronnen || "–"}</b> bronnen</span>
+        <span><b>${actief.length}</b> ${actief.length===1 ? "flits" : "flitsen"} actief</span>
+      </div>
+    </section>
+    ${actief.length ? `<section class="nu"><h2 class="nukop"><span class="pulse" aria-hidden="true"></span>Nu</h2>${actief.slice(0,2).map(f => `<a class="nuflits" href="#flits-${f.id}"><span class="ftag">Flits${sectieNaam(f.sectie) ? " · " + esc(sectieNaam(f.sectie)) : ""}</span><strong>${esc(f.titel)}</strong>${f.laatste ? `<span>${nTijd(f.laatste.tijd)} · ${esc(f.laatste.tekst.slice(0,110))}${f.laatste.tekst.length>110?"…":""}</span>` : ""}</a>`).join("")}</section>` : ""}
+    <section class="tegels">
+      ${laatste ? `<a class="tegel breed uitgelicht" href="#artikel-${laatste.id}">
+        ${laatste.image ? `<img src="${esc(laatste.image)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}
+        <span class="tinhoud"><span class="ftag">Nieuwste ${esc(rubriekShort(laatste))}</span><span class="ttitel groot">${esc(laatste.title)}</span><span class="tuitleg">${esc((laatste.intro || "").slice(0,160))}${(laatste.intro||"").length>160?"…":""}</span></span></a>` : ""}
+      ${tegel("alles", "artikelen", "Artikelen", "", "Nieuws, onderzoek, analyse en Een Andere Kijk, met dossiers per onderwerp.")}
+      ${tegel("stroom", "stroom", "Nieuwsstroom", vandaag[0] ? `<b>${esc(vandaag[0].bron)}</b> ${esc(vandaag[0].titel.slice(0,80))}${vandaag[0].titel.length>80?"…":""}` : "", "Koppen uit media wereldwijd, met bij elke bron wat voor bron het is.")}
+      ${tegel("agenda", "agenda", "Agenda", volgende ? `<b>${aftellen(volgende)}</b> ${esc(volgende.titel)}` : "", "Toppen en onderhandelingen: officieel, deels bevestigd of speculatie.")}
+      ${tegel("wereld", "wereld", "Wereldbol", top.length ? `Meeste nieuws: ${top.map(esc).join(", ")}` : "", "Interactieve wereldbol: waar het nieuws van dit moment over gaat.")}
+      ${tegel("energie", "energie", "Energie", [prijs("brent"), prijs("diesel_nl")].filter(Boolean).join(" · "), "Olie, gas en de pompprijs, en het nieuws rond grote prijsbewegingen.")}
+      ${tegel("gesprek", "gesprek", "Gesprekken", ruimte ? `<b>${esc(ruimte.naam)}</b> · laatst ${nTijd(ruimte.laatste.tijd)}` : "", "Praat mee met andere lezers per onderwerp.")}
+      ${tegel("#meldingen", "bel", "Meldingen", "", "Kies per onderwerp waarover je een melding wilt krijgen.", true).replace('class="tegel breed"', 'class="tegel breed klein"')}
+    </section>
+    ${DOSSIERS.length ? `<section class="stroomblok"><h2>Dossiers</h2><div class="dgrid">${DOSSIERS.map(ds => { const l = sorted.find(a => ds.ids.includes(a.id)); return `<button class="dcard" data-act="dossier" data-id="${ds.id}"><strong>${esc(ds.name)}</strong><span>${ds.ids.length} artikelen${l ? ", laatst op " + fmtShort.format(new Date(l.date)) : ""}</span></button>`; }).join("")}</div></section>` : ""}`;
+}
+
 /* ---------- routing ---------- */
 function route(){
   stopVoorlezen();
@@ -1295,7 +1391,7 @@ function route(){
   else { renderList(); document.title = "Het Alternatieve Geluid"; }
 }
 document.getElementById("home").addEventListener("click", e=>{
-  e.preventDefault(); state.cat="alles"; state.q=""; state.dossier=null; document.getElementById("q").value="";
+  e.preventDefault(); state.cat="start"; state.q=""; state.dossier=null; document.getElementById("q").value="";
   renderTabs(); if(location.hash) location.hash=""; else renderList(); window.scrollTo(0,0);
 });
 document.getElementById("main").addEventListener("click", e=>{
@@ -1307,6 +1403,7 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="ga"){ const doel = b.dataset.id; if(doel.startsWith("#")){ location.hash = doel; return; } state.cat = doel; state.dossier = null; state.sectie = null; renderTabs(); renderList(); window.scrollTo(0,0); return; }
   if(act==="naaragenda"){ state.cat = "agenda"; renderTabs(); renderList(); window.scrollTo(0,0); return; }
   if(act==="agendafilter"){ state.agendaFilter = b.dataset.id || ""; renderList(); return; }
   if(act==="reeks"){ state.reeks = b.dataset.id; document.querySelectorAll('[data-act="reeks"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenGrafiek(); return; }

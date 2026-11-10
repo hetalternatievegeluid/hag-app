@@ -74,6 +74,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
   <strong>Beheer</strong>
   <nav id="nav" hidden>
     <button data-view="flitsen" aria-pressed="true">Flitsen</button>
+    <button data-view="gesprekken" aria-pressed="false">Gesprekken</button>
     <button data-view="moderatie" aria-pressed="false">Moderatie <span id="wachtteller"></span></button>
     <button data-view="uit" aria-pressed="false">Uitloggen</button>
   </nav>
@@ -122,7 +123,8 @@ document.getElementById("nav").addEventListener("click", e=>{
 });
 function kies(view){
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
-  if(view==="moderatie") toonModeratie(); else toonFlitsen();
+  main.onclick = null; main.onchange = null;
+  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else toonFlitsen();
 }
 
 /* ---------- flitsen-overzicht ---------- */
@@ -250,22 +252,66 @@ function koppelTijdlijn(f){
   };
 }
 
+/* ---------- gesprekken ---------- */
+const MODUS = {gemodereerd:"Gemodereerd", open:"Open", gesloten:"Gesloten"};
+async function toonGesprekken(){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const {ruimtes} = await api("ruimtes");
+    let redNaam = "Redactie"; try { redNaam = localStorage.getItem("hag-rednaam") || "Redactie"; } catch(e) {}
+    main.innerHTML = `<h1>Gesprekken</h1><p class="hint">Stel per ruimte in of berichten eerst langs jou gaan (gemodereerd), direct verschijnen (open) of niet meer kunnen (gesloten). Als redactie plaats je hier ook berichten; die krijgen in de app een rood label.</p>
+      <div class="card"><label for="rednaam">Naam bij je redactieberichten</label><input id="rednaam" value="${esc(redNaam)}" maxlength="40"></div>
+      ${ruimtes.map(r=>`<div class="card" data-ruimte="${esc(r.id)}">
+        <h2 style="margin:0 0 4px">${esc(r.naam)}</h2><p class="meta">${esc(r.omschrijving)}</p>
+        <label>Stand</label><select data-modus>${Object.entries(MODUS).map(([k,v])=>`<option value="${k}" ${r.modus===k?"selected":""}>${v}</option>`).join("")}</select>
+        <label>Bericht als redactie</label><textarea data-tekst maxlength="2000" style="min-height:70px"></textarea>
+        <div class="actions"><button class="btn small" data-a="plaats">Plaatsen</button><button class="btn ghost small" data-a="bekijk">Laatste berichten</button><a class="btn ghost small" href="/#ruimte-${esc(r.id)}" target="_blank">Bekijk in app</a></div>
+        <div data-uit></div>
+      </div>`).join("")}`;
+    document.getElementById("rednaam").onchange = e => { try { localStorage.setItem("hag-rednaam", e.target.value); } catch(err) {} };
+    main.onchange = async e => {
+      const sel = e.target.closest("[data-modus]"); if(!sel) return;
+      const c = sel.closest("[data-ruimte]");
+      try { await api("ruimte-modus", {ruimte:c.dataset.ruimte, modus:sel.value}); melding(c.querySelector("[data-uit]"), "Stand opgeslagen."); }
+      catch(err){ melding(c.querySelector("[data-uit]"), err.message, "fout"); }
+    };
+    main.onclick = async e => {
+      const b = e.target.closest("button[data-a], button[data-weg]"); if(!b) return;
+      const c = b.closest("[data-ruimte]"), uit = c.querySelector("[data-uit]"), ruimte = c.dataset.ruimte;
+      try {
+        if(b.dataset.weg){
+          if(!confirm("Dit bericht verwijderen?")) return;
+          await api("bericht-weg", {ruimte, id:b.dataset.weg}); b.closest(".update").remove(); return;
+        }
+        if(b.dataset.a==="plaats"){
+          const ta = c.querySelector("[data-tekst]");
+          await api("redactie-bericht", {ruimte, tekst:ta.value, naam:document.getElementById("rednaam").value});
+          ta.value = ""; melding(uit, "Geplaatst.");
+          return;
+        }
+        const {berichten} = await api("ruimte-berichten", {ruimte});
+        uit.innerHTML = berichten.length ? berichten.slice().reverse().map(m=>`<div class="update"><p class="meta">${esc(m.naam)}${m.redactie?" (redactie)":""} · ${fmt(m.tijd)}</p><p class="quote">${esc(m.tekst)}</p><button class="btn ghost small" data-weg="${esc(m.id)}">Verwijderen</button></div>`).join("") : `<p class="hint">Nog geen berichten.</p>`;
+      } catch(err){ melding(uit, err.message, "fout"); }
+    };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
 /* ---------- moderatie ---------- */
 async function toonModeratie(){
   main.innerHTML = `<p class="hint">Laden…</p>`;
   try {
     const {reacties} = await api("wachtrij");
     zetTeller(reacties.length);
-    main.innerHTML = `<h1>Moderatie</h1><p class="hint">Reacties die op je goedkeuring wachten: bij een gemodereerd gesprek, met een link of filterwoord, of na drie meldingen.</p>
-      ${reacties.length ? reacties.map(r=>`<div class="card" data-r="${r.id}" data-f="${r.flits}">
-        <p class="meta">${esc(r.flitsTitel)} · ${fmt(r.tijd)}${r.reden==="gemeld" ? ` · <strong style="color:var(--accent)">${r.meldingen}× gemeld</strong>` : ""}</p>
+    main.innerHTML = `<h1>Moderatie</h1><p class="hint">Reacties en berichten die op je goedkeuring wachten: bij een gemodereerde flits of ruimte, met een link of filterwoord, of na drie meldingen.</p>
+      ${reacties.length ? reacties.map(r=>`<div class="card" data-r="${r.id}" data-f="${esc(r.flits || "")}" data-ruimte="${esc(r.ruimte || "")}">
+        <p class="meta">${r.ruimte ? "Gesprek: " + esc(r.ruimteNaam) : "Flits: " + esc(r.flitsTitel)} · ${fmt(r.tijd)}${r.reden==="gemeld" ? ` · <strong style="color:var(--accent)">${r.meldingen}× gemeld</strong>` : ""}</p>
         <strong>${esc(r.naam)}</strong><p class="quote">${esc(r.tekst)}</p>
         <div class="actions"><button class="btn small" data-b="goedkeuren">Goedkeuren</button><button class="btn ghost small" data-b="verwijderen">Verwijderen</button></div>
       </div>`).join("") : `<div class="card"><p class="hint" style="margin:0">Niets te beoordelen.</p></div>`}`;
     main.onclick = async e => {
       const b = e.target.closest("button[data-b]"); if(!b) return;
       const c = b.closest(".card");
-      try { await api("reactie", {flits:c.dataset.f, id:c.dataset.r, besluit:b.dataset.b}); c.remove(); zetTeller(main.querySelectorAll("[data-r]").length); }
+      try { await api("reactie", {flits:c.dataset.f, ruimte:c.dataset.ruimte || undefined, id:c.dataset.r, besluit:b.dataset.b}); c.remove(); zetTeller(main.querySelectorAll("[data-r]").length); }
       catch(err){ alert(err.message); }
     };
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }

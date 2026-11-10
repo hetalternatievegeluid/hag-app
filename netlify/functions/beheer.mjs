@@ -1,6 +1,8 @@
 // Alleen voor de beheerder (wachtwoord in de Netlify-instelling BEHEER_WACHTWOORD).
 import { json, schoon, schoonUrl, nieuwId, LABELS, isBeheerder, leesIndex, leesFlits, bewaarFlits, verwijderFlits, leesReacties, bewaarReacties } from "../lib/flitsen.mjs";
 
+import { ruimtes, zetModus, leesBerichten, bewaarBerichten, bestaat } from "../lib/gesprek.mjs";
+
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const bron = b => ({ naam: schoon(b?.naam, 80), url: schoonUrl(b?.url), label: schoon(b?.label, 80) });
 
@@ -73,17 +75,59 @@ export default async (req) => {
       for (const f of await leesIndex()) {
         for (const r of await leesReacties(f.id)) if (r.status === "wacht") uit.push({ ...r, flits: f.id, flitsTitel: f.titel });
       }
+      for (const r of await ruimtes()) {
+        for (const m of await leesBerichten(r.id)) if (m.status === "wacht") uit.push({ ...m, ruimte: r.id, ruimteNaam: r.naam });
+      }
       uit.sort((a, b) => a.tijd.localeCompare(b.tijd));
       return json({ reacties: uit });
     }
 
     case "reactie": {
+      if (b.ruimte) {
+        const lijst = await leesBerichten(b.ruimte);
+        const m = lijst.find(x => x.id === b.id);
+        if (!m) return json({ fout: "Bericht niet gevonden" }, 404);
+        if (b.besluit === "goedkeuren") { m.status = "zichtbaar"; m.meldingen = 0; delete m.reden; }
+        else if (b.besluit === "verwijderen") m.status = "verwijderd";
+        await bewaarBerichten(b.ruimte, lijst);
+        return json({ ok: true });
+      }
       const lijst = await leesReacties(b.flits);
       const r = lijst.find(x => x.id === b.id);
       if (!r) return json({ fout: "Reactie niet gevonden" }, 404);
       if (b.besluit === "goedkeuren") { r.status = "zichtbaar"; r.meldingen = 0; delete r.reden; }
       else if (b.besluit === "verwijderen") r.status = "verwijderd";
       await bewaarReacties(b.flits, lijst);
+      return json({ ok: true });
+    }
+
+    case "ruimtes":
+      return json({ ruimtes: await ruimtes() });
+
+    case "ruimte-modus":
+      return (await zetModus(b.ruimte, b.modus)) ? json({ ok: true }) : json({ fout: "Ongeldige ruimte of stand" }, 400);
+
+    case "redactie-bericht": {
+      if (!bestaat(b.ruimte)) return json({ fout: "Ruimte niet gevonden" }, 404);
+      const tekst = schoon(b.tekst, 2000);
+      if (!tekst) return json({ fout: "Het bericht is leeg." }, 400);
+      const lijst = await leesBerichten(b.ruimte);
+      const antwoordOp = lijst.some(x => x.id === b.antwoordOp) ? b.antwoordOp : null;
+      lijst.push({ id: nieuwId(), naam: schoon(b.naam, 40) || "Redactie", tekst, tijd: new Date().toISOString(), status: "zichtbaar", meldingen: 0, redactie: true, antwoordOp });
+      await bewaarBerichten(b.ruimte, lijst);
+      return json({ ok: true });
+    }
+
+    case "ruimte-berichten": {
+      if (!bestaat(b.ruimte)) return json({ fout: "Ruimte niet gevonden" }, 404);
+      const lijst = (await leesBerichten(b.ruimte)).filter(m => m.status === "zichtbaar").slice(-60);
+      return json({ berichten: lijst });
+    }
+
+    case "bericht-weg": {
+      const lijst = await leesBerichten(b.ruimte);
+      const m = lijst.find(x => x.id === b.id);
+      if (m) { m.status = "verwijderd"; await bewaarBerichten(b.ruimte, lijst); }
       return json({ ok: true });
     }
 

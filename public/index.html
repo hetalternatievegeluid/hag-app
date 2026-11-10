@@ -122,6 +122,21 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px}
+.rcard{display:flex;flex-direction:column;gap:5px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:0 0 6px 6px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.rcard:hover{border-color:var(--accent)}
+.rcard strong{font-family:var(--serif);font-size:1.15rem}
+.romschr{font-size:.85rem;color:var(--muted)}
+.redlbl{font-size:.7rem;font-weight:700;background:var(--accent);color:#fff;border-radius:4px;padding:0 6px}
+ul.rlist li.isred{border-left:3px solid var(--accent);padding-left:12px}
+ul.rlist li.flash{background:var(--accent-soft)}
+ul.rlist li{transition:background .4s}
+.macties{margin-left:auto;display:flex;gap:10px}
+.antw{background:none;border:0;color:var(--accent);font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;padding:0}
+.macties .meld{margin-left:0}
+.citaat{display:block;width:100%;text-align:left;background:var(--bg);border:0;border-left:3px solid var(--line);border-radius:0 4px 4px 0;padding:6px 10px;margin:6px 0 2px;font:inherit;font-size:.84rem;color:var(--muted);cursor:pointer}
+.citaat b{color:var(--ink)}
+#antwoordbalk{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--bg);border-left:3px solid var(--accent);padding:8px 10px;margin:10px 0 0;font-size:.86rem}
 .heroimg{display:block;margin:0 0 18px;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:var(--line)}
 .heroimg img{width:100%;height:100%;object-fit:cover;display:block}
 .irow{display:flex;gap:14px;align-items:flex-start}
@@ -273,6 +288,7 @@ const CATS = [
   {id:"alles", name:"Alles"},
   {id:"stroom", name:"Nieuwsstroom"},
   {id:"wereld", name:"Wereldbol"},
+  {id:"gesprek", name:"Gesprekken"},
   {id:"nieuws", name:"Nieuws"},
   {id:"onderzoek", name:"Onderzoek"},
   {id:"analyse", name:"Analyse"},
@@ -318,7 +334,7 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = (c.id==="stroom" || c.id==="wereld") ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    const n = ["stroom","wereld","gesprek"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
     return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
@@ -326,6 +342,7 @@ document.getElementById("tabs").addEventListener("click", e=>{
   const b = e.target.closest(".tab"); if(!b) return;
   state.cat = b.dataset.cat;
   state.dossier = null; state.sectie = null; state.limit = 80;
+  if(state.cat==="gesprek") RUIMTES = null;
   if(location.hash) location.hash = ""; else renderList();
   renderTabs();
 });
@@ -354,6 +371,10 @@ function renderList(){
   stopBol();
   if(state.cat==="stroom"){ main.innerHTML = stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
+  if(state.cat==="gesprek"){
+    if(!RUIMTES){ main.innerHTML = `<p class="loading">Gesprekken laden…</p>`; laadRuimtes(); return; }
+    main.innerHTML = gesprekView(); return;
+  }
   let list = filtered();
   let html = "";
 
@@ -747,9 +768,130 @@ function tekenPlekLijst(){
 }
 function stopBol(){ if(bol){ bol.stop = true; cancelAnimationFrame(bol.raf); bol = null; } }
 
+/* ---------- gesprekken ---------- */
+let RUIMTES = null, ruimteTimer = null, antwoordOp = null;
+const HUISREGELS = `Reageer op de inhoud, niet op personen. Geen beledigingen, bedreigingen, discriminatie of oproepen tot geweld. Noem je bron als je een bewering doet. Berichten die deze regels overtreden, worden verwijderd.`;
+async function laadRuimtes(){
+  try { const r = await fetch("/api/gesprek", {cache:"no-cache"}); RUIMTES = r.ok ? (await r.json()).ruimtes : []; }
+  catch(e){ RUIMTES = []; }
+  if(state.cat==="gesprek" && !location.hash) renderList();
+}
+function gesprekView(){
+  let html = `<section class="dhead"><h2>Gesprekken</h2><p>Praat mee met andere lezers over de grote ontwikkelingen. ${HUISREGELS}</p></section>`;
+  if(!RUIMTES.length) return html + `<div class="empty"><strong>De gesprekken zijn nu niet bereikbaar</strong>Probeer het over een paar minuten opnieuw.</div>`;
+  return html + `<div class="rgrid">${RUIMTES.map(r => `<a class="rcard" href="#ruimte-${esc(r.id)}">
+    <strong>${esc(r.naam)}</strong>
+    <span class="romschr">${esc(r.omschrijving)}</span>
+    ${r.laatste ? `<span class="flast"><b>${esc(r.laatste.naam)}</b> ${esc(r.laatste.tekst)}${r.laatste.tekst.length>=120?"…":""}</span>` : `<span class="fmeta">Nog geen berichten. Begin het gesprek.</span>`}
+    <span class="fmeta">${r.aantal} ${r.aantal===1?"bericht":"berichten"}${r.laatste ? " · laatst " + nTijd(r.laatste.tijd) : ""}${r.modus==="gesloten" ? " · gesloten" : ""}</span>
+  </a>`).join("")}</div>`;
+}
+function berichtHTML(m, perId){
+  const ouder = m.antwoordOp && perId.get(m.antwoordOp);
+  return `<li id="m-${esc(m.id)}" class="${m.redactie ? "isred" : ""}">
+    <div class="nmeta"><b>${esc(m.naam)}</b>${m.redactie ? `<span class="redlbl">Redactie</span>` : ""}<time datetime="${esc(m.tijd)}">${nTijd(m.tijd)}</time>
+      <span class="macties"><button class="antw" data-antw="${esc(m.id)}">Reageer</button>${m.redactie ? "" : `<button class="meld" data-meld="${esc(m.id)}">Melden</button>`}</span></div>
+    ${ouder ? `<button class="citaat" data-naar="${esc(ouder.id)}"><b>${esc(ouder.naam)}</b> ${esc(ouder.tekst.slice(0,90))}${ouder.tekst.length>90?"…":""}</button>` : ""}
+    <p>${esc(m.tekst)}</p>
+  </li>`;
+}
+function berichtenHTML(lijst){
+  if(!lijst.length) return `<p class="stroom-intro">Nog geen berichten. Jij kunt het gesprek beginnen.</p>`;
+  const perId = new Map(lijst.map(m => [m.id, m]));
+  return `<ul class="rlist">${lijst.slice().reverse().map(m => berichtHTML(m, perId)).join("")}</ul>`;
+}
+let RUIMTE_BERICHTEN = [];
+async function renderRuimte(id){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = true;
+  document.getElementById("tabs").hidden = true;
+  main.innerHTML = `<p class="loading">Laden…</p>`;
+  window.scrollTo(0,0);
+  antwoordOp = null;
+  let data;
+  try { const r = await fetch(`/api/gesprek?ruimte=${encodeURIComponent(id)}`, {cache:"no-cache"}); if(!r.ok) throw 0; data = await r.json(); }
+  catch(e){ main.innerHTML = `<div class="empty"><strong>Deze ruimte bestaat niet (meer)</strong><p><a class="btn" href="#">Naar de startpagina</a></p></div>`; return; }
+  RUIMTE_BERICHTEN = data.berichten;
+  const r = data.ruimte;
+  document.title = r.naam + " · Gesprekken | Het Alternatieve Geluid";
+  const open = r.modus !== "gesloten";
+  main.innerHTML = `<article class="reader flits">
+    <button class="back" id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Alle gesprekken</button>
+    <p class="meta"><span class="ftag">Gesprek</span></p>
+    <h1>${esc(r.naam)}</h1>
+    <p class="aanleiding">${esc(r.omschrijving)}</p>
+    ${open ? `<form class="rform" id="rform" novalidate>
+      <p class="stroom-intro">${HUISREGELS} ${r.modus==="gemodereerd" ? "Berichten verschijnen na goedkeuring." : "Berichten met een link verschijnen pas na goedkeuring."}</p>
+      <div id="antwoordbalk" hidden></div>
+      <label for="rnaam">Naam</label><input id="rnaam" maxlength="40" autocomplete="nickname">
+      <label for="rtekst">Je bericht</label><textarea id="rtekst" maxlength="1000"></textarea>
+      <div class="hp" aria-hidden="true"><label>Laat leeg <input id="rweb" tabindex="-1" autocomplete="off"></label></div>
+      <div class="actions"><button class="btn" type="submit">Plaatsen</button></div>
+      <div id="rmsg" role="status"></div>
+      <p class="stroom-intro privacy">We bewaren alleen de naam die je kiest en je bericht, geen e-mailadres of IP-adres. Om spam te beperken gebruiken we een versleutelde code van je verbinding die na tien minuten niet meer meetelt.</p>
+    </form>` : `<p class="note"><span>Deze ruimte is op dit moment gesloten.</span></p>`}
+    <h2 class="kop">Berichten</h2>
+    <div id="berichten">${berichtenHTML(RUIMTE_BERICHTEN)}</div>
+  </article>`;
+  document.getElementById("back").onclick = () => { state.cat = "gesprek"; RUIMTES = null; renderTabs(); location.hash = ""; };
+  const form = document.getElementById("rform"), t0 = Date.now();
+  const zetAntwoord = mid => {
+    antwoordOp = mid;
+    const balk = document.getElementById("antwoordbalk"); if(!balk) return;
+    const m = RUIMTE_BERICHTEN.find(x => x.id===mid);
+    if(!m){ balk.hidden = true; balk.innerHTML = ""; return; }
+    balk.hidden = false;
+    balk.innerHTML = `<span>Je reageert op <b>${esc(m.naam)}</b>: ${esc(m.tekst.slice(0,70))}${m.tekst.length>70?"…":""}</span><button type="button" class="antw" id="geenantw">Annuleren</button>`;
+    document.getElementById("geenantw").onclick = () => zetAntwoord(null);
+  };
+  if(form){
+    try { document.getElementById("rnaam").value = localStorage.getItem("hag-naam") || ""; } catch(e) {}
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const knop = form.querySelector('button[type="submit"]'), msg = document.getElementById("rmsg"), naam = document.getElementById("rnaam").value;
+      knop.disabled = true;
+      try {
+        const res = await fetch("/api/gesprek", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({ruimte:id, naam, tekst:document.getElementById("rtekst").value, antwoordOp, website:document.getElementById("rweb").value, t:t0})});
+        const j = await res.json();
+        if(!res.ok) throw new Error(j.fout || "Er ging iets mis.");
+        try { localStorage.setItem("hag-naam", naam); } catch(err) {}
+        document.getElementById("rtekst").value = ""; zetAntwoord(null);
+        msg.innerHTML = `<div class="note"><p>${j.status==="zichtbaar" ? "Je bericht staat erbij." : "Bedankt. Je bericht verschijnt zodra het is goedgekeurd."}</p></div>`;
+        if(j.status==="zichtbaar") verversRuimte(id);
+      } catch(err){ msg.innerHTML = `<div class="note"><p>${esc(err.message)}</p></div>`; }
+      finally { knop.disabled = false; }
+    };
+  }
+  document.getElementById("berichten").onclick = async e => {
+    const a = e.target.closest("[data-antw]");
+    if(a && form){ zetAntwoord(a.dataset.antw); form.scrollIntoView({behavior:"smooth", block:"start"}); document.getElementById("rtekst").focus({preventScroll:true}); return; }
+    const n = e.target.closest("[data-naar]");
+    if(n){ const el = document.getElementById("m-" + n.dataset.naar); if(el){ el.scrollIntoView({behavior:"smooth", block:"center"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"), 1600); } return; }
+    const b = e.target.closest("[data-meld]");
+    if(b){
+      if(!confirm("Dit bericht melden als ongepast?")) return;
+      b.disabled = true; b.textContent = "Gemeld";
+      try { await fetch("/api/gesprek", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({ruimte:id, actie:"meld", id:b.dataset.meld})}); } catch(err) {}
+    }
+  };
+  ruimteTimer = setInterval(() => verversRuimte(id), 20000);
+}
+async function verversRuimte(id){
+  try {
+    const r = await fetch(`/api/gesprek?ruimte=${encodeURIComponent(id)}`, {cache:"no-cache"}); if(!r.ok) return;
+    const j = await r.json();
+    if(j.berichten.length === RUIMTE_BERICHTEN.length && j.berichten.at(-1)?.id === RUIMTE_BERICHTEN.at(-1)?.id) return;
+    RUIMTE_BERICHTEN = j.berichten;
+    const box = document.getElementById("berichten"); if(box) box.innerHTML = berichtenHTML(RUIMTE_BERICHTEN);
+  } catch(e) {}
+}
+
 /* ---------- routing ---------- */
 function route(){
   clearInterval(flitsTimer);
+  clearInterval(ruimteTimer);
+  const rm = location.hash.match(/^#ruimte-([a-z0-9-]+)$/);
+  if(rm){ stopBol(); renderRuimte(rm[1]); return; }
   stopBol();
   const fm = location.hash.match(/^#flits-([a-f0-9]{12})$/);
   if(fm){ renderFlits(fm[1]); return; }

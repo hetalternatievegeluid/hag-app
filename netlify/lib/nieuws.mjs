@@ -6,7 +6,7 @@ import plaatsen from "../../config/plaatsen.json";
 import { archiveerEnergie } from "./energie.mjs";
 
 const BEWAAR_DAGEN = 7;
-const MAX_BERICHTEN = 800;
+const MAX_BERICHTEN = 1500;
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_", textNodeName: "#text" });
 
 const store = () => getStore("nieuws");
@@ -35,7 +35,7 @@ function datum(it) {
 const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const sectieRegels = config.secties.map(s => ({
   id: s.id,
-  re: new RegExp(`(^|[^\\p{L}])(${s.trefwoorden.map(escRe).join("|")})`, "iu"),
+  re: new RegExp(`(^|[^\\p{L}])(${s.trefwoorden.map(w => w.endsWith("=") ? escRe(w.slice(0, -1)) + "(?![\\p{L}])" : escRe(w)).join("|")})`, "iu"),
 }));
 
 // Plaats bepalen voor de wereldbol: de plaatsnaam die het eerst in de kop staat, anders in de samenvatting.
@@ -105,7 +105,7 @@ export async function verversNieuws() {
   });
   const grens = Date.now() - BEWAAR_DAGEN * 864e5;
   const berichten = [...perUrl.values()]
-    .filter(b => b.secties.length && new Date(b.tijd).getTime() > grens && new Date(b.tijd).getTime() < Date.now() + 36e5)
+    .filter(b => (b.secties.length || b.plaats) && new Date(b.tijd).getTime() > grens && new Date(b.tijd).getTime() < Date.now() + 36e5)
     .sort((a, b) => b.tijd.localeCompare(a.tijd))
     .slice(0, MAX_BERICHTEN);
   const data = { bijgewerkt: new Date().toISOString(), secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status };

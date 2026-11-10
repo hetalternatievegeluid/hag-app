@@ -794,6 +794,809 @@
    ]
   },
   {
+   "naam": "Johannesburg",
+   "lat": -26.2,
+   "lon": 28.05,
+   "namen": [
+    "Johannesburg"
+   ]
+  },
+  {
+   "naam": "Pretoria",
+   "lat": -25.75,
+   "lon": 28.19,
+   "namen": [
+    "Pretoria"
+   ]
+  },
+  {
+   "naam": "Kaapstad",
+   "lat": -33.92,
+   "lon": 18.42,
+   "namen": [
+    "Kaapstad",
+    "Cape Town"
+   ]
+  },
+  {
+   "naam": "Lagos",
+   "lat": 6.52,
+   "lon": 3.38,
+   "namen": [
+    "Lagos"
+   ]
+  },
+  {
+   "naam": "Abuja",
+   "lat": 9.06,
+   "lon": 7.5,
+   "namen": [
+    "Abuja"
+   ]
+  },
+  {
+   "naam": "Accra",
+   "lat": 5.6,
+   "lon": -0.19,
+   "namen": [
+    "Accra"
+   ]
+  },
+  {
+   "naam": "Dakar",
+   "lat": 14.69,
+   "lon": -17.44,
+   "namen": [
+    "Dakar"
+   ]
+  },
+  {
+   "naam": "Abidjan",
+   "lat": 5.36,
+   "lon": -4.01,
+   "namen": [
+    "Abidjan"
+   ]
+  },
+  {
+   "naam": "Kinshasa",
+   "lat": -4.44,
+   "lon": 15.27,
+   "namen": [
+    "Kinshasa"
+   ]
+  },
+  {
+   "naam": "Goma",
+   "lat": -1.68,
+   "lon": 29.22,
+   "namen": [
+    "Goma",
+    "Noord-Kivu",
+    "North Kivu"
+   ]
+  },
+  {
+   "naam": "Kigali",
+   "lat": -1.95,
+   "lon": 30.06,
+   "namen": [
+    "Kigali"
+   ]
+  },
+  {
+   "naam": "Kampala",
+   "lat": 0.35,
+   "lon": 32.58,
+   "namen": [
+    "Kampala"
+   ]
+  },
+  {
+   "naam": "Juba",
+   "lat": 4.85,
+   "lon": 31.58,
+   "namen": [
+    "Juba"
+   ]
+  },
+  {
+   "naam": "Port Sudan",
+   "lat": 19.62,
+   "lon": 37.22,
+   "namen": [
+    "Port Sudan"
+   ]
+  },
+  {
+   "naam": "Tigray",
+   "lat": 14.0,
+   "lon": 38.5,
+   "namen": [
+    "Tigray",
+    "Amhara"
+   ]
+  },
+  {
+   "naam": "Djibouti",
+   "lat": 11.59,
+   "lon": 43.15,
+   "namen": [
+    "Djibouti"
+   ]
+  },
+  {
+   "naam": "Luanda",
+   "lat": -8.84,
+   "lon": 13.23,
+   "namen": [
+    "Luanda"
+   ]
+  },
+  {
+   "naam": "Harare",
+   "lat": -17.83,
+   "lon": 31.05,
+   "namen": [
+    "Harare"
+   ]
+  },
+  {
+   "naam": "Lusaka",
+   "lat": -15.39,
+   "lon": 28.32,
+   "namen": [
+    "Lusaka"
+   ]
+  },
+  {
+   "naam": "Maputo",
+   "lat": -25.97,
+   "lon": 32.57,
+   "namen": [
+    "Maputo",
+    "Cabo Delgado"
+   ]
+  },
+  {
+   "naam": "Antananarivo",
+   "lat": -18.88,
+   "lon": 47.51,
+   "namen": [
+    "Antananarivo"
+   ]
+  },
+  {
+   "naam": "Algiers",
+   "lat": 36.75,
+   "lon": 3.06,
+   "namen": [
+    "Algiers",
+    "Algiers"
+   ]
+  },
+  {
+   "naam": "Tunis",
+   "lat": 36.81,
+   "lon": 10.18,
+   "namen": [
+    "Tunis"
+   ]
+  },
+  {
+   "naam": "Rabat",
+   "lat": 34.02,
+   "lon": -6.83,
+   "namen": [
+    "Rabat"
+   ]
+  },
+  {
+   "naam": "Niamey",
+   "lat": 13.51,
+   "lon": 2.11,
+   "namen": [
+    "Niamey"
+   ]
+  },
+  {
+   "naam": "Ouagadougou",
+   "lat": 12.37,
+   "lon": -1.52,
+   "namen": [
+    "Ouagadougou"
+   ]
+  },
+  {
+   "naam": "Bamako",
+   "lat": 12.64,
+   "lon": -8.0,
+   "namen": [
+    "Bamako"
+   ]
+  },
+  {
+   "naam": "N'Djamena",
+   "lat": 12.13,
+   "lon": 15.06,
+   "namen": [
+    "N'Djamena",
+    "Ndjamena"
+   ]
+  },
+  {
+   "naam": "Bangui",
+   "lat": 4.39,
+   "lon": 18.56,
+   "namen": [
+    "Bangui"
+   ]
+  },
+  {
+   "naam": "Yaoundé",
+   "lat": 3.85,
+   "lon": 11.5,
+   "namen": [
+    "Yaoundé",
+    "Yaounde"
+   ]
+  },
+  {
+   "naam": "Dar es Salaam",
+   "lat": -6.79,
+   "lon": 39.21,
+   "namen": [
+    "Dar es Salaam"
+   ]
+  },
+  {
+   "naam": "Sahel",
+   "lat": 15.0,
+   "lon": 2.0,
+   "namen": [
+    "Sahel"
+   ]
+  },
+  {
+   "naam": "Bogotá",
+   "lat": 4.71,
+   "lon": -74.07,
+   "namen": [
+    "Bogotá",
+    "Bogota"
+   ]
+  },
+  {
+   "naam": "Lima",
+   "lat": -12.05,
+   "lon": -77.04,
+   "namen": [
+    "Lima"
+   ]
+  },
+  {
+   "naam": "Santiago de Chile",
+   "lat": -33.45,
+   "lon": -70.67,
+   "namen": [
+    "Santiago de Chile"
+   ]
+  },
+  {
+   "naam": "Buenos Aires",
+   "lat": -34.6,
+   "lon": -58.38,
+   "namen": [
+    "Buenos Aires"
+   ]
+  },
+  {
+   "naam": "São Paulo",
+   "lat": -23.55,
+   "lon": -46.63,
+   "namen": [
+    "São Paulo",
+    "Sao Paulo"
+   ]
+  },
+  {
+   "naam": "Rio de Janeiro",
+   "lat": -22.91,
+   "lon": -43.17,
+   "namen": [
+    "Rio de Janeiro"
+   ]
+  },
+  {
+   "naam": "Quito",
+   "lat": -0.18,
+   "lon": -78.47,
+   "namen": [
+    "Quito"
+   ]
+  },
+  {
+   "naam": "La Paz",
+   "lat": -16.5,
+   "lon": -68.15,
+   "namen": [
+    "La Paz"
+   ]
+  },
+  {
+   "naam": "Asunción",
+   "lat": -25.26,
+   "lon": -57.58,
+   "namen": [
+    "Asunción",
+    "Asuncion"
+   ]
+  },
+  {
+   "naam": "Montevideo",
+   "lat": -34.9,
+   "lon": -56.16,
+   "namen": [
+    "Montevideo"
+   ]
+  },
+  {
+   "naam": "Port-au-Prince",
+   "lat": 18.59,
+   "lon": -72.31,
+   "namen": [
+    "Port-au-Prince"
+   ]
+  },
+  {
+   "naam": "Managua",
+   "lat": 12.11,
+   "lon": -86.24,
+   "namen": [
+    "Managua"
+   ]
+  },
+  {
+   "naam": "Paramaribo",
+   "lat": 5.85,
+   "lon": -55.2,
+   "namen": [
+    "Paramaribo"
+   ]
+  },
+  {
+   "naam": "Willemstad",
+   "lat": 12.11,
+   "lon": -68.93,
+   "namen": [
+    "Willemstad"
+   ]
+  },
+  {
+   "naam": "Mumbai",
+   "lat": 19.08,
+   "lon": 72.88,
+   "namen": [
+    "Mumbai",
+    "Bombay"
+   ]
+  },
+  {
+   "naam": "Bengaluru",
+   "lat": 12.97,
+   "lon": 77.59,
+   "namen": [
+    "Bengaluru",
+    "Bangalore"
+   ]
+  },
+  {
+   "naam": "Kolkata",
+   "lat": 22.57,
+   "lon": 88.36,
+   "namen": [
+    "Kolkata",
+    "Calcutta"
+   ]
+  },
+  {
+   "naam": "Chennai",
+   "lat": 13.08,
+   "lon": 80.27,
+   "namen": [
+    "Chennai"
+   ]
+  },
+  {
+   "naam": "Kasjmir",
+   "lat": 34.08,
+   "lon": 74.8,
+   "namen": [
+    "Kasjmir",
+    "Kashmir",
+    "Srinagar"
+   ]
+  },
+  {
+   "naam": "Lahore",
+   "lat": 31.55,
+   "lon": 74.34,
+   "namen": [
+    "Lahore"
+   ]
+  },
+  {
+   "naam": "Karachi",
+   "lat": 24.86,
+   "lon": 67.0,
+   "namen": [
+    "Karachi"
+   ]
+  },
+  {
+   "naam": "Dhaka",
+   "lat": 23.81,
+   "lon": 90.41,
+   "namen": [
+    "Dhaka"
+   ]
+  },
+  {
+   "naam": "Colombo",
+   "lat": 6.93,
+   "lon": 79.86,
+   "namen": [
+    "Colombo"
+   ]
+  },
+  {
+   "naam": "Kathmandu",
+   "lat": 27.72,
+   "lon": 85.32,
+   "namen": [
+    "Kathmandu"
+   ]
+  },
+  {
+   "naam": "Yangon",
+   "lat": 16.84,
+   "lon": 96.17,
+   "namen": [
+    "Yangon",
+    "Rangoon",
+    "Naypyidaw"
+   ]
+  },
+  {
+   "naam": "Bangkok",
+   "lat": 13.76,
+   "lon": 100.5,
+   "namen": [
+    "Bangkok"
+   ]
+  },
+  {
+   "naam": "Kuala Lumpur",
+   "lat": 3.14,
+   "lon": 101.69,
+   "namen": [
+    "Kuala Lumpur"
+   ]
+  },
+  {
+   "naam": "Phnom Penh",
+   "lat": 11.56,
+   "lon": 104.92,
+   "namen": [
+    "Phnom Penh"
+   ]
+  },
+  {
+   "naam": "Kopenhagen",
+   "lat": 55.68,
+   "lon": 12.57,
+   "namen": [
+    "Kopenhagen",
+    "Copenhagen"
+   ]
+  },
+  {
+   "naam": "Dublin",
+   "lat": 53.35,
+   "lon": -6.26,
+   "namen": [
+    "Dublin"
+   ]
+  },
+  {
+   "naam": "Lissabon",
+   "lat": 38.72,
+   "lon": -9.14,
+   "namen": [
+    "Lissabon",
+    "Lisbon"
+   ]
+  },
+  {
+   "naam": "Athene",
+   "lat": 37.98,
+   "lon": 23.73,
+   "namen": [
+    "Athene",
+    "Athens"
+   ]
+  },
+  {
+   "naam": "Belgrado",
+   "lat": 44.79,
+   "lon": 20.45,
+   "namen": [
+    "Belgrado",
+    "Belgrade"
+   ]
+  },
+  {
+   "naam": "Pristina",
+   "lat": 42.66,
+   "lon": 21.17,
+   "namen": [
+    "Pristina"
+   ]
+  },
+  {
+   "naam": "Sarajevo",
+   "lat": 43.86,
+   "lon": 18.41,
+   "namen": [
+    "Sarajevo"
+   ]
+  },
+  {
+   "naam": "Zagreb",
+   "lat": 45.81,
+   "lon": 15.98,
+   "namen": [
+    "Zagreb"
+   ]
+  },
+  {
+   "naam": "Boekarest",
+   "lat": 44.43,
+   "lon": 26.1,
+   "namen": [
+    "Boekarest",
+    "Bucharest"
+   ]
+  },
+  {
+   "naam": "Sofia",
+   "lat": 42.7,
+   "lon": 23.32,
+   "namen": [
+    "Sofia"
+   ]
+  },
+  {
+   "naam": "Bratislava",
+   "lat": 48.15,
+   "lon": 17.11,
+   "namen": [
+    "Bratislava"
+   ]
+  },
+  {
+   "naam": "Praag",
+   "lat": 50.08,
+   "lon": 14.44,
+   "namen": [
+    "Praag",
+    "Prague"
+   ]
+  },
+  {
+   "naam": "Bern",
+   "lat": 46.95,
+   "lon": 7.45,
+   "namen": [
+    "Bern"
+   ]
+  },
+  {
+   "naam": "Tallinn",
+   "lat": 59.44,
+   "lon": 24.75,
+   "namen": [
+    "Tallinn"
+   ]
+  },
+  {
+   "naam": "Riga",
+   "lat": 56.95,
+   "lon": 24.11,
+   "namen": [
+    "Riga"
+   ]
+  },
+  {
+   "naam": "Vilnius",
+   "lat": 54.69,
+   "lon": 25.28,
+   "namen": [
+    "Vilnius"
+   ]
+  },
+  {
+   "naam": "Kaliningrad",
+   "lat": 54.71,
+   "lon": 20.45,
+   "namen": [
+    "Kaliningrad"
+   ]
+  },
+  {
+   "naam": "Tbilisi",
+   "lat": 41.72,
+   "lon": 44.79,
+   "namen": [
+    "Tbilisi"
+   ]
+  },
+  {
+   "naam": "Jerevan",
+   "lat": 40.18,
+   "lon": 44.51,
+   "namen": [
+    "Jerevan",
+    "Yerevan"
+   ]
+  },
+  {
+   "naam": "Bakoe",
+   "lat": 40.41,
+   "lon": 49.87,
+   "namen": [
+    "Bakoe",
+    "Baku"
+   ]
+  },
+  {
+   "naam": "Straatsburg",
+   "lat": 48.57,
+   "lon": 7.75,
+   "namen": [
+    "Straatsburg",
+    "Strasbourg"
+   ]
+  },
+  {
+   "naam": "München",
+   "lat": 48.14,
+   "lon": 11.58,
+   "namen": [
+    "München",
+    "Munich"
+   ]
+  },
+  {
+   "naam": "Frankfurt",
+   "lat": 50.11,
+   "lon": 8.68,
+   "namen": [
+    "Frankfurt"
+   ]
+  },
+  {
+   "naam": "Hamburg",
+   "lat": 53.55,
+   "lon": 9.99,
+   "namen": [
+    "Hamburg"
+   ]
+  },
+  {
+   "naam": "Milaan",
+   "lat": 45.46,
+   "lon": 9.19,
+   "namen": [
+    "Milaan",
+    "Milan"
+   ]
+  },
+  {
+   "naam": "Barcelona",
+   "lat": 41.39,
+   "lon": 2.17,
+   "namen": [
+    "Barcelona",
+    "Catalonië",
+    "Catalonia"
+   ]
+  },
+  {
+   "naam": "Marseille",
+   "lat": 43.3,
+   "lon": 5.37,
+   "namen": [
+    "Marseille"
+   ]
+  },
+  {
+   "naam": "Edinburgh",
+   "lat": 55.95,
+   "lon": -3.19,
+   "namen": [
+    "Edinburgh"
+   ]
+  },
+  {
+   "naam": "Belfast",
+   "lat": 54.6,
+   "lon": -5.93,
+   "namen": [
+    "Belfast",
+    "Noord-Ierland",
+    "Northern Ireland"
+   ]
+  },
+  {
+   "naam": "Reykjavik",
+   "lat": 64.15,
+   "lon": -21.94,
+   "namen": [
+    "Reykjavik",
+    "Reykjavík"
+   ]
+  },
+  {
+   "naam": "Valletta",
+   "lat": 35.9,
+   "lon": 14.51,
+   "namen": [
+    "Valletta"
+   ]
+  },
+  {
+   "naam": "Nicosia",
+   "lat": 35.19,
+   "lon": 33.38,
+   "namen": [
+    "Nicosia"
+   ]
+  },
+  {
+   "naam": "Davos",
+   "lat": 46.8,
+   "lon": 9.84,
+   "namen": [
+    "Davos"
+   ]
+  },
+  {
+   "naam": "Antwerpen",
+   "lat": 51.22,
+   "lon": 4.4,
+   "namen": [
+    "Antwerpen",
+    "Antwerp"
+   ]
+  },
+  {
+   "naam": "Utrecht",
+   "lat": 52.09,
+   "lon": 5.12,
+   "namen": [
+    "Utrecht"
+   ]
+  },
+  {
+   "naam": "Groningen",
+   "lat": 53.22,
+   "lon": 6.57,
+   "namen": [
+    "Groningen"
+   ]
+  },
+  {
    "naam": "Oekraïne",
    "lat": 49.0,
    "lon": 31.4,
@@ -1270,6 +2073,670 @@
     "Verenigde Staten",
     "United States",
     "Amerika"
+   ]
+  },
+  {
+   "naam": "Zuid-Afrika",
+   "lat": -30.6,
+   "lon": 22.9,
+   "namen": [
+    "Zuid-Afrika",
+    "South Africa"
+   ]
+  },
+  {
+   "naam": "Ghana",
+   "lat": 7.9,
+   "lon": -1.0,
+   "namen": [
+    "Ghana"
+   ]
+  },
+  {
+   "naam": "Senegal",
+   "lat": 14.5,
+   "lon": -14.5,
+   "namen": [
+    "Senegal"
+   ]
+  },
+  {
+   "naam": "Ivoorkust",
+   "lat": 7.5,
+   "lon": -5.5,
+   "namen": [
+    "Ivoorkust",
+    "Ivory Coast",
+    "Côte d'Ivoire"
+   ]
+  },
+  {
+   "naam": "DR Congo",
+   "lat": -2.9,
+   "lon": 23.7,
+   "namen": [
+    "DR Congo",
+    "Democratische Republiek Congo",
+    "Democratic Republic of Congo",
+    "Congo"
+   ]
+  },
+  {
+   "naam": "Rwanda",
+   "lat": -1.9,
+   "lon": 29.9,
+   "namen": [
+    "Rwanda"
+   ]
+  },
+  {
+   "naam": "Oeganda",
+   "lat": 1.4,
+   "lon": 32.3,
+   "namen": [
+    "Oeganda",
+    "Uganda"
+   ]
+  },
+  {
+   "naam": "Kenia",
+   "lat": 0.0,
+   "lon": 37.9,
+   "namen": [
+    "Kenia",
+    "Kenya"
+   ]
+  },
+  {
+   "naam": "Tanzania",
+   "lat": -6.4,
+   "lon": 34.9,
+   "namen": [
+    "Tanzania"
+   ]
+  },
+  {
+   "naam": "Zuid-Soedan",
+   "lat": 7.9,
+   "lon": 30.0,
+   "namen": [
+    "Zuid-Soedan",
+    "South Sudan"
+   ]
+  },
+  {
+   "naam": "Eritrea",
+   "lat": 15.2,
+   "lon": 39.8,
+   "namen": [
+    "Eritrea"
+   ]
+  },
+  {
+   "naam": "Angola",
+   "lat": -11.2,
+   "lon": 17.9,
+   "namen": [
+    "Angola"
+   ]
+  },
+  {
+   "naam": "Zimbabwe",
+   "lat": -19.0,
+   "lon": 29.2,
+   "namen": [
+    "Zimbabwe"
+   ]
+  },
+  {
+   "naam": "Zambia",
+   "lat": -13.1,
+   "lon": 27.8,
+   "namen": [
+    "Zambia"
+   ]
+  },
+  {
+   "naam": "Mozambique",
+   "lat": -18.7,
+   "lon": 35.5,
+   "namen": [
+    "Mozambique"
+   ]
+  },
+  {
+   "naam": "Madagaskar",
+   "lat": -18.8,
+   "lon": 46.9,
+   "namen": [
+    "Madagaskar",
+    "Madagascar"
+   ]
+  },
+  {
+   "naam": "Algerije",
+   "lat": 28.0,
+   "lon": 1.7,
+   "namen": [
+    "Algerije",
+    "Algeria"
+   ]
+  },
+  {
+   "naam": "Tunesië",
+   "lat": 34.0,
+   "lon": 9.5,
+   "namen": [
+    "Tunesië",
+    "Tunisia"
+   ]
+  },
+  {
+   "naam": "Burkina Faso",
+   "lat": 12.2,
+   "lon": -1.6,
+   "namen": [
+    "Burkina Faso"
+   ]
+  },
+  {
+   "naam": "Tsjaad",
+   "lat": 15.5,
+   "lon": 18.7,
+   "namen": [
+    "Tsjaad",
+    "Chad"
+   ]
+  },
+  {
+   "naam": "Centraal-Afrikaanse Republiek",
+   "lat": 6.6,
+   "lon": 20.9,
+   "namen": [
+    "Centraal-Afrikaanse Republiek",
+    "Central African Republic"
+   ]
+  },
+  {
+   "naam": "Kameroen",
+   "lat": 7.4,
+   "lon": 12.4,
+   "namen": [
+    "Kameroen",
+    "Cameroon"
+   ]
+  },
+  {
+   "naam": "Niger",
+   "lat": 17.6,
+   "lon": 8.1,
+   "namen": [
+    "Niger"
+   ]
+  },
+  {
+   "naam": "Colombia",
+   "lat": 4.6,
+   "lon": -74.3,
+   "namen": [
+    "Colombia"
+   ]
+  },
+  {
+   "naam": "Peru",
+   "lat": -9.2,
+   "lon": -75.0,
+   "namen": [
+    "Peru"
+   ]
+  },
+  {
+   "naam": "Chili",
+   "lat": -35.7,
+   "lon": -71.5,
+   "namen": [
+    "Chili",
+    "Chile"
+   ]
+  },
+  {
+   "naam": "Argentinië",
+   "lat": -38.4,
+   "lon": -63.6,
+   "namen": [
+    "Argentinië",
+    "Argentina",
+    "Milei"
+   ]
+  },
+  {
+   "naam": "Ecuador",
+   "lat": -1.8,
+   "lon": -78.2,
+   "namen": [
+    "Ecuador"
+   ]
+  },
+  {
+   "naam": "Bolivia",
+   "lat": -16.3,
+   "lon": -63.6,
+   "namen": [
+    "Bolivia"
+   ]
+  },
+  {
+   "naam": "Paraguay",
+   "lat": -23.4,
+   "lon": -58.4,
+   "namen": [
+    "Paraguay"
+   ]
+  },
+  {
+   "naam": "Uruguay",
+   "lat": -32.5,
+   "lon": -55.8,
+   "namen": [
+    "Uruguay"
+   ]
+  },
+  {
+   "naam": "Haïti",
+   "lat": 19.0,
+   "lon": -72.3,
+   "namen": [
+    "Haïti",
+    "Haiti"
+   ]
+  },
+  {
+   "naam": "Panama",
+   "lat": 8.5,
+   "lon": -80.8,
+   "namen": [
+    "Panama"
+   ]
+  },
+  {
+   "naam": "Nicaragua",
+   "lat": 12.9,
+   "lon": -85.2,
+   "namen": [
+    "Nicaragua"
+   ]
+  },
+  {
+   "naam": "Honduras",
+   "lat": 15.2,
+   "lon": -86.2,
+   "namen": [
+    "Honduras"
+   ]
+  },
+  {
+   "naam": "Guatemala",
+   "lat": 15.8,
+   "lon": -90.2,
+   "namen": [
+    "Guatemala"
+   ]
+  },
+  {
+   "naam": "El Salvador",
+   "lat": 13.8,
+   "lon": -88.9,
+   "namen": [
+    "El Salvador",
+    "Bukele"
+   ]
+  },
+  {
+   "naam": "Dominicaanse Republiek",
+   "lat": 18.7,
+   "lon": -70.2,
+   "namen": [
+    "Dominicaanse Republiek",
+    "Dominican Republic"
+   ]
+  },
+  {
+   "naam": "Puerto Rico",
+   "lat": 18.2,
+   "lon": -66.5,
+   "namen": [
+    "Puerto Rico"
+   ]
+  },
+  {
+   "naam": "Suriname",
+   "lat": 4.0,
+   "lon": -56.0,
+   "namen": [
+    "Suriname"
+   ]
+  },
+  {
+   "naam": "Curaçao",
+   "lat": 12.17,
+   "lon": -68.98,
+   "namen": [
+    "Curaçao",
+    "Curacao"
+   ]
+  },
+  {
+   "naam": "Aruba",
+   "lat": 12.52,
+   "lon": -69.97,
+   "namen": [
+    "Aruba"
+   ]
+  },
+  {
+   "naam": "Bonaire",
+   "lat": 12.2,
+   "lon": -68.26,
+   "namen": [
+    "Bonaire"
+   ]
+  },
+  {
+   "naam": "Bangladesh",
+   "lat": 23.7,
+   "lon": 90.4,
+   "namen": [
+    "Bangladesh"
+   ]
+  },
+  {
+   "naam": "Sri Lanka",
+   "lat": 7.9,
+   "lon": 80.8,
+   "namen": [
+    "Sri Lanka"
+   ]
+  },
+  {
+   "naam": "Nepal",
+   "lat": 28.4,
+   "lon": 84.1,
+   "namen": [
+    "Nepal"
+   ]
+  },
+  {
+   "naam": "Myanmar",
+   "lat": 21.9,
+   "lon": 95.96,
+   "namen": [
+    "Myanmar",
+    "Birma",
+    "Burma"
+   ]
+  },
+  {
+   "naam": "Thailand",
+   "lat": 15.9,
+   "lon": 101.0,
+   "namen": [
+    "Thailand"
+   ]
+  },
+  {
+   "naam": "Maleisië",
+   "lat": 4.2,
+   "lon": 102.0,
+   "namen": [
+    "Maleisië",
+    "Malaysia"
+   ]
+  },
+  {
+   "naam": "Cambodja",
+   "lat": 12.6,
+   "lon": 104.99,
+   "namen": [
+    "Cambodja",
+    "Cambodia"
+   ]
+  },
+  {
+   "naam": "Denemarken",
+   "lat": 56.3,
+   "lon": 9.5,
+   "namen": [
+    "Denemarken",
+    "Denmark"
+   ]
+  },
+  {
+   "naam": "Ierland",
+   "lat": 53.4,
+   "lon": -8.2,
+   "namen": [
+    "Ierland",
+    "Ireland"
+   ]
+  },
+  {
+   "naam": "Portugal",
+   "lat": 39.4,
+   "lon": -8.2,
+   "namen": [
+    "Portugal"
+   ]
+  },
+  {
+   "naam": "Griekenland",
+   "lat": 39.1,
+   "lon": 21.8,
+   "namen": [
+    "Griekenland",
+    "Greece"
+   ]
+  },
+  {
+   "naam": "Servië",
+   "lat": 44.0,
+   "lon": 21.0,
+   "namen": [
+    "Servië",
+    "Serbia"
+   ]
+  },
+  {
+   "naam": "Kosovo",
+   "lat": 42.6,
+   "lon": 20.9,
+   "namen": [
+    "Kosovo"
+   ]
+  },
+  {
+   "naam": "Bosnië",
+   "lat": 43.9,
+   "lon": 17.7,
+   "namen": [
+    "Bosnië",
+    "Bosnia"
+   ]
+  },
+  {
+   "naam": "Kroatië",
+   "lat": 45.1,
+   "lon": 15.2,
+   "namen": [
+    "Kroatië",
+    "Croatia"
+   ]
+  },
+  {
+   "naam": "Roemenië",
+   "lat": 45.9,
+   "lon": 24.97,
+   "namen": [
+    "Roemenië",
+    "Romania"
+   ]
+  },
+  {
+   "naam": "Bulgarije",
+   "lat": 42.7,
+   "lon": 25.5,
+   "namen": [
+    "Bulgarije",
+    "Bulgaria"
+   ]
+  },
+  {
+   "naam": "Slowakije",
+   "lat": 48.7,
+   "lon": 19.7,
+   "namen": [
+    "Slowakije",
+    "Slovakia"
+   ]
+  },
+  {
+   "naam": "Tsjechië",
+   "lat": 49.8,
+   "lon": 15.5,
+   "namen": [
+    "Tsjechië",
+    "Czech Republic",
+    "Czechia"
+   ]
+  },
+  {
+   "naam": "Oostenrijk",
+   "lat": 47.5,
+   "lon": 14.6,
+   "namen": [
+    "Oostenrijk",
+    "Austria"
+   ]
+  },
+  {
+   "naam": "Zwitserland",
+   "lat": 46.8,
+   "lon": 8.2,
+   "namen": [
+    "Zwitserland",
+    "Switzerland"
+   ]
+  },
+  {
+   "naam": "Zweden",
+   "lat": 60.1,
+   "lon": 18.6,
+   "namen": [
+    "Zweden",
+    "Sweden"
+   ]
+  },
+  {
+   "naam": "Noorwegen",
+   "lat": 60.5,
+   "lon": 8.5,
+   "namen": [
+    "Noorwegen",
+    "Norway"
+   ]
+  },
+  {
+   "naam": "Finland",
+   "lat": 61.9,
+   "lon": 25.7,
+   "namen": [
+    "Finland"
+   ]
+  },
+  {
+   "naam": "Estland",
+   "lat": 58.6,
+   "lon": 25.0,
+   "namen": [
+    "Estland",
+    "Estonia"
+   ]
+  },
+  {
+   "naam": "Letland",
+   "lat": 56.9,
+   "lon": 24.6,
+   "namen": [
+    "Letland",
+    "Latvia"
+   ]
+  },
+  {
+   "naam": "Litouwen",
+   "lat": 55.2,
+   "lon": 23.9,
+   "namen": [
+    "Litouwen",
+    "Lithuania"
+   ]
+  },
+  {
+   "naam": "Georgië",
+   "lat": 42.3,
+   "lon": 43.4,
+   "namen": [
+    "Georgië"
+   ]
+  },
+  {
+   "naam": "België",
+   "lat": 50.5,
+   "lon": 4.5,
+   "namen": [
+    "België",
+    "Belgium"
+   ]
+  },
+  {
+   "naam": "Luxemburg",
+   "lat": 49.8,
+   "lon": 6.1,
+   "namen": [
+    "Luxemburg",
+    "Luxembourg"
+   ]
+  },
+  {
+   "naam": "Schotland",
+   "lat": 56.5,
+   "lon": -4.2,
+   "namen": [
+    "Schotland",
+    "Scotland"
+   ]
+  },
+  {
+   "naam": "IJsland",
+   "lat": 64.96,
+   "lon": -19.0,
+   "namen": [
+    "IJsland",
+    "Iceland"
+   ]
+  },
+  {
+   "naam": "Malta",
+   "lat": 35.9,
+   "lon": 14.4,
+   "namen": [
+    "Malta"
+   ]
+  },
+  {
+   "naam": "Cyprus",
+   "lat": 35.1,
+   "lon": 33.4,
+   "namen": [
+    "Cyprus"
    ]
   }
  ]

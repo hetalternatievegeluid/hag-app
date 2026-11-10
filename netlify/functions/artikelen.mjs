@@ -20,7 +20,7 @@ function authorized(req) {
 }
 
 export default async (req, context) => {
-const production = env("CONTEXT") === "production";
+const production = context?.deploy?.context === "production";
 
   const store = production
     ? getStore({ name: "artikelen", consistency: "strong" })

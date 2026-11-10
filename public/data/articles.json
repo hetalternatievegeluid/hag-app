@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T09:17",
+ "updated": "2026-11-10T14:23",
  "dossiers": [
   {
    "id": "iran",
@@ -20,6 +20,10 @@
   {
    "id": "vs",
    "name": "Amerikaanse macht"
+  },
+  {
+   "id": "tech",
+   "name": "Tech en AI"
   }
  ],
  "articles": [
@@ -36,7 +40,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -65,7 +70,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3437861_analyse-artikel-05-11-2026-een-bunker-in-een-berg-een-supermacht-in-de-knel",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -97,7 +103,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3435962_amerikaanse-midterms-2-nieuws-artikel-03-11-2026",
    "source": "site",
    "dossiers": [
-    "vs"
+    "vs",
+    "tech"
    ]
   },
   {
@@ -128,7 +135,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -143,7 +151,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -157,7 +166,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3426362_analyse-artikel-28-10-2026-parijs-leent-duurder-dan-athene",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -246,7 +256,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -260,7 +271,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3408179_nieuws-artikel-13-10-2026-russische-diesel-oekraiense-rekening",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -319,7 +331,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3395033_nieuws-artikel-04-10-2026-een-bijl-in-de-cockpit-en-een-oorlog-die-wacht-op-3-november",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -346,7 +359,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-thu-sep-24-2026-12-45-48-gmt-0200-midden-europese-zomertijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3380709_analyse-artikel-25-09-2026-iedereen-waarschuwt-niemand-remt",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "3380121",
@@ -377,7 +392,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -450,7 +466,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -464,7 +481,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3345898_nieuws-artikel-31-08-2026-het-eiland-waar-de-rekening-wordt-geind",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -493,7 +511,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -507,7 +526,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3336776_nieuws-artikel-24-08-2026-de-oorlog-om-iran-verhuist-van-de-zeestraat-naar-de-boekhouding",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -562,7 +582,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3319025_analyse-artikel-10-08-2026-wie-de-tijd-bezit",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -648,7 +669,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3297552_nieuws-artikel-28-07-2026-een-diplomatiek-venster-opent-zich-terwijl-oorlog-en-olie-de-wereld-verknopen",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -663,7 +685,8 @@
    "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3295506_een-andere-kijk-deel-18-de-eigen-kweek",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -691,7 +714,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3290321_nieuws-artikel-23-07-2026-van-hormuz-tot-odesa-twee-oorlogen-die-dezelfde-aders-raken",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -720,7 +744,8 @@
    "source": "site",
    "dossiers": [
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -839,7 +864,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3230921_analyse-artikel-17-06-2026-de-smalle-zeestraat-en-het-brede-rijk-is-dit-het-begin-van-het-einde-van-de-amerikaanse-hegemonie",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -867,7 +893,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3219996_breaking-news-11-06-2026-trump-blaast-aanvallen-af-en-claimt-akkoord-met-iran-teheran-bevestigt-niets",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -950,7 +977,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3202041_analyse-artikel-31-05-2026-de-stille-verbouwing-van-de-staat-hoe-nederland-de-sleutels-van-zijn-digitale-huis-uit-handen-gaf-en-ze-nu-terugprobeert-te-halen",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -978,7 +1006,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-mon-may-25-2026-14-14-13-gmt-0200-midden-europese-zomertijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3188947_nieuws-artikel-25-05-2026-de-diplomatie-van-een-multipolaire-wereld",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "3181131",
@@ -1047,7 +1077,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3153950_nieuws-artikel-05-05-2026-een-wereld-in-spanning-van-hormuz-tot-handelsoorlogen",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1061,7 +1092,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3149976_nieuws-artikel-04-05-2026-het-iran-conflict-als-kantelpunt-tussen-macht-economie-en-internationale-systemen",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1117,7 +1149,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3132442_nieuws-artikel-22-04-2026-tussen-pauze-en-escalatie-het-iran-conflict-bereikt-de-ultimatumfase",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1131,7 +1164,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3128187_nieuws-artikel-20-04-2026-escalatie-en-diplomatie-in-balans-een-wereldorde-onder-druk",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1145,7 +1179,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3120902_nieuws-artikel-15-04-2026-tussen-oorlog-en-onderhandelingen-de-crisis-rond-iran-als-kantelpunt-in-de-wereldorde",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1159,7 +1194,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3128528_analyse-artikel-12-04-2026-van-islamabad-tot-hormuz-hoe-de-wapenstilstand-tussen-washington-en-teheran-uitmondt-in-een-navo-stress-test",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1173,7 +1209,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3110595_nieuws-artikel-08-04-2026-vs-en-iran-claimen-overwinning-in-een-oorlog-zonder-duidelijke-winnaar",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1187,7 +1224,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3106976_nieuws-artikel-06-04-2026-op-de-rand-van-escalatie-de-oorlog-tussen-de-vs-en-iran-als-geopolitieke-stresstest",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1201,7 +1239,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3099601_nieuws-artikel-02-04-2026-wereld-op-scherp-iran-oorlog-escaleert-terwijl-westen-verdeeld-raakt-en-einde-uit-zicht-blijft",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1216,7 +1255,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -1231,7 +1271,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -1245,7 +1286,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3085869_nieuws-artikel-26-03-2026-escalatie-rond-iran-groeit-uit-tot-mondiale-crisis-van-de-diplomatie-naar-het-slagveld",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1259,7 +1301,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3081732_nieuws-artikel-24-03-2026-diplomatie-of-schijnvertoning-de-complexe-werkelijkheid-achter-mogelijke-iran-vs-onderhandelingen",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1273,7 +1316,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3128535_analyse-artikel-22-03-2026-een-wereld-in-transitie-hoe-de-oorlog-met-iran-uitgroeit-tot-een-geopolitieke-economische-en-systemische-breuklijn",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1304,7 +1348,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -1332,7 +1377,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3059739_nieuws-artikel-12-03-2026-militaire-successen-diplomatieke-spanningen-en-een-oorlog-zonder-duidelijk-einde",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1346,7 +1392,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3055614_nieuws-artikel-10-03-2026-escalatie-rond-iran-geopolitiek-energie-en-strategische-belangen",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1374,7 +1421,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3051329_nieuws-artikel-07-03-2026-wereld-in-spanning-oorlog-rond-iran-escaleert-op-meerdere-fronten",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1389,7 +1437,8 @@
    "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3128573_een-andere-kijk-deel-16-pax-judaica-profetie-en-geopolitiek-hoe-religieuze-eindtijdverhalen-het-denken-over-het-midden-oosten-beinvloeden",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1403,7 +1452,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3041303_uitgebreid-nieuws-artikel-03-03-2026-oorlog-in-verbreding-vs-en-israel-intensiveren-campagne-tegen-iran-regio-balanceert-tussen-escalatie-en-diplomatie",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1417,7 +1467,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3039532_nieuws-artikel-02-02-2026-midden-oosten-in-brand-regionale-oorlog-escaleert-olieprijzen-stijgen-en-diplomatie-blijft-uit",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1431,7 +1482,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3128560_analyse-artikel-01-03-2026-iran-na-khamenei-regionale-oorlog-of-het-begin-van-iets-groters",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1462,7 +1514,8 @@
     "iran",
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1478,7 +1531,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -1492,7 +1546,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/3016045_nieuws-artikel-19-02-2026-confrontatie-of-compromis-spanningen-tussen-vs-en-iran-bereiken-kritiek-punt-terwijl-wereld-toekijkt",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1507,7 +1562,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -1521,7 +1577,8 @@
    "url": "https://www.hetalternatievegeluid.nl/onderzoeks-artikelen/3128567_onderzoeks-artikel-12-02-2026-digitale-afhankelijkheid-onder-de-loep-hoe-europa-balanceert-tussen-technologische-efficientie-en-democratische-controle",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1535,7 +1592,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2998339_nieuws-artikel-11-02-2026-geopolitieke-spanningen-nemen-toe-van-oekraine-tot-het-midden-oosten-en-een-verschuivende-orde",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -1550,7 +1608,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -1575,7 +1634,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-thu-feb-05-2026-23-19-07-gmt-0100-midden-europese-standaardtijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2986882_nieuws-artikel-05-02-26-wereld-in-beweging-diplomatie-onder-druk-terwijl-machtsblokken-zich-herschikken",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "3128576",
@@ -1588,7 +1649,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-mon-feb-02-2026-22-38-34-gmt-0100-midden-europese-standaardtijd-standard.png",
    "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3128576_een-andere-kijk-deel-15-de-epstein-zaak-als-venster-op-macht",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2973995",
@@ -1602,7 +1665,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1618,7 +1682,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1634,7 +1699,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1662,7 +1728,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1677,7 +1744,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1692,7 +1760,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -1706,7 +1775,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2935054_nieuws-artikel-14-01-26-iran-in-digitale-duisternis-protestgolf-harde-repressie-en-trump-s-drukcampagne-zetten-wereld-op-scherp",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -1762,7 +1832,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-mon-jan-05-2026-19-49-11-gmt-0100-midden-europese-standaardtijd-standard.png",
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3128587_analyse-artikel-05-01-26-hoe-amerika-via-snelle-gerichte-machtsprojectie-zijn-invloedssfeer-probeert-te-behouden",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2913644",
@@ -1774,7 +1846,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-sun-jan-04-2026-01-12-14-gmt-0100-midden-europese-standaardtijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2913644_nieuws-artikel-04-01-26-washington-sleept-maduro-weg-caracas-ontploft-de-aanval-op-venezuela-als-breekijzer-voor-een-nieuwe-wereldorde",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2903234",
@@ -1788,7 +1862,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -1804,7 +1879,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1849,7 +1925,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1878,7 +1955,8 @@
    "url": "https://www.hetalternatievegeluid.nl/onderzoeks-artikelen/3133141_onderzoeks-artikel-09-12-25-de-nss-2025-van-trump-breuk-met-amerika-s-rol-en-erkenning-van-een-multipolaire-wereldorde",
    "source": "site",
    "dossiers": [
-    "vs"
+    "vs",
+    "tech"
    ]
   },
   {
@@ -1923,7 +2001,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3129335_analyse-artikel-03-12-25-hoe-volodymyr-zelensky-kon-uitgroeien-tot-het-meest-ongewone-staatshoofd-van-de-21e-eeuw",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -1969,7 +2048,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1984,7 +2064,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -1999,7 +2080,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2030,7 +2112,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2055,7 +2138,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-sat-nov-15-2025-11-38-49-gmt-0100-midden-europese-standaardtijd-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2821916_nieuws-artikel-15-11-25-machtsstrijd-in-de-amerikaanse-achtertuin-waarom-de-vs-en-venezuela-opnieuw-op-ramkoers-liggen",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2815801",
@@ -2070,7 +2155,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2083,7 +2169,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-wed-nov-12-2025-21-56-17-gmt-0100-midden-europese-standaardtijd-standard.png",
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3133142_analyse-artikel-12-11-25-de-nieuwe-intelligentie-hoe-kunstmatige-intelligentie-de-wereld-en-onszelf-herschept",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2809515",
@@ -2096,7 +2184,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2809515_nieuws-artikel-09-11-25-navo-scherpt-afschrikking-aan-trump-schuift-aan-de-knoppen-en-europa-voelt-de-drone-dreiging-zo-grijpen-de-dossiers-in-elkaar",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2111,7 +2200,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2183,7 +2273,8 @@
    "source": "site",
    "dossiers": [
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2197,7 +2288,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2775373_nieuws-artikel-23-10-25-diplomatie-op-drift-de-strijd-om-invloed-na-de-stilgevallen-top",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2240,7 +2332,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2270,7 +2363,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2284,7 +2378,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-fri-oct-10-2025-15-21-29-gmt-0200-midden-europese-zomertijd-standard.png",
    "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3129316_een-andere-kijk-deel-14-tiktok-data-en-de-nieuwe-wereldorde-hoe-een-platform-de-strijd-om-macht-waarheid-en-vrijheid-vormgeeft",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2745427",
@@ -2372,7 +2468,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2401,7 +2498,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2474,7 +2572,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2503,7 +2602,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2532,7 +2632,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2664581_nieuws-artikel-20-08-25-de-nieuwe-diplomatieke-schaakpartij-rond-oekraine",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2660,7 +2761,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2643788_nieuws-artikel-05-08-25-nieuwe-wereldorde-in-beweging-crisisdiplomatie-wapenwedloop-en-geopolitieke-rivaliteit",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2674,7 +2776,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2641378_essay-artikel-04-08-25-de-wereldorde-op-het-kantelpunt-leiderschap-in-een-tijd-van-ideologisch-verval",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2689,7 +2792,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2705,7 +2809,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2720,7 +2825,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2750,7 +2856,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2765,7 +2872,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2781,7 +2889,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2796,7 +2905,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2811,7 +2921,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2826,7 +2937,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2840,7 +2952,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3134929_analyse-artikel-17-07-25-vrede-in-oekraine-tussen-morele-belofte-en-militaire-realiteit",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2854,7 +2967,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2610378_nieuws-artikel-15-07-25-trump-s-draaipunt-tussen-sancties-en-strategie-de-herbouw-van-amerika-s-rol-in-de-oekraine-oorlog",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2868,7 +2982,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2609915_analyse-artikel-14-07-25-een-nieuw-strijdtoneel-frankrijk-rusland-en-de-race-om-afrika",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -2883,7 +2998,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -2943,7 +3059,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -2957,7 +3074,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2588208_analyse-artikel-30-06-25-een-wereld-in-overgang-iran-israel-kernwapens-en-de-crisis-van-de-wereldorde",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -2971,7 +3089,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3133517_analyse-artikel-30-06-25-een-wereld-in-overgang-iran-israel-kernwapens-en-de-crisis-van-de-wereldorde",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3015,7 +3134,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2577592_nieuws-artikel-24-06-25-van-bunker-busters-tot-wapenstilstand-hoe-de-12-daagse-oorlog-tussen-iran-en-israel-de-wereld-op-het-randje-van-chaos-bracht",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3029,7 +3149,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2574604_nieuws-artikel-22-06-25-op-de-rand-van-oorlog-hoe-israel-de-vs-en-iran-de-wereld-naar-een-breekpunt-leiden",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3043,7 +3164,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2571160_nieuws-artikel-20-06-25-midden-oosten-op-het-kantelpunt-dreigt-er-een-allesomvattende-oorlog-tussen-israel-en-iran",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3057,7 +3179,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3133513_analyse-artikel-18-06-25-oorlogsdiplomatie-hoe-israel-iran-en-de-vs-elkaar-vasthouden-in-een-cyclus-van-vuur-politiek-en-overleving",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3071,7 +3194,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2567696_analyse-artikel-18-06-25-oorlogsdiplomatie-hoe-israel-iran-en-de-vs-elkaar-vasthouden-in-een-cyclus-van-vuur-politiek-en-overleving",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3085,7 +3209,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2565485_nieuws-artikel-13-06-25-op-de-rand-van-de-afgrond-israel-iran-en-de-wereldoorlog-die-niemand-wil",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3099,7 +3224,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2563029_nieuws-artikel-15-06-25-midden-oosten-op-het-kantelpunt-israel-en-iran-raken-verwikkeld-in-escalerend-conflict-terwijl-diplomatie-stilvalt",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3113,7 +3239,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2560087_nieuws-artikel-13-06-25-crisis-op-een-kookschaal-israel-iran-escalatie-brengt-midden-oosten-op-rand-van-oorlog",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3127,7 +3254,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3134960_analyse-artikel-12-06-2025-kernwapens-drones-en-diplomatie-hoe-een-aanval-de-nucleaire-orde-op-losse-schroeven-zet",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -3141,7 +3269,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2558264_analyse-artikel-12-06-2025-kernwapens-drones-en-diplomatie-hoe-een-aanval-de-nucleaire-orde-op-losse-schroeven-zet",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -3171,7 +3300,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -3187,7 +3317,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -3217,7 +3348,8 @@
    "dossiers": [
     "iran",
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -3231,7 +3363,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2535418_nieuws-artikel-gespannen-allianties-hoe-diplomatie-dreiging-en-regionale-ambities-het-midden-oosten-vormgeven",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3245,7 +3378,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2531787_nieuws-artikel-oorlog-en-onderhandeling-het-spanningsveld-tussen-trump-poetin-en-zelensky",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -3273,7 +3407,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-mon-may-26-2025-22-49-43-gmt-0200-midden-europese-zomertijd-high.png",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2528577_analyse-artikel-een-nieuwe-koude-oorlog-waarom-de-wereldorde-wankelt-en-wat-het-westen-nog-niet-wil-zien",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "3163695",
@@ -3286,7 +3422,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-sat-may-24-2025-18-21-28-gmt-0200-midden-europese-zomertijd-standard.png",
    "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3163695_een-andere-kijk-deel-12-ai-stilte-en-de-ziel-van-de-mens-waarom-we-meer-nodig-hebben-dan-slimme-machines",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2523233",
@@ -3314,7 +3452,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -3399,7 +3538,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2507602_nieuws-artikel-trump-schudt-het-midden-oosten-op-wapenakkoorden-diplomatie-en-opmerkelijke-allianties",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3413,7 +3553,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2506549_nieuws-artikel-vredesretoriek-en-machtsspel-oekraine-rusland-en-het-westen-balanceren-op-de-rand-van-onderhandelingen",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -3495,7 +3636,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-wed-may-07-2025-08-18-48-gmt-0200-midden-europese-zomertijd-high.png",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2492298_nieuws-artikel-spanningen-aan-de-grens-india-en-pakistan-in-snel-escalerend-conflict",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2490324",
@@ -3507,7 +3650,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/pasted-image-tue-may-06-2025-07-10-25-gmt-0200-midden-europese-zomertijd-high.png",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2490324_nieuws-artikel-explosieve-escalatie-in-het-midden-oosten-israel-voert-oorlog-uit-op-meerdere-fronten-terwijl-internationale-kritiek-toeneemt",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2483926",
@@ -3534,7 +3679,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/chatgpt-image-12-mei-2026-11_13_33-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2479700_een-andere-kijk-deel-10-macht-in-het-digitale-tijdperk-burger-staat-en-big-tech-in-strijd-om-controle",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2478325",
@@ -3547,7 +3694,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2478325_oorlog-vrede-en-illusies-oekraine-en-het-westen-op-de-drempel-van-een-nieuwe-realiteit",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -3637,7 +3785,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2452217_iran-en-de-vs-op-ramkoers-diplomatie-of-dreiging-van-oorlog",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3679,7 +3828,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2441207_diplomatie-in-de-schaduw-van-oorlog-vs-en-rusland-botsen-ondanks-nieuwe-gespreksrondes",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -3693,7 +3843,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2440393_explosieve-spanningen-in-het-midden-oosten-vs-iran-en-israel-op-ramkoers",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3719,7 +3870,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2431689_de-onzichtbare-macht-hoe-lobbygroepen-achter-de-schermen-aan-de-touwtjes-trekken",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -3733,7 +3885,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2426436_hoe-de-rivaliteit-tussen-de-vs-en-iran-het-midden-oosten-op-de-rand-van-escalatie-brengt",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3763,7 +3916,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/chatgpt-image-12-mei-2026-11_13_33-standard.png",
    "url": "https://www.hetalternatievegeluid.nl/een-andere-kijk-artikelen/3163685_een-andere-kijk-deel-10-macht-in-het-digitale-tijdperk-burger-staat-en-big-tech-in-strijd-om-controle",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2409758",
@@ -3776,7 +3931,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2409758_midden-oosten-in-vuur-en-vlam-spanningen-escaleren-op-meerdere-fronten",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -3805,7 +3961,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2397714_de-spanningen-rondom-azie-pacific-van-handelsoorlog-tot-militaire-dreiging",
    "source": "site",
    "dossiers": [
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -3820,7 +3977,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -3864,7 +4022,8 @@
    "source": "site",
    "dossiers": [
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -3892,7 +4051,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -3921,7 +4081,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2339939_de-opkomst-van-een-multipolaire-wereldorde-wat-de-toekomst-brengt-voor-europa-en-de-wereld",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -3937,7 +4098,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4010,7 +4172,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2309386_explosieve-spanningen-in-het-midden-oosten-wat-staat-de-wereld-te-wachten",
    "source": "site",
    "dossiers": [
-    "iran"
+    "iran",
+    "tech"
    ]
   },
   {
@@ -4052,7 +4215,8 @@
    "source": "site",
    "dossiers": [
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4066,7 +4230,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2286026_roemeense-presidentsverkiezingen-ongeldig-verklaard-georganiseerde-staatsgreep-of-bestrijding-van-russische-inmenging",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -4095,7 +4260,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2270055_europa-tussen-oost-en-west-de-zoektocht-naar-autonomie-in-een-geopolitieke-storm",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4108,7 +4274,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/img_4251-high.jpg",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2265906_quantumcomputers-kansen-en-gevaren-in-het-digitale-tijdperk",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2262750",
@@ -4203,7 +4371,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4216,7 +4385,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/img_4055-high.jpg",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2207349_de-macht-en-invloed-van-de-pax-americana-het-behouden-van-hegemoniale-macht-in-een-complexe-wereldorde",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2203629",
@@ -4254,7 +4425,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/435e2889-9ac0-4dc0-8603-22ad02cd3fc1-high.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2187775_de-tijdgeest-van-vandaag-social-media-ai-en-de-complexe-wereld-van-morgen",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "2175269",
@@ -4307,7 +4480,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4323,7 +4497,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4350,7 +4525,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4377,7 +4553,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -4446,7 +4623,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2099351_taiwan-in-de-tangodans-van-supermachten-chips-macht-en-de-dreiging-van-conflict",
    "source": "site",
    "dossiers": [
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -4501,7 +4679,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -4529,7 +4708,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2049530_hoe-poetins-reactie-op-amerikaanse-hegemonie-de-wereldorde-veranderde-van-muenchen-tot-de-krim",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -4567,7 +4747,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2044826_de-rivaliteit-om-de-quantumcomputer-de-strijd-tussen-de-vs-en-china",
    "source": "site",
    "dossiers": [
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -4635,7 +4816,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/2009332_pre-revolutionaire-tijden-sociaal-economische-en-geopolitieke-spanningen-in-een-veranderende-wereld",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4650,7 +4832,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4678,7 +4861,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1987738_gast-artikel-de-reichsbuerger-en-de-opkomst-van-het-nieuw-nationalisme",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4691,7 +4875,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/image-high-5u2w9w.png?enable-io=true&enable=upscale&fit=bounds&width=1200",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1977035_de-veranderende-wereldorde-van-amerikaanse-hegemonie-naar-multipolaire-dynamiek",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "1974843",
@@ -4717,7 +4903,8 @@
    "source": "site",
    "dossiers": [
     "iran",
-    "vs"
+    "vs",
+    "tech"
    ]
   },
   {
@@ -4766,7 +4953,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/image-high-23znty.png",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1952407_hoe-het-militair-industrieel-complex-en-grote-bedrijven-de-amerikaanse-politiek-vormen-en-de-wereldorde-uitdagen",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "1946121",
@@ -4792,7 +4981,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4822,7 +5012,8 @@
    "dossiers": [
     "oekraine",
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4850,7 +5041,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1914927_china-s-opkomst-in-het-midden-oosten-en-de-indo-pacifische-rivaliteit-de-nieuwe-wereldorde",
    "source": "site",
    "dossiers": [
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -4864,7 +5056,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1912459_de-moderne-koude-oorlog-tussen-de-vs-en-rusland",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -4907,7 +5100,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1880035_navo-en-rusland-op-ramkoers-militaire-provocaties-en-geopolitieke-implicaties",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -4921,7 +5115,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1867606_hybride-oorlogsvoering-in-parijs-grafkisten-bij-de-eiffeltoren-en-andere-symbolische-aanvallen",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4951,7 +5146,8 @@
    "source": "site",
    "dossiers": [
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -4965,7 +5161,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1847678_spanningen-over-grenzen-heen-het-escalerende-conflict-en-europa",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -5036,7 +5233,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1799058_tussen-traditie-en-toekomst-de-ideologische-strijd-van-de-21e-eeuw",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -5050,7 +5248,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1791513_een-nieuwe-wereldorde",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -5078,7 +5277,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1781026_de-nieuwe-koude-oorlog-diplomatie-en-desinformatie-in-het-tijdperk-van-brics",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -5187,7 +5387,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1733830_analyse-artikel-22-03-2024-rusland-staatsinrichting-macht-en-politieke-realiteit",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -5201,7 +5402,8 @@
    "url": "https://www.hetalternatievegeluid.nl/analyse-artikelen/3133438_analyse-artikel-22-03-2024-rusland-staatsinrichting-macht-en-politieke-realiteit",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -5216,7 +5418,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "china"
+    "china",
+    "tech"
    ]
   },
   {
@@ -5268,7 +5471,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1709694_mark-rutte-en-de-navo-een-ambitie-met-een-prijs",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -5281,7 +5485,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/3gz7xs/pasted-imagesunmar032024160413gmt0100midden-europesestandaardtijd.jpg",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1704102_wat-is-een-false-flag-en-waarom-moet-je-erop-letten",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "1703915",
@@ -5294,7 +5500,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1703915_hoe-realistisch-is-een-confrontatie-tussen-rusland-en-de-navo",
    "source": "site",
    "dossiers": [
-    "oekraine"
+    "oekraine",
+    "tech"
    ]
   },
   {
@@ -5395,7 +5602,8 @@
    "source": "site",
    "dossiers": [
     "china",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -5409,7 +5617,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1658657_de-nieuwe-amerikaanse-eeuw-een-gevaarlijk-project-voor-de-wereld-en-voor-europa",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -5422,7 +5631,9 @@
    "image": "https://primary.jwwb.nl/public/r/g/s/temp-clvxqkhkreeymtdiwjzt/rhnmhh/pasted-imagewedjan312024211146gmt0100midden-europesestandaardtijd.jpg",
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1656189_ww3-bangmakerij-of-realiteit",
    "source": "site",
-   "dossiers": []
+   "dossiers": [
+    "tech"
+   ]
   },
   {
    "id": "1654952",
@@ -5452,7 +5663,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -5508,7 +5720,8 @@
    "url": "https://www.hetalternatievegeluid.nl/nieuws-artikelen/1639867_de-rode-zee-een-cruciale-zeeroute-onder-vuur",
    "source": "site",
    "dossiers": [
-    "europa"
+    "europa",
+    "tech"
    ]
   },
   {
@@ -5523,7 +5736,8 @@
    "source": "site",
    "dossiers": [
     "oekraine",
-    "europa"
+    "europa",
+    "tech"
    ]
   }
  ]

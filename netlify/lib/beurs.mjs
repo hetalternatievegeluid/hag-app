@@ -39,7 +39,8 @@ export async function leesBeurs() { return store().get("koersen", { type: "json"
 export async function archiveerTech(berichten) {
   const arch = (await store().get("archief", { type: "json" })) || [];
   const perUrl = new Map(arch.map(b => [b.url, b]));
-  for (const b of berichten) if (b.secties?.includes("tech") && !perUrl.has(b.url)) perUrl.set(b.url, { titel: b.titel, url: b.url, bron: b.bron, label: b.label, staat: b.staat, tijd: b.tijd });
+  const bedrijfRe = zoekRe(config.aandelen.flatMap(a => a.zoek));
+  for (const b of berichten) if ((b.secties?.includes("tech") || bedrijfRe.test(" " + b.titel + " ")) && !perUrl.has(b.url)) perUrl.set(b.url, { titel: b.titel, url: b.url, bron: b.bron, label: b.label, staat: b.staat, tijd: b.tijd });
   const grens = Date.now() - 400 * 864e5;
   await store().setJSON("archief", [...perUrl.values()].filter(b => new Date(b.tijd).getTime() > grens).sort((a, b) => b.tijd.localeCompare(a.tijd)).slice(0, 6000));
 }

@@ -1697,16 +1697,44 @@ window.addEventListener("hashchange", route);
 async function load(){
   document.getElementById("main").innerHTML = `<p class="loading">Artikelen laden…</p>`;
   try {
-    const res = await fetch("/data/articles.json", {cache:"no-cache"});
-    if(!res.ok) throw new Error(res.status);
+    
+    // Probeer eerst de nieuwe artikel-API.
+    // Als die niet werkt, gebruik het bestaande artikelbestand.
+    let res;
+
+    try {
+      res = await fetch("/api/artikelen", { cache: "no-store" });
+      if (!res.ok) throw new Error("Artikel-API: " + res.status);
+    } catch (apiError) {
+      console.warn("Artikel-API niet bereikbaar, statisch bestand gebruiken.", apiError);
+      res = await fetch("/data/articles.json", { cache: "no-cache" });
+    }
+
+    if (!res.ok) throw new Error(res.status);
+
     const data = await res.json();
     ARTICLES = data.articles || [];
     sorted = [...ARTICLES].sort((a,b)=> b.date.localeCompare(a.date));
-    DOSSIERS = (data.dossiers || []).map(d=>({...d, ids: ARTICLES.filter(a=>(a.dossiers||[]).includes(d.id)).map(a=>a.id)})).filter(d=>d.ids.length);
+    DOSSIERS = (data.dossiers || [])
+      .map(d=>({
+        ...d,
+        ids: ARTICLES.filter(a=>(a.dossiers||[]).includes(d.id)).map(a=>a.id)
+      }))
+      .filter(d=>d.ids.length);
+
     UPDATED = data.updated;
-    if(UPDATED) document.getElementById("updated").textContent = "Bijgewerkt op " + fmtFull.format(new Date(UPDATED)) + " om " + fmtTime.format(new Date(UPDATED)) + ".";
+
+    if(UPDATED) {
+      document.getElementById("updated").textContent =
+        "Bijgewerkt op " +
+        fmtFull.format(new Date(UPDATED)) +
+        " om " +
+        fmtTime.format(new Date(UPDATED)) + ".";
+    }
+
     renderTabs();
     route();
+
   } catch(e) {
     document.getElementById("main").innerHTML = `<div class="empty"><strong>De artikelen konden niet worden geladen</strong>Controleer je internetverbinding en probeer het opnieuw.<p><button class="btn" onclick="load()">Opnieuw proberen</button></p></div>`;
   }

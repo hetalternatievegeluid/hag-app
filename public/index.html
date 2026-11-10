@@ -122,6 +122,26 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.ticker{display:flex;align-items:stretch;background:var(--bar);color:#E9EAEE;border-bottom:1px solid #000;font-size:.86rem;height:34px;overflow:hidden}
+.tlabel{flex:none;display:flex;align-items:center;background:var(--accent);color:#fff;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:0 12px}
+.tvenster{flex:1;overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+.tband{display:inline-flex;align-items:center;height:34px;white-space:nowrap;animation:tick 120s linear infinite;will-change:transform}
+.tkopie{display:inline-flex;align-items:center}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker:hover .tband,.ticker:focus-within .tband,.ticker.gepauzeerd .tband{animation-play-state:paused}
+.titem{color:#E9EAEE;text-decoration:none;padding:0 4px}
+.titem b{font-weight:700;color:#fff;margin-right:4px}
+.titem.flits b{color:#fff;background:var(--accent);border-radius:3px;padding:0 5px;text-transform:uppercase;font-size:.72rem;letter-spacing:.04em}
+.titem:hover{text-decoration:underline}
+.tsep{color:var(--accent);padding:0 10px}
+.tpauze{flex:none;background:none;border:0;border-left:1px solid #2D2F38;color:#9EA1AB;width:36px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tpauze[aria-pressed="true"]{color:var(--accent)}
+@media (prefers-reduced-motion: reduce){
+  .tband{animation:none}
+  .tvenster{overflow-x:auto;scrollbar-width:none;mask-image:none;-webkit-mask-image:none}
+  .tkopie{display:none}
+  .tpauze{display:none}
+}
 .stand{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 14px;margin:18px 0 0}
 .stand p{font-family:var(--serif);font-size:1.12rem;line-height:1.5;margin:4px 0}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:18px 0 6px}
@@ -285,6 +305,11 @@ footer .social a:hover{text-decoration:underline}
       <p>Voor wie verder kijkt dan de krantenkop.</p>
     </div>
   </div></div>
+  <div class="ticker" id="ticker" hidden>
+    <span class="tlabel">Nieuws</span>
+    <div class="tvenster"><div class="tband" id="tband"></div></div>
+    <button class="tpauze" id="tpauze" aria-label="Nieuwsbalk pauzeren" aria-pressed="false"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1" width="3" height="10" fill="currentColor"/><rect x="7" y="1" width="3" height="10" fill="currentColor"/></svg></button>
+  </div>
   <div class="wrap">
     <div class="tools" id="tools">
       <label class="search">
@@ -537,6 +562,7 @@ async function loadNieuws(){
   } catch(e) {
     if(!NIEUWS) NIEUWS = {fout:true, berichten:[], secties:[]};
   }
+  updateTicker();
   if(!location.hash && ARTICLES.length) renderList();
 }
 function nTijd(iso){
@@ -588,6 +614,7 @@ const ULABEL = {bevestigd:"Bevestigd", claim:"Claim", onbevestigd:"Onbevestigd"}
 const sectieNaam = id => (NIEUWS?.secties || []).find(s=>s.id===id)?.naam || (DOSSIERS.find(d=>d.id===id)||{}).name || "";
 async function loadFlitsen(){
   try { const r = await fetch("/api/flitsen", {cache:"no-cache"}); if(r.ok) FLITSEN = (await r.json()).flitsen || []; } catch(e) {}
+  updateTicker();
   if(!location.hash && ARTICLES.length) renderList();
 }
 function flitsenBlok(){
@@ -1023,6 +1050,34 @@ async function tekenGrafiek(){
 }
 let grafiekTimer = null;
 window.addEventListener("resize", () => { clearTimeout(grafiekTimer); grafiekTimer = setTimeout(() => { if(state.cat==="energie" && !location.hash) tekenGrafiek(); }, 250); });
+
+/* ---------- nieuwsbalk ---------- */
+let tickerSig = "";
+function updateTicker(){
+  const balk = document.getElementById("ticker"), band = document.getElementById("tband");
+  if(!balk || !band) return;
+  const flitsen = (FLITSEN || []).filter(f => f.status==="actief").map(f => ({flits:true, url:`#flits-${f.id}`, bron:"Flits", titel: f.laatste ? `${f.titel}: ${f.laatste.tekst}` : f.titel}));
+  const koppen = (NIEUWS?.berichten || []).slice(0, 25).map(b => ({url:b.url, bron: b.bron + (b.staat ? " (staatsmedia)" : ""), titel:b.titel}));
+  const items = [...flitsen, ...koppen];
+  if(!items.length){ balk.hidden = true; return; }
+  const sig = items.map(i => i.url).join("|");
+  if(sig === tickerSig) return;
+  tickerSig = sig;
+  const html = items.map(i => `<a class="titem${i.flits ? " flits" : ""}" href="${esc(i.url)}"${i.flits ? "" : ` target="_blank" rel="noopener"`}><b>${esc(i.bron)}</b> ${esc(i.titel.length > 160 ? i.titel.slice(0,157) + "…" : i.titel)}</a><span class="tsep" aria-hidden="true">•</span>`).join("");
+  band.innerHTML = html + `<span aria-hidden="true" class="tkopie">${html}</span>`;
+  band.querySelectorAll(".tkopie a").forEach(a => a.tabIndex = -1);
+  balk.hidden = false;
+  requestAnimationFrame(() => {
+    const breedte = band.scrollWidth / 2;
+    band.style.animationDuration = Math.max(30, breedte / 70) + "s";
+  });
+}
+document.getElementById("tpauze").addEventListener("click", e => {
+  const b = e.currentTarget, balk = document.getElementById("ticker");
+  const aan = b.getAttribute("aria-pressed") !== "true";
+  b.setAttribute("aria-pressed", aan); balk.classList.toggle("gepauzeerd", aan);
+  b.setAttribute("aria-label", aan ? "Nieuwsbalk hervatten" : "Nieuwsbalk pauzeren");
+});
 
 /* ---------- routing ---------- */
 function route(){

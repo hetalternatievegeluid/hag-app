@@ -1,0 +1,30 @@
+
+name: Eerste synchronisatie Netlify Blobs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synchroniseren:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@v4
+
+      - name: Node.js instellen
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Pakketten installeren
+        run: npm install --no-audit --no-fund
+
+      - name: Artikelen synchroniseren
+        env:
+          ARTIKELEN_SYNC_TOKEN: ${{ secrets.ARTIKELEN_SYNC_TOKEN }}
+          SYNC_PUBLISH: "true"
+          SYNC_FORCE_SEED: "true"
+        run: node scripts/sync.mjs

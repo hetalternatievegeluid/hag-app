@@ -84,6 +84,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
     <button data-view="flitsen" aria-pressed="true">Flitsen</button>
     <button data-view="gesprekken" aria-pressed="false">Gesprekken</button>
     <button data-view="agenda" aria-pressed="false">Agenda</button>
+    <button data-view="uitlichten" aria-pressed="false">Uitlichten</button>
     <button data-view="energie" aria-pressed="false">Energie</button>
     <button data-view="meldingen" aria-pressed="false">Meldingen</button>
     <button data-view="moderatie" aria-pressed="false">Moderatie <span id="wachtteller"></span></button>
@@ -135,7 +136,7 @@ document.getElementById("nav").addEventListener("click", e=>{
 function kies(view){
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
   main.onclick = null; main.onchange = null;
-  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else if(view==="status") toonStatus(); else toonFlitsen();
+  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else if(view==="status") toonStatus(); else if(view==="uitlichten") toonUitlichten(); else toonFlitsen();
 }
 
 /* ---------- flitsen-overzicht ---------- */
@@ -440,6 +441,37 @@ async function toonStatus(){
       if(!confirm("Weet je het zeker? Alles uit de back-up overschrijft wat er nu in de app staat.")) return;
       try { const r = await api("herstel", {bestand: JSON.parse(await f.text())}); melding(document.getElementById("bmsg"), `Teruggezet: ${r.items} onderdelen.`); }
       catch(e){ melding(document.getElementById("bmsg"), e.message, "fout"); }
+    };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
+/* ---------- uitlichten ---------- */
+let ART = null;
+async function toonUitlichten(keuze){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    if(!ART){ const r = await fetch("/api/artikelen"); ART = (await r.json()).articles || []; }
+    const u = await api("uitgelicht");
+    const opties = [...SECTIES, {id:"tech", naam:"Tech en AI"}].filter((x, i, a) => a.findIndex(y => y.id===x.id)===i);
+    const sec = keuze || opties[0]?.id;
+    const gekozen = (u[sec] || []).map(id => ART.find(a => a.id===id)).filter(Boolean);
+    const titel = a => a.title + " (" + String(a.date).slice(0,10) + ")";
+    main.innerHTML = `<h1>Uitlichten</h1><p class="hint">Kies per onderwerp maximaal zes van je eigen artikelen. Die staan in de app bovenaan bij dat onderwerp: in de nieuwsstroom, de bronvergelijking, bij flitsen en op de dossierpagina, en op de startpagina onder "Uitgelicht door de redactie".</p>
+      <div class="card"><label for="usec">Onderwerp</label><select id="usec">${opties.map(o => `<option value="${esc(o.id)}" ${o.id===sec ? "selected" : ""}>${esc(o.naam)}</option>`).join("")}</select>
+      <h2>Nu uitgelicht</h2>
+      ${gekozen.length ? gekozen.map((a, i) => `<div class="update"><strong>${esc(titel(a))}</strong><div class="actions"><button class="btn ghost small" data-op="${i}">Omhoog</button><button class="btn ghost small" data-weg="${esc(a.id)}">Verwijderen</button></div></div>`).join("") : `<p class="hint">Nog niets uitgelicht bij dit onderwerp.</p>`}
+      <h2>Artikel toevoegen</h2><input id="uzoek" placeholder="Zoek in je artikelen"><div class="list-scroll" id="ulijst" style="margin-top:8px"></div><div id="umsg2"></div></div>`;
+    const bewaar = async ids => { try { await api("uitgelicht-zet", {sectie:sec, ids}); toonUitlichten(sec); } catch(e){ melding(document.getElementById("umsg2"), e.message, "fout"); } };
+    const huidig = gekozen.map(a => a.id);
+    document.getElementById("usec").onchange = e => toonUitlichten(e.target.value);
+    const toon = q => { const n = q.toLowerCase(); document.getElementById("ulijst").innerHTML = ART.filter(a => !huidig.includes(a.id) && (!n || a.title.toLowerCase().includes(n))).slice(0, 40).map(a => `<button class="pick" data-voeg="${esc(a.id)}">${esc(a.title)}<small>${esc(String(a.date).slice(0,10))}${(a.dossiers || []).includes(sec) ? " · hoort bij dit onderwerp" : ""}</small></button>`).join("") || `<p class="hint">Niets gevonden.</p>`; };
+    toon("");
+    document.getElementById("uzoek").oninput = e => toon(e.target.value);
+    main.onclick = e => {
+      const v = e.target.closest("[data-voeg]"), w = e.target.closest("[data-weg]"), o = e.target.closest("[data-op]");
+      if(v){ if(huidig.length >= 6){ melding(document.getElementById("umsg2"), "Maximaal zes artikelen per onderwerp.", "fout"); return; } bewaar([...huidig, v.dataset.voeg]); }
+      if(w) bewaar(huidig.filter(id => id !== w.dataset.weg));
+      if(o){ const i = +o.dataset.op; if(i > 0){ const l = [...huidig]; [l[i-1], l[i]] = [l[i], l[i-1]]; bewaar(l); } }
     };
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
 }

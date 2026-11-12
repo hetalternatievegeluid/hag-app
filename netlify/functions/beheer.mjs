@@ -1,5 +1,5 @@
 // Alleen voor de beheerder (wachtwoord in de Netlify-instelling BEHEER_WACHTWOORD).
-import { json, schoon, schoonUrl, nieuwId, LABELS, isBeheerder, leesIndex, leesFlits, bewaarFlits, verwijderFlits, leesReacties, bewaarReacties } from "../lib/flitsen.mjs";
+import { db, json, schoon, schoonUrl, nieuwId, LABELS, isBeheerder, leesIndex, leesFlits, bewaarFlits, verwijderFlits, leesReacties, bewaarReacties } from "../lib/flitsen.mjs";
 
 import { ruimtes, zetModus, leesBerichten, bewaarBerichten, bestaat } from "../lib/gesprek.mjs";
 import { leesPrijzen, bewegingen, leesDuiding, bewaarDuiding, REEKSEN } from "../lib/energie.mjs";
@@ -8,6 +8,7 @@ import { stuur, ONDERWERPEN, leesAbonnees } from "../lib/push.mjs";
 import { ontsleutel, herstel, laatsteBackup } from "../lib/backup.mjs";
 import { leesNieuws } from "../lib/nieuws.mjs";
 import { leesBeurs } from "../lib/beurs.mjs";
+import { leesIndex as leesArtikelIndex } from "../lib/artikelen.mjs";
 
 async function meld(opties) { try { return await stuur(opties); } catch (e) { console.warn("Push mislukt: " + e.message); return { fout: e.message }; } }
 
@@ -202,8 +203,8 @@ export default async (req) => {
       const beurs = await leesBeurs().catch(() => null);
       let artikelen = null;
       try {
-        const r = await fetch(`${env("URL")}/data/articles.json`, { signal: AbortSignal.timeout(10000) });
-        const j = await r.json(); artikelen = { bijgewerkt: j.updated, aantal: j.articles?.length || 0, nieuwste: j.articles?.[0]?.date || null };
+        const j = await leesArtikelIndex(); if (!j) throw new Error("geen artikelindex");
+        artikelen = { bijgewerkt: j.updated, aantal: j.articles?.length || 0, nieuwste: j.articles?.[0]?.date || null };
       } catch (e) { artikelen = { fout: e.message }; }
       let wacht = 0;
       for (const f of await leesIndex()) wacht += (await leesReacties(f.id)).filter(r => r.status === "wacht").length;
@@ -223,6 +224,19 @@ export default async (req) => {
       const ww = globalThis.Netlify?.env?.get?.("BEHEER_WACHTWOORD") ?? process.env.BEHEER_WACHTWOORD;
       try { const n = await herstel(ontsleutel(b.bestand, ww)); return json({ ok: true, items: n }); }
       catch (e) { return json({ fout: e.message }, 400); }
+    }
+
+    case "uitgelicht":
+      return json((await db().get("uitgelicht", { type: "json" })) || {});
+
+    case "uitgelicht-zet": {
+      const u = (await db().get("uitgelicht", { type: "json" })) || {};
+      const sectie = schoon(b.sectie, 40);
+      if (!sectie) return json({ fout: "Kies een dossier of sectie." }, 400);
+      const ids = [...new Set((b.ids || []).map(x => String(x)).filter(x => /^[\w-]{1,80}$/.test(x)))].slice(0, 6);
+      if (ids.length) u[sectie] = ids; else delete u[sectie];
+      await db().setJSON("uitgelicht", u);
+      return json(u);
     }
 
     default:

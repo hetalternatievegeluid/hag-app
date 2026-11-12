@@ -36,8 +36,9 @@ async function main() {
   console.log("Bestaand artikelarchief ophalen...");
 
   // Gebruik altijd de gepubliceerde gegevens als uitgangspunt.
+  // Het volledige archief (met tekst); de gewone /api/artikelen geeft alleen de index.
   const bestaand = await download(
-    `${SITE}/api/artikelen`
+    `${SITE}/api/artikelen?volledig=1`
   ).catch(() => download(`${SITE}/data/articles.json`));
 
   // Voorkomt verlies van artikelen die niet in GitHub staan.

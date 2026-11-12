@@ -1,5 +1,5 @@
 {
- "_uitleg": "Instellingen voor de nieuwsstroom. 'secties' zijn de onderwerpen (zelfde ID's als de dossiers). Een bericht komt in een sectie als een trefwoord in de kop of samenvatting staat. Bij een bron met 'sectie' komen ALLE berichten van die bron in die sectie, ook zonder trefwoord. Een bron uitzetten: zet 'aan' op false. Een trefwoord dat eindigt op '=' moet als heel woord voorkomen (zo vindt 'Mali=' wel 'Mali' maar niet 'malicious'); zonder '=' telt ook een woord dat ermee begint (zo vindt 'Oekraïens' ook 'Oekraïense').",
+ "_uitleg": "Instellingen voor de nieuwsstroom. 'secties' zijn de onderwerpen (zelfde ID's als de dossiers). Een bericht komt in een sectie als een trefwoord in de kop of samenvatting staat. Bij een bron met 'sectie' komen ALLE berichten van die bron in die sectie, ook zonder trefwoord. Een bron uitzetten: zet 'aan' op false. Een trefwoord dat eindigt op '=' moet als heel woord voorkomen (zo vindt 'Mali=' wel 'Mali' maar niet 'malicious'); zonder '=' telt ook een woord dat ermee begint (zo vindt 'Oekraïens' ook 'Oekraïense'). 'kamp' bepaalt in welke kolom een bron staat bij de bronvergelijking en framing-check. Media die onder de EU-sancties vallen (zoals RT, Sputnik, RIA Novosti, Izvestia, Lenta) mogen er niet in.",
  "secties": [
   {
    "id": "oekraine",
@@ -380,35 +380,40 @@
    "naam": "NOS",
    "label": "Westerse mainstream media",
    "feed": "https://feeds.nos.nl/nosnieuwsbuitenland",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "bbc",
    "naam": "BBC World",
    "label": "Westerse mainstream media",
    "feed": "https://feeds.bbci.co.uk/news/world/rss.xml",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "guardian",
    "naam": "The Guardian",
    "label": "Westerse mainstream media",
    "feed": "https://www.theguardian.com/world/rss",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "politico",
    "naam": "Politico Europe",
    "label": "Westerse mainstream media",
    "feed": "https://www.politico.eu/feed/",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "aljazeera",
    "naam": "Al Jazeera English",
    "label": "Qatarese staatsomroep",
    "feed": "https://www.aljazeera.com/xml/rss/all.xml",
-   "aan": true
+   "aan": true,
+   "kamp": "golf"
   },
   {
    "id": "kyivindependent",
@@ -416,7 +421,8 @@
    "label": "Oekraïense onafhankelijke media",
    "feed": "https://kyivindependent.com/news-archive/rss/",
    "sectie": "oekraine",
-   "aan": true
+   "aan": true,
+   "kamp": "oekraine"
   },
   {
    "id": "pravda",
@@ -424,7 +430,8 @@
    "label": "Oekraïense media",
    "feed": "https://www.pravda.com.ua/eng/rss/",
    "sectie": "oekraine",
-   "aan": true
+   "aan": true,
+   "kamp": "oekraine"
   },
   {
    "id": "meduza",
@@ -432,7 +439,8 @@
    "label": "Russische onafhankelijke media (ballingschap)",
    "feed": "https://meduza.io/rss/en/all",
    "sectie": "oekraine",
-   "aan": true
+   "aan": true,
+   "kamp": "rusland-onafh"
   },
   {
    "id": "tass",
@@ -440,7 +448,8 @@
    "label": "Russische staatsmedia",
    "staat": true,
    "feed": "https://tass.com/rss/v2.xml",
-   "aan": true
+   "aan": true,
+   "kamp": "rusland"
   },
   {
    "id": "almonitor",
@@ -448,14 +457,16 @@
    "label": "Midden-Oosten nieuwssite (VS)",
    "feed": "https://www.al-monitor.com/rss",
    "sectie": "iran",
-   "aan": true
+   "aan": true,
+   "kamp": "midden-oosten"
   },
   {
    "id": "timesofisrael",
    "naam": "Times of Israel",
    "label": "Israëlische media",
    "feed": "https://www.timesofisrael.com/feed/",
-   "aan": true
+   "aan": true,
+   "kamp": "israel"
   },
   {
    "id": "iranintl",
@@ -463,7 +474,8 @@
    "label": "Iraanse oppositiemedia (Saoedische financiering gemeld)",
    "feed": "https://www.iranintl.com/en/feed",
    "sectie": "iran",
-   "aan": true
+   "aan": true,
+   "kamp": "iran-opp"
   },
   {
    "id": "tasnim",
@@ -472,7 +484,8 @@
    "staat": true,
    "feed": "https://www.tasnimnews.com/en/rss",
    "sectie": "iran",
-   "aan": true
+   "aan": true,
+   "kamp": "iran"
   },
   {
    "id": "presstv",
@@ -481,7 +494,8 @@
    "staat": true,
    "feed": "https://www.presstv.ir/RSS",
    "sectie": "iran",
-   "aan": true
+   "aan": true,
+   "kamp": "iran"
   },
   {
    "id": "scmp",
@@ -489,7 +503,8 @@
    "label": "Hongkongse media (eigendom Alibaba)",
    "feed": "https://www.scmp.com/rss/91/feed",
    "sectie": "china",
-   "aan": true
+   "aan": true,
+   "kamp": "azie"
   },
   {
    "id": "globaltimes",
@@ -497,14 +512,16 @@
    "label": "Chinese staatsmedia",
    "staat": true,
    "feed": "https://www.globaltimes.cn/rss/outbrain.xml",
-   "aan": true
+   "aan": true,
+   "kamp": "china"
   },
   {
    "id": "nikkei",
    "naam": "Nikkei Asia",
    "label": "Japanse media",
    "feed": "https://asia.nikkei.com/rss/feed/nar",
-   "aan": true
+   "aan": true,
+   "kamp": "azie"
   },
   {
    "id": "diplomat",
@@ -512,7 +529,8 @@
    "label": "Azië-Pacific tijdschrift",
    "feed": "https://thediplomat.com/feed/",
    "sectie": "china",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "focustaiwan",
@@ -521,7 +539,8 @@
    "staat": true,
    "feed": "https://focustaiwan.tw/rss/aall.xml",
    "sectie": "china",
-   "aan": true
+   "aan": true,
+   "kamp": "azie"
   },
   {
    "id": "yonhap",
@@ -529,7 +548,8 @@
    "label": "Zuid-Koreaans persbureau",
    "feed": "https://en.yna.co.kr/RSS/news.xml",
    "sectie": "china",
-   "aan": true
+   "aan": true,
+   "kamp": "azie"
   },
   {
    "id": "bbc_europa",
@@ -537,21 +557,24 @@
    "label": "Westerse mainstream media",
    "feed": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
    "sectie": "europa",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "dw",
    "naam": "Deutsche Welle",
    "label": "Duitse publieke omroep",
    "feed": "https://rss.dw.com/rdf/rss-en-world",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "france24",
    "naam": "France 24",
    "label": "Franse publieke omroep",
    "feed": "https://www.france24.com/en/rss",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "bbc_afrika",
@@ -559,7 +582,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://feeds.bbci.co.uk/news/world/africa/rss.xml",
    "sectie": "afrika",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "africanews",
@@ -567,7 +591,8 @@
    "label": "Pan-Afrikaanse media (eigendom Euronews)",
    "feed": "https://www.africanews.com/feed/rss",
    "sectie": "afrika",
-   "aan": true
+   "aan": true,
+   "kamp": "afrika"
   },
   {
    "id": "premiumtimes",
@@ -575,7 +600,8 @@
    "label": "Nigeriaanse onafhankelijke media",
    "feed": "https://www.premiumtimesng.com/feed",
    "sectie": "afrika",
-   "aan": true
+   "aan": true,
+   "kamp": "afrika"
   },
   {
    "id": "bbc_latam",
@@ -583,7 +609,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://feeds.bbci.co.uk/news/world/latin_america/rss.xml",
    "sectie": "latam",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "mercopress",
@@ -591,7 +618,8 @@
    "label": "Zuid-Atlantische nieuwsdienst (Uruguay)",
    "feed": "https://en.mercopress.com/rss",
    "sectie": "latam",
-   "aan": true
+   "aan": true,
+   "kamp": "latam"
   },
   {
    "id": "telesur",
@@ -600,14 +628,16 @@
    "staat": true,
    "feed": "https://www.telesurenglish.net/rss/RssHomepage.xml",
    "sectie": "latam",
-   "aan": true
+   "aan": true,
+   "kamp": "latam"
   },
   {
    "id": "bbc_azie",
    "naam": "BBC Asia",
    "label": "Westerse mainstream media",
    "feed": "https://feeds.bbci.co.uk/news/world/asia/rss.xml",
-   "aan": true
+   "aan": true,
+   "kamp": "west"
   },
   {
    "id": "thehindu",
@@ -615,7 +645,8 @@
    "label": "Indiase media",
    "feed": "https://www.thehindu.com/news/international/feeder/default.rss",
    "sectie": "zuidazie",
-   "aan": true
+   "aan": true,
+   "kamp": "zuidazie"
   },
   {
    "id": "dawn",
@@ -623,7 +654,8 @@
    "label": "Pakistaanse media",
    "feed": "https://www.dawn.com/feeds/home",
    "sectie": "zuidazie",
-   "aan": true
+   "aan": true,
+   "kamp": "zuidazie"
   },
   {
    "id": "tweakers",
@@ -631,7 +663,8 @@
    "label": "Nederlandse techmedia",
    "feed": "https://tweakers.net/feeds/mixed.xml",
    "sectie": "tech",
-   "aan": true
+   "aan": true,
+   "kamp": "tech"
   },
   {
    "id": "verge",
@@ -639,7 +672,8 @@
    "label": "Amerikaanse techmedia",
    "feed": "https://www.theverge.com/rss/index.xml",
    "sectie": "tech",
-   "aan": true
+   "aan": true,
+   "kamp": "tech"
   },
   {
    "id": "ars",
@@ -647,7 +681,8 @@
    "label": "Amerikaanse techmedia",
    "feed": "https://feeds.arstechnica.com/arstechnica/index",
    "sectie": "tech",
-   "aan": true
+   "aan": true,
+   "kamp": "tech"
   },
   {
    "id": "techcrunch",
@@ -655,7 +690,8 @@
    "label": "Amerikaanse techmedia",
    "feed": "https://techcrunch.com/feed/",
    "sectie": "tech",
-   "aan": true
+   "aan": true,
+   "kamp": "tech"
   },
   {
    "id": "mittr",
@@ -663,7 +699,8 @@
    "label": "Amerikaans techtijdschrift",
    "feed": "https://www.technologyreview.com/feed/",
    "sectie": "tech",
-   "aan": true
+   "aan": true,
+   "kamp": "tech"
   },
   {
    "id": "wired",
@@ -671,7 +708,8 @@
    "label": "Amerikaanse techmedia",
    "feed": "https://www.wired.com/feed/rss",
    "sectie": "tech",
-   "aan": true
+   "aan": true,
+   "kamp": "tech"
   },
   {
    "id": "cnbctech",
@@ -679,7 +717,8 @@
    "label": "Amerikaanse zakenmedia",
    "feed": "https://www.cnbc.com/id/19854910/device/rss/rss.html",
    "sectie": "tech",
-   "aan": true
+   "aan": true,
+   "kamp": "tech"
   },
   {
    "id": "restofworld",
@@ -687,7 +726,158 @@
    "label": "Techmedia over niet-westerse landen",
    "feed": "https://restofworld.org/feed/latest",
    "sectie": "tech",
+   "aan": true,
+   "kamp": "tech"
+  },
+  {
+   "id": "newsweek",
+   "naam": "Newsweek",
+   "label": "Westerse mainstream media",
+   "feed": "https://www.newsweek.com/rss",
+   "kamp": "west",
+   "aan": true
+  },
+  {
+   "id": "euronews",
+   "naam": "Euronews",
+   "label": "Westerse mainstream media",
+   "feed": "https://www.euronews.com/rss?format=mrss&level=theme&name=news",
+   "kamp": "west",
+   "aan": true
+  },
+  {
+   "id": "foreignpolicy",
+   "naam": "Foreign Policy",
+   "label": "Westers buitenlandtijdschrift",
+   "feed": "https://foreignpolicy.com/feed/",
+   "kamp": "west",
+   "aan": true
+  },
+  {
+   "id": "aa",
+   "naam": "Anadolu Agency",
+   "label": "Turks staatspersbureau",
+   "feed": "https://www.aa.com.tr/en/rss/default?cat=world",
+   "kamp": "turkije",
+   "aan": true,
+   "staat": true
+  },
+  {
+   "id": "trtworld",
+   "naam": "TRT World",
+   "label": "Turkse staatsomroep",
+   "feed": "https://www.trtworld.com/rss",
+   "kamp": "turkije",
+   "aan": true,
+   "staat": true
+  },
+  {
+   "id": "arabnews",
+   "naam": "Arab News",
+   "label": "Saoedische media (regeringsgezind)",
+   "feed": "https://www.arabnews.com/rss.xml",
+   "kamp": "golf",
+   "aan": true
+  },
+  {
+   "id": "thenational",
+   "naam": "The National",
+   "label": "Emiraatse media (staatseigendom)",
+   "feed": "https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml",
+   "kamp": "golf",
+   "aan": true,
+   "staat": true
+  },
+  {
+   "id": "middleeasteye",
+   "naam": "Middle East Eye",
+   "label": "Midden-Oosten nieuwssite (Londen)",
+   "feed": "https://www.middleeasteye.net/rss",
+   "kamp": "midden-oosten",
+   "aan": true
+  },
+  {
+   "id": "haaretz",
+   "naam": "Haaretz",
+   "label": "Israëlische media",
+   "feed": "https://www.haaretz.com/srv/haaretz-latest-headlines",
+   "kamp": "israel",
+   "aan": true
+  },
+  {
+   "id": "irna",
+   "naam": "IRNA",
+   "label": "Iraans staatspersbureau",
+   "feed": "https://en.irna.ir/rss",
+   "kamp": "iran",
+   "aan": true,
+   "staat": true,
+   "sectie": "iran"
+  },
+  {
+   "id": "moscowtimes",
+   "naam": "The Moscow Times",
+   "label": "Russische onafhankelijke media (ballingschap)",
+   "feed": "https://www.themoscowtimes.com/rss/news",
+   "kamp": "rusland-onafh",
+   "aan": true,
+   "sectie": "oekraine"
+  },
+  {
+   "id": "novaya",
+   "naam": "Novaya Gazeta Europe",
+   "label": "Russische onafhankelijke media (ballingschap)",
+   "feed": "https://novayagazeta.eu/feed/rss/en",
+   "kamp": "rusland-onafh",
+   "aan": true,
+   "sectie": "oekraine"
+  },
+  {
+   "id": "ukrinform",
+   "naam": "Ukrinform",
+   "label": "Oekraïens staatspersbureau",
+   "feed": "https://www.ukrinform.net/rss/block-lastnews",
+   "kamp": "oekraine",
+   "aan": true,
+   "staat": true,
+   "sectie": "oekraine"
+  },
+  {
+   "id": "xinhua",
+   "naam": "Xinhua",
+   "label": "Chinees staatspersbureau",
+   "feed": "https://english.news.cn/rss/worldrss.xml",
+   "kamp": "china",
+   "aan": true,
+   "staat": true
+  },
+  {
+   "id": "responsible",
+   "naam": "Responsible Statecraft",
+   "label": "Amerikaanse denktank-media (pleit voor militaire terughoudendheid)",
+   "feed": "https://responsiblestatecraft.org/feed/",
+   "kamp": "kritisch",
    "aan": true
   }
- ]
+ ],
+ "kampen": {
+  "west": "Westerse media",
+  "rusland": "Russische staatsmedia",
+  "rusland-onafh": "Russisch onafhankelijk",
+  "oekraine": "Oekraïense media",
+  "iran": "Iraanse staatsmedia",
+  "iran-opp": "Iraanse oppositie",
+  "golf": "Golfstaten",
+  "israel": "Israëlische media",
+  "turkije": "Turkse media",
+  "midden-oosten": "Midden-Oosten (onafhankelijk)",
+  "china": "Chinese staatsmedia",
+  "azie": "Aziatische media",
+  "zuidazie": "Zuid-Aziatische media",
+  "afrika": "Afrikaanse media",
+  "latam": "Latijns-Amerikaanse media",
+  "kritisch": "Westers-kritisch",
+  "tech": "Techmedia",
+  "overig": "Overig"
+ }
 }

@@ -1,0 +1,232 @@
+{
+ "_uitleg": "Woorden en uitdrukkingen met politieke lading. Ze worden gemarkeerd in de bronvergelijking en geteld in de framing-check. 'namen' zijn de varianten waarop gezocht wordt (eindig op '=' voor een heel woord). De uitleg verschijnt als je op het gemarkeerde woord tikt. Pas gerust aan.",
+ "termen": [
+  {
+   "term": "regime",
+   "namen": [
+    "regime",
+    "regimes",
+    "regiem"
+   ],
+   "uitleg": "Noemt een regering onwettig of autoritair. Media gebruiken het vrijwel alleen voor regeringen van tegenstanders."
+  },
+  {
+   "term": "Kyiv-regime",
+   "namen": [
+    "Kiev regime",
+    "Kyiv regime",
+    "Kiev's regime",
+    "Zelensky regime",
+    "regime in Kiev"
+   ],
+   "uitleg": "Term van Russische staatsmedia die de Oekraïense regering als onwettig neerzet."
+  },
+  {
+   "term": "speciale militaire operatie",
+   "namen": [
+    "special military operation",
+    "speciale militaire operatie",
+    "SMO="
+   ],
+   "uitleg": "Officiële Russische benaming voor de invasie van Oekraïne. Westerse media spreken van oorlog of invasie."
+  },
+  {
+   "term": "invasie",
+   "namen": [
+    "invasion",
+    "invasie",
+    "invaded"
+   ],
+   "uitleg": "Westerse en Oekraïense benaming; Russische staatsmedia vermijden het woord."
+  },
+  {
+   "term": "bevrijd",
+   "namen": [
+    "liberated",
+    "liberation",
+    "bevrijd",
+    "bevrijding"
+   ],
+   "uitleg": "Beschrijft een inname vanuit het perspectief van de partij die het gebied innam."
+  },
+  {
+   "term": "bezet",
+   "namen": [
+    "occupied",
+    "occupation",
+    "bezet",
+    "bezetting"
+   ],
+   "uitleg": "Beschrijft hetzelfde gebied vanuit het perspectief van de partij die het verloor."
+  },
+  {
+   "term": "neonazi",
+   "namen": [
+    "neo-Nazi",
+    "neo-Nazis",
+    "neonazi",
+    "denazification",
+    "denazificatie"
+   ],
+   "uitleg": "Kernbegrip in de Russische rechtvaardiging van de oorlog; door westerse media als propaganda beschouwd."
+  },
+  {
+   "term": "collectieve Westen",
+   "namen": [
+    "collective West",
+    "collectieve Westen"
+   ],
+   "uitleg": "Uitdrukking van Russische en Chinese staatsmedia die het Westen als één blok neerzet."
+  },
+  {
+   "term": "terrorist",
+   "namen": [
+    "terrorist",
+    "terrorists",
+    "terror",
+    "terrorism",
+    "terrorist attack",
+    "terroristen",
+    "terreur"
+   ],
+   "uitleg": "Juridisch en politiek beladen. Wie zo wordt genoemd, verschilt sterk per kamp."
+  },
+  {
+   "term": "martelaar",
+   "namen": [
+    "martyr",
+    "martyrs",
+    "martyred",
+    "martelaar",
+    "martelaren"
+   ],
+   "uitleg": "Religieus geladen term voor gedode strijders of burgers, vooral in Iraanse en Arabische media."
+  },
+  {
+   "term": "zionistisch regime",
+   "namen": [
+    "Zionist regime",
+    "Zionist entity",
+    "zionistisch regime",
+    "Israeli regime"
+   ],
+   "uitleg": "Term van Iraanse staatsmedia die de staat Israël niet erkent."
+  },
+  {
+   "term": "as van verzet",
+   "namen": [
+    "Axis of Resistance",
+    "resistance axis",
+    "as van verzet"
+   ],
+   "uitleg": "Zelfbenaming van Iran en de door Iran gesteunde groepen."
+  },
+  {
+   "term": "proxy",
+   "namen": [
+    "proxy",
+    "proxies",
+    "Iranian-backed",
+    "Iran-backed",
+    "handlanger"
+   ],
+   "uitleg": "Westerse en Israëlische term die groepen neerzet als verlengstuk van een andere staat."
+  },
+  {
+   "term": "mullahs",
+   "namen": [
+    "mullahs",
+    "mullah regime",
+    "ayatollahs"
+   ],
+   "uitleg": "Laatdunkende benaming van de Iraanse leiding, vooral in oppositie- en sommige westerse media."
+  },
+  {
+   "term": "agressie",
+   "namen": [
+    "aggression",
+    "aggressor",
+    "agressie",
+    "agressor"
+   ],
+   "uitleg": "Legt de schuld voor geweld eenduidig bij één partij."
+  },
+  {
+   "term": "zelfverdediging",
+   "namen": [
+    "self-defense",
+    "self-defence",
+    "zelfverdediging",
+    "right to defend"
+   ],
+   "uitleg": "Rechtvaardigt geweld als reactie; welke partij het claimt, verschilt per kamp."
+  },
+  {
+   "term": "provocatie",
+   "namen": [
+    "provocation",
+    "provocations",
+    "provocative",
+    "provocatie"
+   ],
+   "uitleg": "Schuift de verantwoordelijkheid voor een escalatie naar de tegenpartij."
+  },
+  {
+   "term": "genocide",
+   "namen": [
+    "genocide",
+    "genocidal"
+   ],
+   "uitleg": "Zwaarste juridische term; gebruik en betwisting lopen sterk uiteen tussen kampen."
+  },
+  {
+   "term": "hegemonie",
+   "namen": [
+    "hegemony",
+    "hegemonic",
+    "hegemonie",
+    "unipolar"
+   ],
+   "uitleg": "Kritiek op Amerikaanse dominantie, veel gebruikt door Russische, Chinese en Iraanse staatsmedia."
+  },
+  {
+   "term": "marionet",
+   "namen": [
+    "puppet",
+    "puppets",
+    "marionet",
+    "stroman"
+   ],
+   "uitleg": "Ontkent dat een regering of leider zelfstandig handelt."
+  },
+  {
+   "term": "separatisten",
+   "namen": [
+    "separatist",
+    "separatists",
+    "separatisten",
+    "rebels"
+   ],
+   "uitleg": "Westerse en Oekraïense benaming voor door Rusland gesteunde strijders; Russische media spreken van volksmilities."
+  },
+  {
+   "term": "militanten",
+   "namen": [
+    "militants",
+    "militant",
+    "militanten"
+   ],
+   "uitleg": "Neutraal klinkende term voor gewapende groepen; wie zo wordt genoemd en wie niet, is een keuze."
+  },
+  {
+   "term": "hardliner",
+   "namen": [
+    "hardline",
+    "hardliner",
+    "hardliners",
+    "havik"
+   ],
+   "uitleg": "Waardeoordeel over de koers van politici, vooral in westerse media over Iran, Rusland en China."
+  }
+ ]
+}

@@ -7,4 +7,4 @@ export default async () => {
   console.log(`Nieuwsstroom: ${data.berichten.length} berichten.${fout.length ? " Problemen: " + fout.join("; ") : ""}`);
 };
 
-export const config = { schedule: "*/15 * * * *" };
+export const config = { schedule: "*/30 * * * *" };

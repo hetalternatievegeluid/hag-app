@@ -3,6 +3,7 @@ import { XMLParser } from "fast-xml-parser";
 import { getStore } from "@netlify/blobs";
 import config from "../../config/nieuws.json";
 import plaatsen from "../../config/plaatsen.json";
+import framing from "../../config/framing.json";
 import { archiveerEnergie } from "./energie.mjs";
 import { archiveerTech } from "./beurs.mjs";
 
@@ -88,7 +89,7 @@ async function haalBron(bron) {
     const hooi = ` ${titel} ${samenvatting} `;
     const secties = new Set(sectieRegels.filter(s => s.re.test(hooi)).map(s => s.id));
     if (bron.sectie) secties.add(bron.sectie);
-    return { id: url, bron: bron.naam, bronId: bron.id, label: bron.label, staat: !!bron.staat, titel, samenvatting, url, tijd, secties: [...secties], plaats: vindPlaats(titel, samenvatting), beeld: beeld(it) };
+    return { id: url, bron: bron.naam, bronId: bron.id, label: bron.label, staat: !!bron.staat, kamp: bron.kamp || "overig", titel, samenvatting, url, tijd, secties: [...secties], plaats: vindPlaats(titel, samenvatting), beeld: beeld(it) };
   }).filter(b => b.titel && b.url && b.tijd && !GEEN_NIEUWS.test(b.titel) && !/\/(jobs?|vacatures?|careers?)\//i.test(b.url));
 }
 
@@ -98,7 +99,7 @@ const STOP = new Set(("the and for with from that this says said after over amid
 const normT = s => (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 const tokens = t => new Set(normT(t).split(" ").filter(w => w.length >= 4 && !STOP.has(w) && !/^\d+$/.test(w)).map(w => w.length > 5 && w.endsWith("s") ? w.slice(0, -1) : w));
 export function vergelijk(berichten) {
-  const grens = Date.now() - 48 * 36e5;
+  const grens = Date.now() - 72 * 36e5;
   const items = berichten.filter(b => new Date(b.tijd).getTime() > grens).map(b => ({ b, t: tokens(b.titel + " " + (b.samenvatting || "").slice(0, 160)) })).filter(x => x.t.size >= 3);
   const clusters = [];
   const kern = c => new Set([...c.freq.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([w]) => w));
@@ -124,11 +125,11 @@ export function vergelijk(berichten) {
     const centraal = c.leden.slice().sort((a, b) => [...b.t].filter(w => k.has(w)).length - [...a.t].filter(w => k.has(w)).length)[0].b;
     const plekTelling = {}; c.leden.forEach(({ b }) => { if (b.plaats) plekTelling[b.plaats.naam] = (plekTelling[b.plaats.naam] || 0) + 1; });
     const plaats = Object.entries(plekTelling).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
-    const berichten = [...perBron.values()].sort((a, b) => b.tijd.localeCompare(a.tijd)).map(b => ({ bron: b.bron, label: b.label, staat: b.staat, titel: b.titel, url: b.url, tijd: b.tijd }));
+    const berichten = [...perBron.values()].sort((a, b) => b.tijd.localeCompare(a.tijd)).map(b => ({ bron: b.bron, label: b.label, staat: b.staat, kamp: b.kamp || "overig", titel: b.titel, url: b.url, tijd: b.tijd }));
     return { id: centraal.url, kop: centraal.titel, plaats, laatst: berichten[0].tijd, secties: [...new Set(c.leden.flatMap(({ b }) => b.secties))], berichten };
-  }).filter(c => c.berichten.length >= 3)
+  }).filter(c => c.berichten.length >= 3 || (c.berichten.length >= 2 && new Set(c.berichten.map(b => b.kamp)).size >= 2))
     .sort((a, b) => (b.berichten.length - a.berichten.length) || b.laatst.localeCompare(a.laatst))
-    .slice(0, 15);
+    .slice(0, 30);
 }
 
 export async function verversNieuws() {
@@ -151,7 +152,7 @@ export async function verversNieuws() {
     .filter(b => (b.secties.length || b.plaats) && new Date(b.tijd).getTime() > grens && new Date(b.tijd).getTime() < Date.now() + 36e5)
     .sort((a, b) => b.tijd.localeCompare(a.tijd))
     .slice(0, MAX_BERICHTEN);
-  const data = { bijgewerkt: new Date().toISOString(), secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status, vergelijking: vergelijk(berichten) };
+  const data = { bijgewerkt: new Date().toISOString(), kampen: config.kampen || {}, framing: framing.termen || [], secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status, vergelijking: vergelijk(berichten) };
   await store().setJSON("stroom", data);
   try { await archiveerEnergie(berichten); } catch (e) { console.warn("Energie-archief: " + e.message); }
   try { await archiveerTech(berichten); } catch (e) { console.warn("Tech-archief: " + e.message); }

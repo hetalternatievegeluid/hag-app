@@ -1,6 +1,8 @@
 [build]
   publish = "public"
   command = "echo 'Geen build nodig'"
+  # Alleen opnieuw online zetten als er buiten de map backups iets is veranderd (back-ups kosten zo geen credits)
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)backups'"
 
 [[headers]]
   for = "/data/*"

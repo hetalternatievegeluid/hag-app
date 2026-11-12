@@ -133,6 +133,49 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.hagmini{vertical-align:-2px;margin-right:5px;border-radius:50%}
+.hagblok{margin:18px 0;padding:14px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--surface)}
+.hagblok h3{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:1.08rem;margin:0 0 10px}
+.hagblok h3 img{border-radius:50%}
+.hagkaarten{display:grid;gap:10px}
+@media (min-width:640px){.hagkaarten{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}}
+.hagkaart{display:flex;gap:10px;text-decoration:none;color:var(--ink);align-items:flex-start}
+.hagkaart img{width:72px;height:72px;object-fit:cover;border-radius:6px;flex:none;background:var(--line)}
+.hktekst{display:flex;flex-direction:column;gap:2px;min-width:0}
+.hktekst strong{font-family:var(--serif);font-size:1rem;line-height:1.25}
+.hagkaart:hover strong{text-decoration:underline}
+.uitgelichtlabel{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;background:var(--accent);border-radius:3px;padding:0 5px;align-self:flex-start}
+.filters{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin:20px 0 4px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.filterkop{flex-basis:100%;margin:0;display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:600;font-size:1.05rem}
+.filterkop img{border-radius:50%}
+.filters label{display:flex;flex-direction:column;font-size:.75rem;color:var(--muted);gap:3px}
+.filters select{font:inherit;font-size:.9rem;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-width:160px}
+mark.framing{background:transparent;color:inherit;border-bottom:2px dotted var(--accent);cursor:help;padding:0}
+mark.framing.voorbeeld{cursor:default}
+mark.framing:focus{outline:2px solid var(--accent);outline-offset:1px}
+.framingcheck{margin:14px 0 6px}
+ul.framinglijst{list-style:none;margin:0;padding:0}
+ul.framinglijst li{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line)}
+.framingterm{background:none;border:0;border-bottom:2px dotted var(--accent);font:inherit;font-weight:700;color:var(--ink);padding:0;cursor:help}
+.framingkampen{display:flex;flex-wrap:wrap;gap:4px}
+.fk{font-size:.76rem;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
+.fk b{color:var(--ink)}
+.fk.staat{border-color:var(--accent)}
+.fk small{font-size:.7rem}
+#uitlegpop{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:min(92vw,520px);background:var(--bar);color:#fff;border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.45;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+#uitlegpop.zichtbaar{opacity:1;transform:translate(-50%,0)}
+.landover{position:relative;margin:-10px 0 20px}
+.landover a{color:#fff;font-size:.88rem;text-underline-offset:3px}
+.overkop{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+.overkop img{flex:none}
+.overkop h1{margin:0}
+.videokaart{display:flex;gap:14px;align-items:center;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;margin:8px 0 18px;font-family:var(--sans)}
+.videobeeld{position:relative;flex:none;width:160px;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#000}
+.videobeeld img{width:100%;height:100%;object-fit:cover}
+.play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.6rem;background:rgba(0,0,0,.25)}
+.videotekst{display:flex;flex-direction:column;gap:3px;font-size:.9rem}
+.videotekst span{color:var(--muted);font-size:.82rem}
+.overlinks{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--sans);font-weight:600}
 .beursmodus .pct.up{color:#2E7D5B}
 .beursmodus .pct.down{color:var(--accent)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .beursmodus .pct.up{color:#4CC38A}:root:not([data-theme="light"]) .beursmodus .pct.down{color:var(--accent)}}
@@ -451,7 +494,7 @@ footer .social a:hover{text-decoration:underline}
     <a href="https://hetalternatievegeluid.substack.com/" target="_blank" rel="noopener">Substack</a>
   </nav>
   <p>Contact: <a href="mailto:hetalternatievegeluid@gmail.com">hetalternatievegeluid@gmail.com</a></p>
-  <p class="flinks"><a href="#privacy">Privacyverklaring</a><a href="#installeren">App op je beginscherm</a><a href="#meldingen">Meldingen</a></p>
+  <p class="flinks"><a href="#over">Over Het Alternatieve Geluid</a><a href="#privacy">Privacyverklaring</a><a href="#installeren">App op je beginscherm</a><a href="#meldingen">Meldingen</a></p>
   <p id="updated"></p>
   <p>© 2024–2026 Het Alternatieve Geluid</p>
 </footer>
@@ -491,7 +534,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {aandeel:"NVDA", koersBereik:90, stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
+const state = {fDossier:"", fJaar:"", aandeel:"NVDA", koersBereik:90, stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -536,6 +579,8 @@ function filtered(){
   return sorted.filter(a=>{
     if(state.cat==="bewaard" && !saved.has(a.id)) return false;
     if(state.dossier && !DOSSIERS.find(d=>d.id===state.dossier).ids.includes(a.id)) return false;
+    if(state.fDossier && !(a.dossiers || []).includes(state.fDossier)) return false;
+    if(state.fJaar && !String(a.date).startsWith(state.fJaar)) return false;
     if(!["alles","bewaard"].includes(state.cat) && a.cat!==state.cat) return false;
     if(q && !norm(a.title+" "+a.intro+" "+(a.series||"")).includes(q)) return false;
     return true;
@@ -582,8 +627,9 @@ function renderList(){
       <p>${items.length} artikelen, van ${fmtShort.format(first)} tot ${fmtShort.format(last)}.</p>
       <div class="actions"><button class="btn ${f?"":"ghost"}" data-act="follow" data-id="${ds.id}" aria-pressed="${f}">${f?"Je volgt dit dossier":"Volg dit dossier"}</button></div>
     </section>
+    ${uitgelichtBlok(ds.id)}
     ${stroomBlok(ds.id,5)}`;
-  } else if(state.cat==="alles" && !state.q.trim()){
+  } else if(state.cat==="alles" && !state.q.trim() && !state.fDossier && !state.fJaar){
     const h = list[0];
     const d = new Date(h.date);
     html += flitsenBlok() + agendaBlok() + `<section class="hero">
@@ -621,6 +667,7 @@ function renderList(){
     return;
   }
 
+  if(["alles","nieuws","onderzoek","analyse","anderekijk"].includes(state.cat) && !state.dossier) html += artikelFilters();
   let month = "", open = false;
   for(const a of list){
     const d = new Date(a.date);
@@ -634,7 +681,7 @@ function renderList(){
       <time datetime="${a.date}"><b>${fmtDay.format(d)}</b>${fmtMon.format(d).replace(".","")}</time>
       <div class="irow">
         <div>
-          <span class="cat">${rubriekShort(a)}</span> ${seriesLabel(a)}
+          <span class="cat"><img class="hagmini" src="/icons/logo.png" alt="" width="14" height="14">${rubriekShort(a)}</span> ${seriesLabel(a)}
           <h3><a href="#artikel-${a.id}">${esc(a.title)}</a></h3>
           ${a.intro ? `<p>${esc(a.intro)}</p>` : ""}
         </div>
@@ -651,6 +698,12 @@ function renderReader(a){
   const main = document.getElementById("main");
   document.getElementById("tools").hidden = true;
   document.getElementById("tabs").hidden = true;
+  if(!a.html && a.heeftTekst && a.html !== ""){
+    main.innerHTML = `<p class="loading">Artikel laden…</p>`;
+    fetch(`/api/artikelen?id=${encodeURIComponent(a.id)}`).then(r => r.ok ? r.json() : {html:""}).then(j => { a.html = j.html || ""; }).catch(() => { a.html = ""; })
+      .finally(() => { if(location.hash === "#artikel-" + a.id) renderReader(a); });
+    return;
+  }
   const d = new Date(a.date);
   let seriesNav = "";
   if(a.series){
@@ -695,7 +748,7 @@ async function loadNieuws(){
   try {
     const r = await fetch("/api/nieuws", {cache:"no-cache"});
     if(!r.ok) throw new Error(r.status);
-    NIEUWS = await r.json();
+    NIEUWS = await r.json(); FRAMING_REGELS = null;
   } catch(e) {
     if(!NIEUWS) NIEUWS = {fout:true, berichten:[], secties:[]};
   }
@@ -730,6 +783,7 @@ function stroomView(){
   if(NIEUWS.fout && !NIEUWS.berichten.length) return html + `<div class="empty"><strong>De nieuwsstroom is nu niet bereikbaar</strong>Probeer het over een paar minuten opnieuw.</div>`;
   html += modusChips();
   html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...NIEUWS.secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
+  if(state.sectie) html += hagBlok(state.sectie, null, "Van Het Alternatieve Geluid over dit onderwerp");
   const q = norm(state.q.trim());
   const lijst = NIEUWS.berichten.filter(b => (!state.sectie || b.secties.includes(state.sectie)) && (!q || norm(b.titel + " " + b.samenvatting + " " + b.bron).includes(q)));
   if(!lijst.length) return html + `<div class="empty"><strong>Geen berichten gevonden</strong>Kies een andere sectie of zoekterm.</div>`;
@@ -794,6 +848,7 @@ async function renderFlits(id){
     <p class="meta">Gevolgd sinds ${fmtShort.format(new Date(f.gemaakt))} · bijgewerkt ${nTijd(f.bijgewerkt)}</p>
     ${f.context ? `<p class="lead">${esc(f.context)}</p>` : ""}
     ${f.bron?.naam ? `<p class="aanleiding">Aanleiding: ${f.bron.url ? `<a href="${esc(f.bron.url)}" target="_blank" rel="noopener">${esc(f.bron.naam)}</a>` : esc(f.bron.naam)}${f.bron.label ? ` <span class="lbl">${esc(f.bron.label)}</span>` : ""}</p>` : ""}
+    ${hagBlok(f.sectie, null, "Lees de analyse van Het Alternatieve Geluid")}
     ${f.community ? `<p><a class="btn ghost" href="${esc(f.community)}" target="_blank" rel="noopener">${communityLabel(f.community)}</a></p>` : ""}
     <h2 class="kop">Ontwikkelingen</h2>
     ${f.updates.length ? `<ol class="tijdlijn">${f.updates.map(u=>`<li>
@@ -960,6 +1015,7 @@ function tekenPlekLijst(){
   const gekozen = plekken.find(p => p.naam===state.plek);
   let html = `<h3 class="daykop">Meeste nieuws</h3><div class="plekchips">${plekken.slice(0,12).map(p => `<button class="chip" data-act="plek" data-id="${esc(p.naam)}" aria-pressed="${state.plek===p.naam}">${esc(p.naam)} <span class="n">${p.berichten.length}</span></button>`).join("") || `<p class="stroom-intro">Geen berichten.</p>`}</div>`;
   if(gekozen){
+    html += hagBlok(null, gekozen.naam, `Van Het Alternatieve Geluid over ${esc(gekozen.naam)}`);
     html += `<h3 class="daykop">${esc(gekozen.naam)}</h3><ul class="newslist">${gekozen.berichten.slice().sort((a,b)=>b.tijd.localeCompare(a.tijd)).slice(0,30).map(b => newsItem(b, false)).join("")}</ul>`;
   }
   box.innerHTML = html;
@@ -1420,6 +1476,7 @@ function startView(){
       <h1>Het Alternatieve Geluid</h1>
       <p class="landtag">Voor wie verder kijkt dan de krantenkop.</p>
       <p class="landvisie">Geopolitieke analyse, nieuws en duiding. Kritisch maar open, onafhankelijk maar verbonden.</p>
+      <p class="landover"><a href="#over">Over de maker en de werkwijze</a></p>
       <div class="landcijfers">
         <span><b>${ARTICLES.length}</b> artikelen</span>
         <span><b>${vandaag.length || "–"}</b> berichten vandaag</span>
@@ -1428,6 +1485,7 @@ function startView(){
       </div>
     </section>
     ${actief.length ? `<section class="nu"><h2 class="nukop"><span class="pulse" aria-hidden="true"></span>Nu</h2>${actief.slice(0,2).map(f => `<a class="nuflits" href="#flits-${f.id}"><span class="ftag">Flits${sectieNaam(f.sectie) ? " · " + esc(sectieNaam(f.sectie)) : ""}</span><strong>${esc(f.titel)}</strong>${f.laatste ? `<span>${nTijd(f.laatste.tijd)} · ${esc(f.laatste.tekst.slice(0,110))}${f.laatste.tekst.length>110?"…":""}</span>` : ""}</a>`).join("")}</section>` : ""}
+    ${uitgelichtStart()}
     ${installBalk()}
     <section class="tegels">
       ${laatste ? `<a class="tegel breed uitgelicht" href="#artikel-${laatste.id}">
@@ -1452,20 +1510,22 @@ function modusChips(){
   return `<div class="chips modus"><button class="chip" data-act="modus" data-id="lijst" aria-pressed="${state.stroomModus!=="vergelijk"}">Alle berichten</button><button class="chip" data-act="modus" data-id="vergelijk" aria-pressed="${state.stroomModus==="vergelijk"}">Bronvergelijking${n ? ` <span class="n">${n}</span>` : ""}</button></div>`;
 }
 function vergelijkView(){
-  let html = `<section class="dhead"><h2>Bronvergelijking</h2><p>Gebeurtenissen van de afgelopen twee dagen waarover minstens drie verschillende bronnen berichten, met hun koppen naast elkaar. Zo zie je hoe westerse media, staatsmedia en regionale bronnen hetzelfde nieuws brengen: wat ze benadrukken, welke woorden ze kiezen en wat ze weglaten. De app groepeert automatisch op overeenkomende woorden in de koppen. Dat gaat meestal goed, maar soms belandt er een bericht in de verkeerde groep.</p></section>`;
+  let html = `<section class="dhead"><h2>Bronvergelijking en framing-check</h2><p>Hetzelfde nieuws, naast elkaar gezet per soort bron: westers, Russisch, Oekraïens, Iraans, Israëlisch, uit de Golfstaten, Turks, Chinees en meer. Zo zie je wat elke kant benadrukt, welke woorden ze kiezen en wat ze weglaten. Woorden met politieke lading zijn <mark class="framing voorbeeld">gemarkeerd</mark>: tik erop voor uitleg. De app groepeert automatisch op overeenkomende woorden in de koppen; soms belandt er een bericht in de verkeerde groep.</p></section>`;
   if(!NIEUWS) return html + `<p class="loading">Laden…</p>`;
   html += modusChips();
   const secties = NIEUWS.secties || [];
   html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
+  if(state.sectie) html += hagBlok(state.sectie, null, "Van Het Alternatieve Geluid over dit onderwerp");
+  html += framingOverzicht();
   const lijst = (NIEUWS.vergelijking || []).filter(c => !state.sectie || c.secties.includes(state.sectie));
   if(!lijst.length) return html + `<div class="empty"><strong>Nog geen vergelijkingen</strong>Zodra meerdere bronnen over hetzelfde voorval berichten, verschijnen ze hier.</div>`;
-  const groep = b => b.staat ? "staat" : /westerse mainstream/i.test(b.label) ? "west" : "overig";
-  const GROEP = {west:"Westerse mainstream media", staat:"Staatsmedia", overig:"Regionale en andere bronnen"};
-  return html + lijst.map(c => {
-    const g = {west:[], staat:[], overig:[]}; c.berichten.forEach(b => g[groep(b)].push(b));
-    return `<article class="vgl"><div class="nmeta"><span class="ftag">${c.berichten.length} bronnen</span>${c.plaats ? `<span class="nplaats">${esc(c.plaats)}</span>` : ""}<span>laatst ${nTijd(c.laatst)}</span></div>
-      <h3>${esc(c.kop)}</h3>
-      <div class="vglgroepen">${Object.entries(g).filter(([,l]) => l.length).map(([k,l]) => `<div class="vglgroep ${k}"><p class="vglkop">${GROEP[k]}</p>${l.map(b => `<a class="vglitem" href="${esc(b.url)}" target="_blank" rel="noopener"><span class="nmeta"><b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></span><span class="vgltitel">${esc(b.titel)}</span></a>`).join("")}</div>`).join("")}</div>
+  return html + `<h3 class="daykop">Zelfde nieuws, verschillende bronnen</h3>` + lijst.map(c => {
+    const g = {};
+    c.berichten.forEach(b => { const k = b.kamp || (b.staat ? "staat" : "overig"); (g[k] = g[k] || []).push(b); });
+    const kampen = Object.keys(g).sort((a, b) => KAMPVOLGORDE.indexOf(a) - KAMPVOLGORDE.indexOf(b));
+    return `<article class="vgl"><div class="nmeta"><span class="ftag">${c.berichten.length} bronnen · ${kampen.length} ${kampen.length===1 ? "perspectief" : "perspectieven"}</span>${c.plaats ? `<span class="nplaats">${esc(c.plaats)}</span>` : ""}<span>laatst ${nTijd(c.laatst)}</span></div>
+      <h3>${markeer(c.kop)}</h3>
+      <div class="vglgroepen">${kampen.map(k => `<div class="vglgroep ${kampKlasse(k)}"><p class="vglkop">${esc(kampNaam(k))}</p>${g[k].map(b => `<a class="vglitem" href="${esc(b.url)}" target="_blank" rel="noopener"><span class="nmeta"><b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></span><span class="vgltitel">${markeer(b.titel)}</span></a>`).join("")}</div>`).join("")}</div>
     </article>`;
   }).join("");
 }
@@ -1541,7 +1601,7 @@ function renderPrivacy(){
   <h2>Hoe lang bewaren we het?</h2>
   <p>Reacties en berichten bewaren we zolang de flits of gespreksruimte bestaat, tenzij je vraagt om verwijdering. Meldingsadressen bewaren we tot je je afmeldt, of tot ze niet meer werken. Wekelijks maken we een versleutelde back-up, waarvan we de laatste twaalf bewaren.</p>
   <h2>Wie helpt ons daarbij?</h2>
-  <p>De app draait bij <b>Netlify</b> (hosting en opslag), en de broncode en versleutelde back-ups staan bij <b>GitHub</b>. Beide zijn Amerikaanse bedrijven, dus gegevens kunnen buiten de EU worden verwerkt. Meldingen worden afgeleverd via de dienst van de maker van je browser, zoals Google, Apple of Mozilla. Bij het laden van de app worden lettertypen opgehaald bij <b>Google Fonts</b> en voor de wereldbol en grafieken onderdelen bij <b>jsDelivr</b>. Daarbij ziet die dienst je IP-adres. Afbeeldingen bij berichten in de nieuwsstroom komen rechtstreeks van de nieuwsbron.</p>
+  <p>De app draait bij <b>Netlify</b> (hosting en opslag), en de broncode en versleutelde back-ups staan bij <b>GitHub</b>. Beide zijn Amerikaanse bedrijven, dus gegevens kunnen buiten de EU worden verwerkt. Meldingen worden afgeleverd via de dienst van de maker van je browser, zoals Google, Apple of Mozilla. Bij het laden van de app worden lettertypen opgehaald bij <b>Google Fonts</b> en voor de wereldbol en grafieken onderdelen bij <b>jsDelivr</b>. Daarbij ziet die dienst je IP-adres. Afbeeldingen bij berichten in de nieuwsstroom komen rechtstreeks van de nieuwsbron. Op de pagina Over staat een voorvertoning van een YouTube-video; die afbeelding wordt geladen bij YouTube (Google).</p>
   <h2>Je rechten</h2>
   <p>Je kunt ons vragen welke gegevens we van je hebben, en vragen om ze te verbeteren of te verwijderen. Mail ons, en noem erbij welke reactie of welk bericht het gaat. Omdat we geen accounts hebben, kunnen we je alleen helpen als je aangeeft om welke berichten het gaat. Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>
   <h2>Wijzigingen</h2>
@@ -1607,6 +1667,7 @@ function techView(){
   let nw = (NIEUWS?.berichten || []).filter(b => b.secties.includes("tech"));
   if(!nw.length) nw = (NIEUWS?.berichten || []).filter(b => TECH_RE.test(" " + b.titel + " "));
   nw = nw.slice(0, 15);
+  html += hagBlok("tech", null, "Van Het Alternatieve Geluid over tech en AI");
   html += `<h3 class="daykop">Laatste tech- en AI-nieuws</h3>${nw.length ? `<ul class="newslist">${nw.map(b => newsItem(b, false)).join("")}</ul><p><button class="btn ghost" data-act="stroom" data-id="tech">Alle tech- en AI-berichten</button></p>` : `<p class="stroom-intro">Nog geen berichten.</p>`}`;
   return html;
 }
@@ -1639,10 +1700,133 @@ async function tekenKoers(){
 }
 window.addEventListener("resize", () => { clearTimeout(grafiekTimer); grafiekTimer = setTimeout(() => { if(state.cat==="tech" && !location.hash) tekenKoers(); }, 250); });
 
+/* ---------- Het Alternatieve Geluid: uitgelicht en gerelateerd ---------- */
+let UITGELICHT = {};
+async function laadUitgelicht(){
+  try { const r = await fetch("/api/uitgelicht"); if(r.ok) UITGELICHT = await r.json(); } catch(e) {}
+  if(!location.hash && ["start","alles","stroom","tech"].includes(state.cat) && ARTICLES.length) renderList();
+}
+function hagArtikelen(sectie, zoek, n = 3){
+  const gepind = (UITGELICHT[sectie] || []).map(byId).filter(Boolean);
+  let rest = sectie ? sorted.filter(a => (a.dossiers || []).includes(sectie)) : [];
+  if(zoek){ const q = norm(zoek); rest = rest.concat(sorted.filter(a => norm(a.title + " " + (a.intro || "")).includes(q))); }
+  const uit = []; for(const a of [...gepind, ...rest]) if(!uit.includes(a)) uit.push(a);
+  return {lijst: uit.slice(0, n), gepind: new Set(gepind.map(a => a.id))};
+}
+function hagKaart(a, gepind){
+  return `<a class="hagkaart" href="#artikel-${esc(a.id)}">${a.image ? `<img src="${esc(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<span class="hktekst">${gepind ? `<span class="uitgelichtlabel">Uitgelicht</span>` : ""}<span class="cat">${rubriekShort(a)}</span><strong>${esc(a.title)}</strong><span class="fmeta">${fmtShort.format(new Date(a.date))} ${new Date(a.date).getFullYear()}</span></span></a>`;
+}
+function hagBlok(sectie, zoek, titel){
+  const {lijst, gepind} = hagArtikelen(sectie, zoek);
+  if(!lijst.length) return "";
+  return `<section class="hagblok"><h3><img src="/icons/logo.png" alt="" width="24" height="24">${titel || "Van Het Alternatieve Geluid"}</h3><div class="hagkaarten">${lijst.map(a => hagKaart(a, gepind.has(a.id))).join("")}</div></section>`;
+}
+function uitgelichtBlok(sectie){
+  const l = (UITGELICHT[sectie] || []).map(byId).filter(Boolean);
+  if(!l.length) return "";
+  return `<section class="hagblok"><h3><img src="/icons/logo.png" alt="" width="24" height="24">Uitgelicht in dit dossier</h3><div class="hagkaarten">${l.map(a => hagKaart(a, true)).join("")}</div></section>`;
+}
+function uitgelichtStart(){
+  const ids = [...new Set(Object.values(UITGELICHT).flat())];
+  const l = ids.map(byId).filter(Boolean).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 4);
+  if(!l.length) return "";
+  return `<section class="hagblok"><h3><img src="/icons/logo.png" alt="" width="24" height="24">Uitgelicht door de redactie</h3><div class="hagkaarten">${l.map(a => hagKaart(a, false)).join("")}</div></section>`;
+}
+function artikelFilters(){
+  const jaren = [...new Set(ARTICLES.map(a => String(a.date).slice(0, 4)))].sort().reverse();
+  const actief = state.fDossier || state.fJaar;
+  return `<div class="filters"><p class="filterkop"><img src="/icons/logo.png" alt="" width="18" height="18">Artikelen van Het Alternatieve Geluid</p>
+    <label>Onderwerp <select data-filter="fDossier"><option value="">Alle onderwerpen</option>${DOSSIERS.map(d => `<option value="${esc(d.id)}" ${state.fDossier===d.id ? "selected" : ""}>${esc(d.name)}</option>`).join("")}</select></label>
+    <label>Jaar <select data-filter="fJaar"><option value="">Alle jaren</option>${jaren.map(j => `<option ${state.fJaar===j ? "selected" : ""}>${j}</option>`).join("")}</select></label>
+    ${actief ? `<button class="chip" data-act="filterweg">Filters wissen</button>` : ""}</div>`;
+}
+document.getElementById("main").addEventListener("change", e => {
+  const s = e.target.closest("select[data-filter]"); if(!s) return;
+  state[s.dataset.filter] = s.value; renderList();
+});
+
+/* ---------- framing-check ---------- */
+const KAMPVOLGORDE = ["west","kritisch","oekraine","rusland","rusland-onafh","iran","iran-opp","israel","golf","turkije","midden-oosten","china","azie","zuidazie","afrika","latam","tech","staat","overig"];
+const kampNaam = k => (NIEUWS?.kampen || {})[k] || ({staat:"Staatsmedia", overig:"Overig"})[k] || k;
+const kampKlasse = k => ["rusland","iran","china"].includes(k) ? "staat" : k === "west" ? "west" : "overig";
+const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+let FRAMING_REGELS = null;
+function framingRegels(){
+  if(FRAMING_REGELS || !NIEUWS?.framing) return FRAMING_REGELS || [];
+  FRAMING_REGELS = NIEUWS.framing.map(t => ({t, re: new RegExp(`(^|[^\\p{L}])(${t.namen.map(w => escRe(w.replace(/=$/, ""))).join("|")})(?![\\p{L}])`, "giu")}));
+  return FRAMING_REGELS;
+}
+function markeer(tekst){
+  const regels = framingRegels(); if(!regels.length) return esc(tekst);
+  const hits = [];
+  for(const {t, re} of regels){ re.lastIndex = 0; let m; while((m = re.exec(tekst))){ const st = m.index + m[1].length; hits.push([st, st + m[2].length, t]); if(re.lastIndex === m.index) re.lastIndex++; } }
+  hits.sort((a, b) => a[0] - b[0]);
+  let uit = "", pos = 0;
+  for(const [st, eind, t] of hits){ if(st < pos) continue; uit += esc(tekst.slice(pos, st)) + `<mark class="framing" tabindex="0" data-uitleg="${esc(t.term + ": " + t.uitleg)}">${esc(tekst.slice(st, eind))}</mark>`; pos = eind; }
+  return uit + esc(tekst.slice(pos));
+}
+function framingOverzicht(){
+  const regels = framingRegels(); if(!regels.length) return "";
+  const grens = Date.now() - 7 * 864e5;
+  const bs = (NIEUWS.berichten || []).filter(b => new Date(b.tijd).getTime() > grens && (!state.sectie || b.secties.includes(state.sectie)));
+  const perKamp = {}; bs.forEach(b => { const k = b.kamp || "overig"; perKamp[k] = (perKamp[k] || 0) + 1; });
+  const tel = new Map();
+  for(const b of bs){
+    const tekst = " " + b.titel + " " + (b.samenvatting || "") + " ";
+    for(const {t, re} of regels){ re.lastIndex = 0; if(re.test(tekst)){ const k = b.kamp || "overig"; if(!tel.has(t)) tel.set(t, new Map()); const m = tel.get(t); m.set(k, (m.get(k) || 0) + 1); } }
+  }
+  const rijen = [...tel.entries()].map(([t, m]) => ({t, m, tot: [...m.values()].reduce((a, b) => a + b, 0)})).sort((a, b) => b.tot - a.tot).slice(0, 10);
+  if(!rijen.length) return "";
+  return `<section class="framingcheck"><h3 class="daykop">Framing-check: welke woorden gebruikt wie?</h3>
+    <p class="stroom-intro">Hoe vaak woorden met politieke lading voorkomen in de koppen en samenvattingen van de afgelopen zeven dagen${state.sectie ? ` over ${esc(sectieNaam(state.sectie))}` : ""}, per soort bron. Tussen haakjes staat het percentage van alle berichten van dat soort bron. Het zegt iets over taalgebruik, niet automatisch over wie gelijk heeft.</p>
+    <ul class="framinglijst">${rijen.map(r => `<li><button class="framingterm" data-uitleg="${esc(r.t.term + ": " + r.t.uitleg)}">${esc(r.t.term)}</button><span class="framingkampen">${[...r.m.entries()].sort((a, b) => b[1] / perKamp[b[0]] - a[1] / perKamp[a[0]]).map(([k, n]) => `<span class="fk ${kampKlasse(k)}">${esc(kampNaam(k))} <b>${n}</b> <small>(${Math.round(n / perKamp[k] * 100)}%)</small></span>`).join("")}</span></li>`).join("")}</ul></section>`;
+}
+let uitlegTimer = null;
+document.addEventListener("click", e => {
+  const m = e.target.closest("mark.framing[data-uitleg], .framingterm"); if(!m) return;
+  e.preventDefault(); e.stopPropagation();
+  let box = document.getElementById("uitlegpop");
+  if(!box){ box = document.createElement("div"); box.id = "uitlegpop"; box.setAttribute("role", "status"); document.body.append(box); }
+  box.textContent = m.dataset.uitleg; box.classList.add("zichtbaar");
+  clearTimeout(uitlegTimer); uitlegTimer = setTimeout(() => box.classList.remove("zichtbaar"), 6000);
+}, true);
+
+/* ---------- over ---------- */
+function renderOver(){
+  const main = document.getElementById("main");
+  document.getElementById("tools").hidden = true; document.getElementById("tabs").hidden = true; window.scrollTo(0,0);
+  document.title = "Over | Het Alternatieve Geluid";
+  main.innerHTML = `<article class="reader over">
+    <button class="back" id="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Terug</button>
+    <div class="overkop"><img src="/icons/logo-groot.png" alt="" width="96" height="96"><div><p class="meta">Over</p><h1>Het Alternatieve Geluid</h1><p class="aanleiding">Voor wie verder kijkt dan de krantenkop.</p></div></div>
+    <div class="body">
+      <h2>Wie ik ben</h2>
+      <p>Ik ben Ilias Tahiri, schrijver en maker van Het Alternatieve Geluid. Ik schrijf in het Nederlands over geopolitiek: de oorlogen, onderhandelingen en machtsverschuivingen die het nieuws bepalen, en wat ze betekenen voor Nederland en Europa.</p>
+      <p>Mijn achtergrond ligt in de jeugd- en sociale zorg. Daarnaast heb ik een NTI-certificaat Bestuurskunde &amp; Management behaald.</p>
+      <h2>Wat je hier vindt</h2>
+      <p>Vier soorten stukken: <b>nieuwsartikelen</b> over de ontwikkelingen van de week, <b>onderzoeksartikelen</b>, <b>analyses</b>, en de reeks <b>Een Andere Kijk</b>. Daarnaast volgt de app het nieuws van dit moment uit bronnen wereldwijd.</p>
+      <h2>Werkwijze</h2>
+      <p>Ik maak in mijn stukken onderscheid tussen wat vaststaat, wat betrokkenen zeggen, en mijn eigen interpretatie. Beweringen van staats- of partijgebonden bronnen geef ik weer als claim, met de bron erbij. Onderaan elk nieuwsartikel staat een bronverantwoording, met wat niet onafhankelijk kon worden geverifieerd.</p>
+      <p>In de nieuwsstroom toont de app ook bronnen als TASS, Press TV en Global Times. Niet omdat zij gelijk hebben, maar omdat je pas begrijpt hoe een conflict wordt uitgevochten als je ziet hoe elke kant het vertelt. Daarom staat bij elk bericht wat voor bron het is, en zijn staatsmedia gemarkeerd. Media die in de EU onder sancties vallen, zoals RT en Sputnik, staan er niet in.</p>
+      <h2>In de media</h2>
+      <a class="videokaart" href="https://www.youtube.com/watch?v=Fd-ctuwfwGY" target="_blank" rel="noopener">
+        <span class="videobeeld"><img src="https://i.ytimg.com/vi/Fd-ctuwfwGY/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"><span class="play" aria-hidden="true">▶</span></span>
+        <span class="videotekst"><b>Te gast bij De Nieuwe Wereld</b><span>Bekijk het gesprek op YouTube</span></span>
+      </a>
+      <h2>Volgen en contact</h2>
+      <p class="overlinks"><a href="https://x.com/HetAlternatieve" target="_blank" rel="noopener">X</a><a href="https://tiktok.com/@hetalternatievegeluid" target="_blank" rel="noopener">TikTok</a><a href="https://youtube.com/@HetAlternatieveGeluid" target="_blank" rel="noopener">YouTube</a><a href="https://instagram.com/hetalternatievegeluid" target="_blank" rel="noopener">Instagram</a><a href="https://hetalternatievegeluid.substack.com/" target="_blank" rel="noopener">Substack</a><a href="https://www.hetalternatievegeluid.nl" target="_blank" rel="noopener">Website</a></p>
+      <p>Vragen, tips of reacties: <a href="mailto:hetalternatievegeluid@gmail.com">hetalternatievegeluid@gmail.com</a>.</p>
+    </div>
+  </article>`;
+  document.getElementById("back").onclick = () => history.back();
+}
+
 /* ---------- routing ---------- */
 function route(){
   stopVoorlezen();
+  document.getElementById("uitlegpop")?.classList.remove("zichtbaar");
   if(location.hash==="#meldingen"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderMeldingen(); return; }
+  if(location.hash==="#over"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderOver(); return; }
   if(location.hash==="#privacy"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderPrivacy(); return; }
   if(location.hash==="#installeren"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderInstalleren(); return; }
   if(location.hash==="#agenda"){ location.hash = ""; state.cat = "agenda"; renderTabs(); return; }
@@ -1653,7 +1837,7 @@ function route(){
   stopBol();
   const fm = location.hash.match(/^#flits-([a-f0-9]{12})$/);
   if(fm){ renderFlits(fm[1]); return; }
-  const m = location.hash.match(/^#artikel-(\d+)$/);
+  const m = location.hash.match(/^#artikel-([\w-]+)$/);
   const a = m && byId(m[1]);
   if(a){ renderReader(a); document.title = a.title + " | Het Alternatieve Geluid"; }
   else { renderList(); document.title = "Het Alternatieve Geluid"; }
@@ -1671,6 +1855,7 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="filterweg"){ state.fDossier = ""; state.fJaar = ""; renderList(); return; }
   if(act==="aandeel"){ state.aandeel = b.dataset.id; renderList(); document.getElementById("koersdetail")?.scrollIntoView({behavior:"smooth", block:"start"}); return; }
   if(act==="koersbereik"){ state.koersBereik = +b.dataset.id; document.querySelectorAll('[data-act="koersbereik"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenKoers(); return; }
   if(act==="modus"){ state.stroomModus = b.dataset.id; state.limit = 80; renderList(); return; }
@@ -1742,6 +1927,7 @@ async function load(){
 load();
 loadNieuws();
 loadFlitsen();
+laadUitgelicht();
 setInterval(()=>{ loadNieuws(); loadFlitsen(); }, 5*60*1000);
 if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script>

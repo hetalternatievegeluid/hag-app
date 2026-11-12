@@ -9,6 +9,8 @@ import { ontsleutel, herstel, laatsteBackup } from "../lib/backup.mjs";
 import { leesNieuws } from "../lib/nieuws.mjs";
 import { leesBeurs } from "../lib/beurs.mjs";
 import { leesIndex as leesArtikelIndex } from "../lib/artikelen.mjs";
+import { haalPost, bewaarPost, verwijderPost, leesPosts } from "../lib/xposts.mjs";
+import { leesSignalen, verversSignalen } from "../lib/signalen.mjs";
 
 async function meld(opties) { try { return await stuur(opties); } catch (e) { console.warn("Push mislukt: " + e.message); return { fout: e.message }; } }
 
@@ -237,6 +239,25 @@ export default async (req) => {
       if (ids.length) u[sectie] = ids; else delete u[sectie];
       await db().setJSON("uitgelicht", u);
       return json(u);
+    }
+
+    case "x-lijst":
+      return json({ posts: await leesPosts() });
+
+    case "x-ophalen":
+      try { return json(await haalPost(String(b.url || ""))); } catch (e) { return json({ fout: e.message }, 400); }
+
+    case "x-opslaan":
+      try { return json(await bewaarPost(b)); } catch (e) { return json({ fout: e.message }, 400); }
+
+    case "x-weg":
+      await verwijderPost(b.id);
+      return json({ ok: true });
+
+    case "signalen": {
+      let s = await leesSignalen();
+      if (!s || b.ververs) s = await verversSignalen();
+      return json(s);
     }
 
     default:

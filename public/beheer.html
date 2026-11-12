@@ -85,6 +85,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
     <button data-view="gesprekken" aria-pressed="false">Gesprekken</button>
     <button data-view="agenda" aria-pressed="false">Agenda</button>
     <button data-view="uitlichten" aria-pressed="false">Uitlichten</button>
+    <button data-view="x" aria-pressed="false">X</button>
     <button data-view="energie" aria-pressed="false">Energie</button>
     <button data-view="meldingen" aria-pressed="false">Meldingen</button>
     <button data-view="moderatie" aria-pressed="false">Moderatie <span id="wachtteller"></span></button>
@@ -136,7 +137,7 @@ document.getElementById("nav").addEventListener("click", e=>{
 function kies(view){
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
   main.onclick = null; main.onchange = null;
-  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else if(view==="status") toonStatus(); else if(view==="uitlichten") toonUitlichten(); else toonFlitsen();
+  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else if(view==="status") toonStatus(); else if(view==="uitlichten") toonUitlichten(); else if(view==="x") toonX(); else toonFlitsen();
 }
 
 /* ---------- flitsen-overzicht ---------- */
@@ -341,11 +342,11 @@ async function toonEnergie(){
 
 /* ---------- agenda ---------- */
 const STATUS = {officieel:"Officieel (organisator of alle partijen)", deels:"Aangekondigd door één partij", speculatie:"Speculatie (verwacht op basis van berichtgeving)"};
-async function toonAgenda(bewerk){
+async function toonAgenda(bewerk, voorinvul){
   main.innerHTML = `<p class="hint">Laden…</p>`;
   try {
     const {items} = await api("agenda");
-    const i = bewerk ? items.find(x => x.id===bewerk) || {} : {};
+    const i = bewerk ? items.find(x => x.id===bewerk) || {} : (voorinvul || {});
     const sOpt = SECTIES.map(x => `<option value="${esc(x.id)}" ${x.id===i.sectie?"selected":""}>${esc(x.naam)}</option>`).join("");
     main.innerHTML = `<h1>Agenda</h1><p class="hint">Toppen, onderhandelingen en vaststaande momenten. Kies eerlijk het label: officieel alleen als de organisator of alle betrokken partijen het hebben aangekondigd.</p>
       <div class="card" id="agform"><h2 style="margin:0 0 6px">${bewerk ? "Punt bewerken" : "Nieuw punt"}</h2>
@@ -361,6 +362,15 @@ async function toonAgenda(bewerk){
       <h2>Alle punten</h2>
       ${items.map(x => `<div class="card"><span class="tag ${x.status==="officieel"?"actief":""}">${esc(STATUS[x.status]?.split(" (")[0] || x.status)}</span><span class="meta">${esc(x.datumTekst || x.start)}${x.eind ? " t/m " + esc(x.eind) : ""} · ${esc(x.plaats||"")}</span>
         <h2 style="margin:6px 0 4px">${esc(x.titel)}</h2><div class="actions"><button class="btn small" data-bewerk="${esc(x.id)}">Bewerken</button></div></div>`).join("")}`;
+    main.insertAdjacentHTML("beforeend", `<h2>Signalen uit het nieuws</h2><div class="card" id="sigkaart"><p class="hint">Laden…</p></div>`);
+    api("signalen").then(sg => {
+      const k = document.getElementById("sigkaart"); if(!k) return;
+      window._SIG = sg.signalen || [];
+      k.innerHTML = `<p class="hint">Elke ochtend automatisch verzameld: koppen die op een aankomende afspraak wijzen. Ze staan ook openbaar onderaan de agenda, als niet bevestigd. Tik op een kop om er een agendapunt van te maken; titel en bron zijn dan ingevuld, jij kiest datum en label. Bijgewerkt: ${sg.bijgewerkt ? fmt(sg.bijgewerkt) : "nog niet"}.</p>
+        <div class="actions" style="margin:0 0 10px"><button class="btn ghost small" id="sigververs">Nu verversen</button></div>
+        ${window._SIG.length ? window._SIG.map((n, x) => `<button class="pick" data-sig="${x}">${esc(n.titel)}<small>${esc(n.bron)} · ${esc(n.label)} · ${fmt(n.tijd)}</small></button>`).join("") : `<p class="hint">Geen signalen gevonden.</p>`}`;
+      document.getElementById("sigververs").onclick = async () => { await api("signalen", {ververs: true}); toonAgenda(bewerk); };
+    }).catch(() => {});
     document.getElementById("abewaar").onclick = async () => {
       try {
         const r = await api("agenda-opslaan", {id:bewerk, titel:val("atitel"), start:val("astart"), eind:val("aeind"), datumTekst:val("adtekst"), plaats:val("aplaats"), sectie:val("asectie"), status:val("astatus"), toelichting:val("atoel"), bron:{naam:val("abnaam"), url:val("aburl")}, push:document.getElementById("apush").checked});
@@ -372,7 +382,11 @@ async function toonAgenda(bewerk){
       document.getElementById("anieuw").onclick = () => toonAgenda();
       document.getElementById("aweg").onclick = async () => { if(!confirm("Dit punt verwijderen?")) return; await api("agenda-weg", {id:bewerk}); toonAgenda(); };
     }
-    main.onclick = e => { const b = e.target.closest("[data-bewerk]"); if(b){ toonAgenda(b.dataset.bewerk); window.scrollTo(0,0); } };
+    main.onclick = e => {
+      const b = e.target.closest("[data-bewerk]"); if(b){ toonAgenda(b.dataset.bewerk); window.scrollTo(0,0); return; }
+      const g = e.target.closest("[data-sig]");
+      if(g){ const n = window._SIG[+g.dataset.sig]; toonAgenda(null, {titel: n.titel, status: "speculatie", sectie: n.secties?.[0] || "", bron: {naam: n.bron, url: n.url}}); window.scrollTo(0,0); }
+    };
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
 }
 
@@ -473,6 +487,39 @@ async function toonUitlichten(keuze){
       if(w) bewaar(huidig.filter(id => id !== w.dataset.weg));
       if(o){ const i = +o.dataset.op; if(i > 0){ const l = [...huidig]; [l[i-1], l[i]] = [l[i], l[i-1]]; bewaar(l); } }
     };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
+/* ---------- X-commentaren ---------- */
+const XSOORT = {eigen:"Eigen post (Het Alternatieve Geluid op X)", quote:"Eigen quote-post (met geciteerd bericht)", repost:"Repost van een ander (Gedeeld door Het Alternatieve Geluid)"};
+async function toonX(){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const {posts} = await api("x-lijst");
+    let p = null;
+    const sOpt = v => SECTIES.map(x => `<option value="${esc(x.id)}" ${x.id===v ? "selected" : ""}>${esc(x.naam)}</option>`).join("");
+    main.innerHTML = `<h1>X-commentaren</h1><p class="hint">Plak de link van een post op X. De app haalt de tekst op en herkent of de post van jouw account is of van iemand anders. Controleer en kies een onderwerp; dan verschijnt hij in de app.</p>
+      <div class="card"><label for="xurl">Link naar de post</label><input id="xurl" placeholder="https://x.com/…/status/…">
+        <div class="actions"><button class="btn" id="xhaal">Ophalen</button></div><div id="xform"></div><div id="xmsg"></div></div>
+      <h2>In de app</h2>
+      ${posts.length ? posts.map(q => `<div class="card"><span class="tag ${q.soort!=="repost" ? "actief" : ""}">${q.soort==="repost" ? "Repost" : q.soort==="quote" ? "Quote" : "Eigen"}</span><span class="meta">${esc(q.datum || "")} · @${esc(q.handle)}</span><p class="quote">${esc((q.commentaar ? q.commentaar + "\n— " : "") + (q.tekst || ""))}</p><div class="actions"><a class="btn ghost small" href="${esc(q.url)}" target="_blank">Op X</a><button class="btn ghost small" data-xweg="${esc(q.id)}">Verwijderen</button></div></div>`).join("") : `<div class="card"><p class="hint" style="margin:0">Nog geen X-commentaren.</p></div>`}`;
+    document.getElementById("xhaal").onclick = async () => {
+      try {
+        p = await api("x-ophalen", {url: val("xurl")});
+        document.getElementById("xform").innerHTML = `${p.melding ? `<div class="msg fout">${esc(p.melding)}</div>` : ""}
+          <label for="xsoort">Soort</label><select id="xsoort">${Object.entries(XSOORT).map(([k,v]) => `<option value="${k}" ${p.soort===k ? "selected" : ""}>${v}</option>`).join("")}</select>
+          <div class="row"><div><label for="xauteur">Account-naam</label><input id="xauteur" value="${esc(p.auteur)}"></div><div><label for="xhandle">Handle (zonder @)</label><input id="xhandle" value="${esc(p.handle)}"></div></div>
+          <label for="xtekst">Tekst van de post</label><textarea id="xtekst">${esc(p.tekst)}</textarea>
+          <label for="xcomm">Jouw toelichting (bij een repost, optioneel)</label><textarea id="xcomm" style="min-height:60px"></textarea>
+          <div class="row"><div><label for="xsectie">Onderwerp</label><select id="xsectie"><option value="">Geen</option>${sOpt("")}</select></div><div><label for="xdatum">Datum</label><input id="xdatum" value="${esc(p.datum)}"></div></div>
+          <div class="actions"><button class="btn" id="xbewaar">Toevoegen aan de app</button></div>`;
+        document.getElementById("xbewaar").onclick = async () => {
+          try { await api("x-opslaan", {url: p.url, soort: val("xsoort"), auteur: val("xauteur"), handle: val("xhandle"), tekst: val("xtekst"), commentaar: val("xcomm"), sectie: val("xsectie"), datum: val("xdatum")}); toonX(); }
+          catch(e){ melding(document.getElementById("xmsg"), e.message, "fout"); }
+        };
+      } catch(e){ melding(document.getElementById("xmsg"), e.message, "fout"); }
+    };
+    main.onclick = async e => { const w = e.target.closest("[data-xweg]"); if(w && confirm("Deze post uit de app halen?")){ await api("x-weg", {id: w.dataset.xweg}); toonX(); } };
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
 }
 

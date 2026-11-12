@@ -133,6 +133,28 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.terug{flex:none;background:none;border:0;color:#fff;width:36px;height:36px;margin-left:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.terug:hover{background:rgba(255,255,255,.1)}
+@media (max-width:440px){.brand h1{font-size:1.1rem}.brand .home img{width:32px;height:32px}}
+.reader > .back,.dhead > .back,.dhead .back{display:none!important}
+.xpost{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;margin:12px 0}
+.xpost.compact{padding:10px 12px;margin:8px 0}
+.xkop{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.xkop img{border-radius:50%}
+.xlabel{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--accent)}
+.xtekst{white-space:pre-wrap;font-family:var(--serif);font-size:1.05rem;line-height:1.5;margin:4px 0 8px}
+.xorig{margin:6px 0 8px;padding:8px 12px;border-left:3px solid var(--line);background:var(--bg);border-radius:0 6px 6px 0;white-space:pre-wrap;font-size:.95rem}
+.xauteur{display:block;font-size:.82rem;color:var(--muted);margin-bottom:4px}
+.xauteur b{color:var(--ink)}
+.xvoet{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.xvoet a{font-size:.85rem;color:var(--accent)}
+.xembed:not(:empty){margin-top:10px}
+.xblok{margin:14px 0}
+.xblok h3{font-family:var(--serif);font-size:1.05rem;margin:0 0 4px}
+.agnieuws{margin:8px 0 2px;display:grid;gap:4px}
+.agnieuws a{display:block;font-size:.86rem;color:var(--ink);text-decoration:none;border-left:2px solid var(--line);padding-left:8px}
+.agnieuws a:hover{border-left-color:var(--accent)}
+.signalen{margin-top:26px;border-top:1px solid var(--line);padding-top:6px}
 .hagmini{vertical-align:-2px;margin-right:5px;border-radius:50%}
 .hagblok{margin:18px 0;padding:14px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--surface)}
 .hagblok h3{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:1.08rem;margin:0 0 10px}
@@ -463,6 +485,7 @@ footer .social a:hover{text-decoration:underline}
 <header class="top">
   <div class="bar"><div class="wrap">
     <div class="brand">
+      <button class="terug" id="terug" aria-label="Terug naar de vorige pagina" title="Terug" hidden><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
       <h1><a href="#" id="home" class="home"><img src="/icons/logo.png" alt="">Het Alternatieve Geluid</a></h1>
       <p>Voor wie verder kijkt dan de krantenkop.</p>
       <a class="bel" href="#meldingen" aria-label="Meldingen instellen" title="Meldingen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></a>
@@ -510,6 +533,7 @@ const CATS = [
   {id:"energie", name:"Energie"},
   {id:"tech", name:"Tech & AI"},
   {id:"gesprek", name:"Gesprekken"},
+  {id:"x", name:"X-commentaren"},
   {id:"nieuws", name:"Nieuws"},
   {id:"onderzoek", name:"Onderzoek"},
   {id:"analyse", name:"Analyse"},
@@ -555,7 +579,7 @@ const byId = id => ARTICLES.find(a=>a.id===id);
 function renderTabs(){
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = CATS.map(c=>{
-    const n = ["start","stroom","wereld","gesprek","energie","agenda","tech"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
+    const n = ["start","stroom","wereld","gesprek","energie","agenda","tech","x"].includes(c.id) ? null : c.id==="alles" ? ARTICLES.length : c.id==="bewaard" ? saved.size : ARTICLES.filter(a=>a.cat===c.id).length;
     return `<button class="tab" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.name}${n===null ? "" : `<span class="n">${n}</span>`}</button>`;
   }).join("");
 }
@@ -588,7 +612,8 @@ function filtered(){
 }
 function seriesLabel(a){ return a.series ? `<span class="series">Reeks ${esc(a.series)}, deel ${a.part}</span>` : ""; }
 
-function renderList(){
+function renderList(){ renderListBinnen(); naRender(); }
+function renderListBinnen(){
   const main = document.getElementById("main");
   document.getElementById("tools").hidden = false;
   document.getElementById("tabs").hidden = false;
@@ -600,6 +625,10 @@ function renderList(){
   if(state.cat==="agenda"){
     if(!AGENDA){ main.innerHTML = `<p class="loading">Agenda laden…</p>`; laadAgenda(); return; }
     main.innerHTML = agendaView(); return;
+  }
+  if(state.cat==="x"){
+    if(!XPOSTS){ main.innerHTML = `<p class="loading">X-commentaren laden…</p>`; laadX(); return; }
+    main.innerHTML = xView(); return;
   }
   if(state.cat==="tech"){
     if(!BEURS){ main.innerHTML = `<p class="loading">Tech & AI laden…</p>`; laadBeurs(); return; }
@@ -783,7 +812,7 @@ function stroomView(){
   if(NIEUWS.fout && !NIEUWS.berichten.length) return html + `<div class="empty"><strong>De nieuwsstroom is nu niet bereikbaar</strong>Probeer het over een paar minuten opnieuw.</div>`;
   html += modusChips();
   html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...NIEUWS.secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
-  if(state.sectie) html += hagBlok(state.sectie, null, "Van Het Alternatieve Geluid over dit onderwerp");
+  if(state.sectie) html += hagBlok(state.sectie, null, "Van Het Alternatieve Geluid over dit onderwerp") + xBlok(state.sectie);
   const q = norm(state.q.trim());
   const lijst = NIEUWS.berichten.filter(b => (!state.sectie || b.secties.includes(state.sectie)) && (!q || norm(b.titel + " " + b.samenvatting + " " + b.bron).includes(q)));
   if(!lijst.length) return html + `<div class="empty"><strong>Geen berichten gevonden</strong>Kies een andere sectie of zoekterm.</div>`;
@@ -849,6 +878,7 @@ async function renderFlits(id){
     ${f.context ? `<p class="lead">${esc(f.context)}</p>` : ""}
     ${f.bron?.naam ? `<p class="aanleiding">Aanleiding: ${f.bron.url ? `<a href="${esc(f.bron.url)}" target="_blank" rel="noopener">${esc(f.bron.naam)}</a>` : esc(f.bron.naam)}${f.bron.label ? ` <span class="lbl">${esc(f.bron.label)}</span>` : ""}</p>` : ""}
     ${hagBlok(f.sectie, null, "Lees de analyse van Het Alternatieve Geluid")}
+    ${xBlok(f.sectie)}
     ${f.community ? `<p><a class="btn ghost" href="${esc(f.community)}" target="_blank" rel="noopener">${communityLabel(f.community)}</a></p>` : ""}
     <h2 class="kop">Ontwikkelingen</h2>
     ${f.updates.length ? `<ol class="tijdlijn">${f.updates.map(u=>`<li>
@@ -1274,14 +1304,14 @@ document.getElementById("tpauze").addEventListener("click", e => {
 });
 
 /* ---------- agenda ---------- */
-let AGENDA = null;
+let AGENDA = null, AGENDA_EXTRA = {signalen: [], perItem: {}};
 const STATUS = {
   officieel: {naam:"Officieel aangekondigd", kort:"Officieel", uitleg:"aangekondigd door de organisator of alle betrokken partijen"},
   deels: {naam:"Aangekondigd door één partij", kort:"Niet door alle partijen bevestigd", uitleg:"aangekondigd door één partij, nog niet door alle betrokkenen bevestigd"},
   speculatie: {naam:"Speculatie", kort:"Speculatie", uitleg:"verwacht op basis van berichtgeving of anonieme bronnen, niet aangekondigd"}
 };
 async function laadAgenda(){
-  try { const r = await fetch("/api/agenda", {cache:"no-cache"}); AGENDA = r.ok ? (await r.json()).items : []; } catch(e){ AGENDA = []; }
+  try { const r = await fetch("/api/agenda", {cache:"no-cache"}); const j = r.ok ? await r.json() : {}; AGENDA = j.items || []; AGENDA_EXTRA = {signalen: j.signalen || [], perItem: j.perItem || {}, bijgewerkt: j.signalenBijgewerkt}; } catch(e){ AGENDA = []; }
   if(!location.hash && ["agenda","alles","start"].includes(state.cat)) renderList();
 }
 const vandaagIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
@@ -1310,6 +1340,7 @@ function agendaItemHTML(i, compact){
       <div class="nmeta"><span class="agstatus">${esc(st.kort)}</span><span>${esc(datumKort(i))}${i.plaats ? " · " + esc(i.plaats) : ""}</span><span class="agaftel">${aftellen(i)}</span></div>
       <strong>${esc(i.titel)}</strong>
       ${!compact && i.toelichting ? `<p>${esc(i.toelichting)}</p>` : ""}
+      ${!compact && AGENDA_EXTRA.perItem[i.id]?.length && (i.eind || i.start) >= vandaagIso() ? `<div class="agnieuws"><p class="fmeta">Laatste nieuws hierover</p>${AGENDA_EXTRA.perItem[i.id].map(n => `<a href="${esc(n.url)}" target="_blank" rel="noopener"><b>${esc(n.bron)}</b>${n.staat ? ` <span class="lbl staat">staatsmedia</span>` : ""} ${esc(n.titel)} <span class="fmeta">${nTijd(n.tijd)}</span></a>`).join("")}</div>` : ""}
       ${!compact && i.bron?.naam ? `<p class="ubron">Bron: ${i.bron.url ? `<a href="${esc(i.bron.url)}" target="_blank" rel="noopener">${esc(i.bron.naam)}</a>` : esc(i.bron.naam)}${sectieNaam(i.sectie) ? " · " + esc(sectieNaam(i.sectie)) : ""}</p>` : ""}
     </div></li>`;
 }
@@ -1335,6 +1366,8 @@ function agendaView(){
     const kop = m !== maand ? `${maand ? "</ul>" : ""}<h3 class="daykop">${m}</h3><ul class="aglist">` : "";
     maand = m; return kop + agendaItemHTML(i, false);
   }).join("") + (komend.length ? "</ul>" : "");
+  const sig = AGENDA_EXTRA.signalen || [];
+  if(sig.length) html += `<section class="signalen"><h3 class="daykop">Signalen uit het nieuws</h3><p class="stroom-intro">Koppen van de afgelopen twee dagen die wijzen op een aankomende top, onderhandeling, stemming of deadline. Automatisch verzameld en elke ochtend bijgewerkt, maar niet door de redactie bevestigd. Pas als iets bevestigd is, komt het in de agenda hierboven.</p><ul class="newslist compact">${sig.slice(0, 15).map(n => `<li class="news"><div class="nmeta"><time>${nTijd(n.tijd)}</time><b>${esc(n.bron)}</b><span class="lbl${n.staat ? " staat" : ""}">${esc(n.label)}</span></div><a class="ntitle" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titel)}</a></li>`).join("")}</ul></section>`;
   if(voorbij.length) html += `<details class="opbouw"><summary>Afgelopen (${voorbij.length})</summary><ul class="aglist">${voorbij.map(i => agendaItemHTML(i, false)).join("")}</ul></details>`;
   return html;
 }
@@ -1449,6 +1482,7 @@ const ICOON = {
   energie:'<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/><path d="M12 11v6"/>',
   gesprek:'<path d="M4 5h16v11H9l-5 4z"/>',
   bel:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+  x:'<path d="M4 4l16 16M20 4L4 20"/>',
   tech:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>',
   vergelijk:'<rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/><path d="M5.5 9h2M5.5 13h2M16.5 9h2M16.5 13h2"/>'
 };
@@ -1457,6 +1491,7 @@ function startView(){
   if(!AGENDA) laadAgenda();
   if(!KORT) laadKort();
   if(!KORTB) laadKortB();
+  if(!XPOSTS) laadX();
   if(!RUIMTES) laadRuimtes();
   const v = vandaagIso();
   const laatste = sorted[0];
@@ -1498,6 +1533,7 @@ function startView(){
       ${tegel("agenda", "agenda", "Agenda", volgende ? `<b>${aftellen(volgende)}</b> ${esc(volgende.titel)}` : "", "Toppen en onderhandelingen: officieel, deels bevestigd of speculatie.")}
       ${tegel("wereld", "wereld", "Wereldbol", top.length ? `Meeste nieuws: ${top.map(esc).join(", ")}` : "", "Interactieve wereldbol: waar het nieuws van dit moment over gaat.")}
       ${tegel("energie", "energie", "Energie", [prijs("brent"), prijs("diesel_nl")].filter(Boolean).join(" · "), "Olie, gas en de pompprijs, en het nieuws rond grote prijsbewegingen.")}
+      ${tegel("x", "x", "X-commentaren", XPOSTS?.[0] ? esc((XPOSTS[0].soort==="repost" ? (XPOSTS[0].commentaar || XPOSTS[0].tekst) : XPOSTS[0].tekst).slice(0, 90)) + "…" : "", "Korte reacties en video's van Het Alternatieve Geluid op X.")}
       ${tegel("gesprek", "gesprek", "Gesprekken", ruimte ? `<b>${esc(ruimte.naam)}</b> · laatst ${nTijd(ruimte.laatste.tijd)}` : "", "Praat mee met andere lezers per onderwerp.")}
       ${tegel("#meldingen", "bel", "Meldingen", "", "Kies per onderwerp waarover je een melding wilt krijgen.", true).replace('class="tegel breed"', 'class="tegel breed klein"')}
     </section>
@@ -1601,7 +1637,7 @@ function renderPrivacy(){
   <h2>Hoe lang bewaren we het?</h2>
   <p>Reacties en berichten bewaren we zolang de flits of gespreksruimte bestaat, tenzij je vraagt om verwijdering. Meldingsadressen bewaren we tot je je afmeldt, of tot ze niet meer werken. Wekelijks maken we een versleutelde back-up, waarvan we de laatste twaalf bewaren.</p>
   <h2>Wie helpt ons daarbij?</h2>
-  <p>De app draait bij <b>Netlify</b> (hosting en opslag), en de broncode en versleutelde back-ups staan bij <b>GitHub</b>. Beide zijn Amerikaanse bedrijven, dus gegevens kunnen buiten de EU worden verwerkt. Meldingen worden afgeleverd via de dienst van de maker van je browser, zoals Google, Apple of Mozilla. Bij het laden van de app worden lettertypen opgehaald bij <b>Google Fonts</b> en voor de wereldbol en grafieken onderdelen bij <b>jsDelivr</b>. Daarbij ziet die dienst je IP-adres. Afbeeldingen bij berichten in de nieuwsstroom komen rechtstreeks van de nieuwsbron. Op de pagina Over staat een voorvertoning van een YouTube-video; die afbeelding wordt geladen bij YouTube (Google).</p>
+  <p>De app draait bij <b>Netlify</b> (hosting en opslag), en de broncode en versleutelde back-ups staan bij <b>GitHub</b>. Beide zijn Amerikaanse bedrijven, dus gegevens kunnen buiten de EU worden verwerkt. Meldingen worden afgeleverd via de dienst van de maker van je browser, zoals Google, Apple of Mozilla. Bij het laden van de app worden lettertypen opgehaald bij <b>Google Fonts</b> en voor de wereldbol en grafieken onderdelen bij <b>jsDelivr</b>. Daarbij ziet die dienst je IP-adres. Afbeeldingen bij berichten in de nieuwsstroom komen rechtstreeks van de nieuwsbron. Op de pagina Over staat een voorvertoning van een YouTube-video; die afbeelding wordt geladen bij YouTube (Google). Bij X-commentaren worden onderdelen van X pas geladen als je zelf op "Bekijk op X met video" tikt; vanaf dat moment kan X gegevens over je bezoek verwerken.</p>
   <h2>Je rechten</h2>
   <p>Je kunt ons vragen welke gegevens we van je hebben, en vragen om ze te verbeteren of te verwijderen. Mail ons, en noem erbij welke reactie of welk bericht het gaat. Omdat we geen accounts hebben, kunnen we je alleen helpen als je aangeeft om welke berichten het gaat. Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>
   <h2>Wijzigingen</h2>
@@ -1821,8 +1857,59 @@ function renderOver(){
   document.getElementById("back").onclick = () => history.back();
 }
 
+/* ---------- X-commentaren ---------- */
+let XPOSTS = null, xBezig = false, xScript = null;
+async function laadX(){
+  if(xBezig) return; xBezig = true;
+  try { const r = await fetch("/api/x"); XPOSTS = r.ok ? (await r.json()).posts || [] : []; } catch(e){ XPOSTS = []; }
+  xBezig = false;
+  if(!location.hash && ["x","start"].includes(state.cat)) renderList();
+}
+function xKaart(p, compact){
+  const eigen = p.soort !== "repost";
+  const kop = eigen ? `<div class="xkop"><img src="/icons/logo.png" alt="" width="22" height="22"><b>Het Alternatieve Geluid</b><span class="fmeta">op X</span></div>` : `<div class="xkop"><span class="xlabel">Gedeeld door Het Alternatieve Geluid</span></div>`;
+  const inhoud = eigen ? `<p class="xtekst">${esc(p.tekst || "")}</p>${p.soort === "quote" ? `<p class="fmeta">Met een geciteerd bericht van een ander account. Tik op “Bekijk op X” om het te zien.</p>` : ""}`
+    : `${p.commentaar ? `<p class="xtekst">${esc(p.commentaar)}</p>` : ""}<blockquote class="xorig"><span class="xauteur"><b>${esc(p.auteur)}</b> @${esc(p.handle)}</span><span>${esc(p.tekst || "")}</span></blockquote>`;
+  return `<article class="xpost${compact ? " compact" : ""}">${kop}${inhoud}
+    <div class="xvoet"><span class="fmeta">${esc(p.datum || "")}${sectieNaam(p.sectie) ? " · " + esc(sectieNaam(p.sectie)) : ""}</span>
+      ${compact ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">Open op X</a>` : `<button class="btn ghost small" data-act="xladen" data-id="${esc(p.postId)}">Bekijk op X met video</button><a href="${esc(p.url)}" target="_blank" rel="noopener">Open op X</a>`}</div>
+    ${compact ? "" : `<div class="xembed" id="xe-${esc(p.postId)}"></div>`}</article>`;
+}
+function xView(){
+  let html = `<section class="dhead"><h2>X-commentaren</h2><p>Korte reacties en video's van Het Alternatieve Geluid op X, en berichten van anderen die we delen. De tekst staat hier altijd; de video en de rest van X laden pas als je op “Bekijk op X met video” tikt.</p></section>`;
+  if(!XPOSTS.length) return html + `<div class="empty"><strong>Nog geen X-commentaren</strong>Kijk binnenkort weer, of volg ons op <a href="https://x.com/HetAlternatieve" target="_blank" rel="noopener">X</a>.</div>`;
+  const secties = [...new Set(XPOSTS.map(p => p.sectie).filter(Boolean))];
+  if(secties.length > 1) html += `<div class="chips">${[["", "Alles"], ...secties.map(sid => [sid, sectieNaam(sid) || sid])].map(([k, t]) => `<button class="chip" data-act="sectie" data-id="${esc(k)}" aria-pressed="${(state.sectie || "")===k}">${esc(t)}</button>`).join("")}</div>`;
+  return html + XPOSTS.filter(p => !state.sectie || p.sectie === state.sectie).map(p => xKaart(p, false)).join("");
+}
+function xBlok(sectie){
+  const l = (XPOSTS || []).filter(p => p.sectie === sectie).slice(0, 2);
+  if(!l.length) return "";
+  return `<section class="xblok"><h3>Op X</h3>${l.map(p => xKaart(p, true)).join("")}</section>`;
+}
+function laadXScript(){
+  if(window.twttr?.widgets) return Promise.resolve();
+  if(!xScript) xScript = new Promise((ok, nee) => { const sc = document.createElement("script"); sc.src = "https://platform.twitter.com/widgets.js"; sc.async = true; sc.onload = () => window.twttr?.ready ? twttr.ready(() => ok()) : ok(); sc.onerror = nee; document.head.append(sc); });
+  return xScript;
+}
+async function toonXPost(id, knop){
+  const el = document.getElementById("xe-" + id); if(!el) return;
+  knop.disabled = true; knop.textContent = "Laden…";
+  try {
+    await laadXScript();
+    el.innerHTML = "";
+    const r = await twttr.widgets.createTweet(id, el, {dnt: true, lang: "nl", theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"});
+    if(!r) throw new Error("leeg");
+    knop.remove();
+  } catch(e){
+    knop.disabled = false; knop.textContent = "Bekijk op X met video";
+    el.innerHTML = `<p class="fmeta">X kon het bericht hier niet laden. <a href="https://x.com/i/status/${esc(id)}" target="_blank" rel="noopener">Open het op X</a>.</p>`;
+  }
+}
+
 /* ---------- routing ---------- */
-function route(){
+function route(){ routeBinnen(); zetTerugknop(); if(location.hash && location.hash !== "#"){ try { sessionStorage.setItem("hag-nav", "1"); } catch(e) {} } }
+function routeBinnen(){
   stopVoorlezen();
   document.getElementById("uitlegpop")?.classList.remove("zichtbaar");
   if(location.hash==="#meldingen"){ clearInterval(flitsTimer); clearInterval(ruimteTimer); stopBol(); renderMeldingen(); return; }
@@ -1855,6 +1942,7 @@ document.getElementById("main").addEventListener("click", e=>{
     persistFollow(); renderList(); return;
   }
   if(act==="meer"){ state.limit += 80; renderList(); return; }
+  if(act==="xladen"){ toonXPost(b.dataset.id, b); return; }
   if(act==="filterweg"){ state.fDossier = ""; state.fJaar = ""; renderList(); return; }
   if(act==="aandeel"){ state.aandeel = b.dataset.id; renderList(); document.getElementById("koersdetail")?.scrollIntoView({behavior:"smooth", block:"start"}); return; }
   if(act==="koersbereik"){ state.koersBereik = +b.dataset.id; document.querySelectorAll('[data-act="koersbereik"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenKoers(); return; }
@@ -1879,6 +1967,33 @@ document.getElementById("main").addEventListener("click", e=>{
   window.scrollTo(0,0);
 });
 window.addEventListener("hashchange", route);
+/* ---------- navigatiegeschiedenis en terugknop ---------- */
+let herstelBezig = false;
+const momentopname = () => ({cat:state.cat, sectie:state.sectie, dossier:state.dossier, stroomModus:state.stroomModus, fDossier:state.fDossier, fJaar:state.fJaar, aandeel:state.aandeel, agendaFilter:state.agendaFilter || ""});
+function naRender(){
+  if(location.hash && location.hash !== "#"){ zetTerugknop(); return; }
+  const nu = momentopname(), vorige = history.state?.app;
+  if(!vorige) history.replaceState({app: nu}, "", location.pathname + location.search);
+  else if(!herstelBezig && JSON.stringify(vorige) !== JSON.stringify(nu)){
+    history.pushState({app: nu}, "", location.pathname + location.search);
+    try { sessionStorage.setItem("hag-nav", "1"); } catch(e) {}
+  }
+  zetTerugknop();
+}
+function zetTerugknop(){
+  const k = document.getElementById("terug"); if(!k) return;
+  k.hidden = state.cat === "start" && (!location.hash || location.hash === "#");
+}
+window.addEventListener("popstate", e => {
+  if(e.state?.app && (!location.hash || location.hash === "#")){
+    herstelBezig = true; Object.assign(state, e.state.app); renderTabs(); renderListBinnen(); herstelBezig = false; zetTerugknop(); window.scrollTo(0,0);
+  }
+});
+document.getElementById("terug").addEventListener("click", () => {
+  let binnen = false; try { binnen = !!sessionStorage.getItem("hag-nav"); } catch(e) {}
+  if(binnen && history.length > 1) history.back();
+  else { state.cat = "start"; state.dossier = null; state.sectie = null; renderTabs(); if(location.hash && location.hash !== "#") location.hash = ""; else renderList(); window.scrollTo(0,0); }
+});
 async function load(){
   document.getElementById("main").innerHTML = `<p class="loading">Artikelen laden…</p>`;
   try {

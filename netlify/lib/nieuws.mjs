@@ -8,7 +8,7 @@ import { archiveerEnergie } from "./energie.mjs";
 import { archiveerTech } from "./beurs.mjs";
 
 const BEWAAR_DAGEN = 7;
-const MAX_BERICHTEN = 1500;
+const MAX_BERICHTEN = 2500;
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_", textNodeName: "#text" });
 
 const store = () => getStore("nieuws");
@@ -89,7 +89,7 @@ async function haalBron(bron) {
     const hooi = ` ${titel} ${samenvatting} `;
     const secties = new Set(sectieRegels.filter(s => s.re.test(hooi)).map(s => s.id));
     if (bron.sectie) secties.add(bron.sectie);
-    return { id: url, bron: bron.naam, bronId: bron.id, label: bron.label, staat: !!bron.staat, kamp: bron.kamp || "overig", titel, samenvatting, url, tijd, secties: [...secties], plaats: vindPlaats(titel, samenvatting), beeld: beeld(it) };
+    return { id: url, bron: bron.naam, bronId: bron.id, label: bron.label, staat: !!bron.staat, kamp: bron.kamp || "overig", perspectief: bron.perspectief || "west", titel, samenvatting, url, tijd, secties: [...secties], plaats: vindPlaats(titel, samenvatting), beeld: beeld(it) };
   }).filter(b => b.titel && b.url && b.tijd && !GEEN_NIEUWS.test(b.titel) && !/\/(jobs?|vacatures?|careers?)\//i.test(b.url));
 }
 
@@ -152,7 +152,7 @@ export async function verversNieuws() {
     .filter(b => (b.secties.length || b.plaats) && new Date(b.tijd).getTime() > grens && new Date(b.tijd).getTime() < Date.now() + 36e5)
     .sort((a, b) => b.tijd.localeCompare(a.tijd))
     .slice(0, MAX_BERICHTEN);
-  const data = { bijgewerkt: new Date().toISOString(), kampen: config.kampen || {}, framing: framing.termen || [], secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status, vergelijking: vergelijk(berichten) };
+  const data = { bijgewerkt: new Date().toISOString(), kampen: config.kampen || {}, perspectieven: config.perspectieven || {}, framing: framing.termen || [], secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status, vergelijking: vergelijk(berichten) };
   await store().setJSON("stroom", data);
   try { await archiveerEnergie(berichten); } catch (e) { console.warn("Energie-archief: " + e.message); }
   try { await archiveerTech(berichten); } catch (e) { console.warn("Tech-archief: " + e.message); }

@@ -1,5 +1,5 @@
 {
- "_uitleg": "Instellingen voor de nieuwsstroom. 'secties' zijn de onderwerpen (zelfde ID's als de dossiers). Een bericht komt in een sectie als een trefwoord in de kop of samenvatting staat. Bij een bron met 'sectie' komen ALLE berichten van die bron in die sectie, ook zonder trefwoord. Een bron uitzetten: zet 'aan' op false. Een trefwoord dat eindigt op '=' moet als heel woord voorkomen (zo vindt 'Mali=' wel 'Mali' maar niet 'malicious'); zonder '=' telt ook een woord dat ermee begint (zo vindt 'Oekraïens' ook 'Oekraïense'). 'kamp' bepaalt in welke kolom een bron staat bij de bronvergelijking en framing-check. Media die onder de EU-sancties vallen (zoals RT, Sputnik, RIA Novosti, Izvestia, Lenta) mogen er niet in.",
+ "_uitleg": "Instellingen voor de nieuwsstroom. 'secties' zijn de onderwerpen (zelfde ID's als de dossiers). Een bericht komt in een sectie als een trefwoord in de kop of samenvatting staat. Bij een bron met 'sectie' komen ALLE berichten van die bron in die sectie, ook zonder trefwoord. Een bron uitzetten: zet 'aan' op false. Een trefwoord dat eindigt op '=' moet als heel woord voorkomen (zo vindt 'Mali=' wel 'Mali' maar niet 'malicious'); zonder '=' telt ook een woord dat ermee begint (zo vindt 'Oekraïens' ook 'Oekraïense'). 'kamp' bepaalt in welke kolom een bron staat bij de bronvergelijking en framing-check. Media die onder de EU-sancties vallen (zoals RT, Sputnik, RIA Novosti, Izvestia, Lenta) mogen er niet in. 'perspectief' bepaalt in welke groep een bron in de nieuwsstroom staat (zie 'perspectieven' voor namen en kleuren).",
  "secties": [
   {
    "id": "oekraine",
@@ -381,7 +381,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://feeds.nos.nl/nosnieuwsbuitenland",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "bbc",
@@ -389,7 +390,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://feeds.bbci.co.uk/news/world/rss.xml",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "guardian",
@@ -397,7 +399,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://www.theguardian.com/world/rss",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "politico",
@@ -405,7 +408,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://www.politico.eu/feed/",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "aljazeera",
@@ -413,7 +417,8 @@
    "label": "Qatarese staatsomroep",
    "feed": "https://www.aljazeera.com/xml/rss/all.xml",
    "aan": true,
-   "kamp": "golf"
+   "kamp": "golf",
+   "perspectief": "midden-oosten"
   },
   {
    "id": "kyivindependent",
@@ -422,7 +427,8 @@
    "feed": "https://kyivindependent.com/news-archive/rss/",
    "sectie": "oekraine",
    "aan": true,
-   "kamp": "oekraine"
+   "kamp": "oekraine",
+   "perspectief": "oekraine"
   },
   {
    "id": "pravda",
@@ -431,7 +437,8 @@
    "feed": "https://www.pravda.com.ua/eng/rss/",
    "sectie": "oekraine",
    "aan": true,
-   "kamp": "oekraine"
+   "kamp": "oekraine",
+   "perspectief": "oekraine"
   },
   {
    "id": "meduza",
@@ -440,7 +447,8 @@
    "feed": "https://meduza.io/rss/en/all",
    "sectie": "oekraine",
    "aan": true,
-   "kamp": "rusland-onafh"
+   "kamp": "rusland-onafh",
+   "perspectief": "rusland"
   },
   {
    "id": "tass",
@@ -449,7 +457,8 @@
    "staat": true,
    "feed": "https://tass.com/rss/v2.xml",
    "aan": true,
-   "kamp": "rusland"
+   "kamp": "rusland",
+   "perspectief": "rusland"
   },
   {
    "id": "almonitor",
@@ -458,7 +467,8 @@
    "feed": "https://www.al-monitor.com/rss",
    "sectie": "iran",
    "aan": true,
-   "kamp": "midden-oosten"
+   "kamp": "midden-oosten",
+   "perspectief": "midden-oosten"
   },
   {
    "id": "timesofisrael",
@@ -466,7 +476,8 @@
    "label": "Israëlische media",
    "feed": "https://www.timesofisrael.com/feed/",
    "aan": true,
-   "kamp": "israel"
+   "kamp": "israel",
+   "perspectief": "midden-oosten"
   },
   {
    "id": "iranintl",
@@ -475,7 +486,8 @@
    "feed": "https://www.iranintl.com/en/feed",
    "sectie": "iran",
    "aan": true,
-   "kamp": "iran-opp"
+   "kamp": "iran-opp",
+   "perspectief": "midden-oosten"
   },
   {
    "id": "tasnim",
@@ -485,7 +497,8 @@
    "feed": "https://www.tasnimnews.com/en/rss",
    "sectie": "iran",
    "aan": true,
-   "kamp": "iran"
+   "kamp": "iran",
+   "perspectief": "midden-oosten"
   },
   {
    "id": "presstv",
@@ -495,7 +508,8 @@
    "feed": "https://www.presstv.ir/RSS",
    "sectie": "iran",
    "aan": true,
-   "kamp": "iran"
+   "kamp": "iran",
+   "perspectief": "midden-oosten"
   },
   {
    "id": "scmp",
@@ -504,7 +518,8 @@
    "feed": "https://www.scmp.com/rss/91/feed",
    "sectie": "china",
    "aan": true,
-   "kamp": "azie"
+   "kamp": "azie",
+   "perspectief": "china"
   },
   {
    "id": "globaltimes",
@@ -513,7 +528,8 @@
    "staat": true,
    "feed": "https://www.globaltimes.cn/rss/outbrain.xml",
    "aan": true,
-   "kamp": "china"
+   "kamp": "china",
+   "perspectief": "china"
   },
   {
    "id": "nikkei",
@@ -521,7 +537,8 @@
    "label": "Japanse media",
    "feed": "https://asia.nikkei.com/rss/feed/nar",
    "aan": true,
-   "kamp": "azie"
+   "kamp": "azie",
+   "perspectief": "japan-azie"
   },
   {
    "id": "diplomat",
@@ -530,7 +547,8 @@
    "feed": "https://thediplomat.com/feed/",
    "sectie": "china",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "focustaiwan",
@@ -540,7 +558,8 @@
    "feed": "https://focustaiwan.tw/rss/aall.xml",
    "sectie": "china",
    "aan": true,
-   "kamp": "azie"
+   "kamp": "azie",
+   "perspectief": "japan-azie"
   },
   {
    "id": "yonhap",
@@ -549,7 +568,8 @@
    "feed": "https://en.yna.co.kr/RSS/news.xml",
    "sectie": "china",
    "aan": true,
-   "kamp": "azie"
+   "kamp": "korea",
+   "perspectief": "korea"
   },
   {
    "id": "bbc_europa",
@@ -558,7 +578,8 @@
    "feed": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
    "sectie": "europa",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "dw",
@@ -566,7 +587,8 @@
    "label": "Duitse publieke omroep",
    "feed": "https://rss.dw.com/rdf/rss-en-world",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "france24",
@@ -574,7 +596,8 @@
    "label": "Franse publieke omroep",
    "feed": "https://www.france24.com/en/rss",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "bbc_afrika",
@@ -583,7 +606,8 @@
    "feed": "https://feeds.bbci.co.uk/news/world/africa/rss.xml",
    "sectie": "afrika",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "africanews",
@@ -592,7 +616,8 @@
    "feed": "https://www.africanews.com/feed/rss",
    "sectie": "afrika",
    "aan": true,
-   "kamp": "afrika"
+   "kamp": "afrika",
+   "perspectief": "afrika"
   },
   {
    "id": "premiumtimes",
@@ -601,7 +626,8 @@
    "feed": "https://www.premiumtimesng.com/feed",
    "sectie": "afrika",
    "aan": true,
-   "kamp": "afrika"
+   "kamp": "afrika",
+   "perspectief": "afrika"
   },
   {
    "id": "bbc_latam",
@@ -610,7 +636,8 @@
    "feed": "https://feeds.bbci.co.uk/news/world/latin_america/rss.xml",
    "sectie": "latam",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "mercopress",
@@ -619,7 +646,8 @@
    "feed": "https://en.mercopress.com/rss",
    "sectie": "latam",
    "aan": true,
-   "kamp": "latam"
+   "kamp": "latam",
+   "perspectief": "latam"
   },
   {
    "id": "telesur",
@@ -629,7 +657,8 @@
    "feed": "https://www.telesurenglish.net/rss/RssHomepage.xml",
    "sectie": "latam",
    "aan": true,
-   "kamp": "latam"
+   "kamp": "latam",
+   "perspectief": "latam"
   },
   {
    "id": "bbc_azie",
@@ -637,7 +666,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://feeds.bbci.co.uk/news/world/asia/rss.xml",
    "aan": true,
-   "kamp": "west"
+   "kamp": "west",
+   "perspectief": "west"
   },
   {
    "id": "thehindu",
@@ -646,7 +676,8 @@
    "feed": "https://www.thehindu.com/news/international/feeder/default.rss",
    "sectie": "zuidazie",
    "aan": true,
-   "kamp": "zuidazie"
+   "kamp": "zuidazie",
+   "perspectief": "india"
   },
   {
    "id": "dawn",
@@ -655,7 +686,8 @@
    "feed": "https://www.dawn.com/feeds/home",
    "sectie": "zuidazie",
    "aan": true,
-   "kamp": "zuidazie"
+   "kamp": "zuidazie",
+   "perspectief": "india"
   },
   {
    "id": "tweakers",
@@ -664,7 +696,8 @@
    "feed": "https://tweakers.net/feeds/mixed.xml",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "verge",
@@ -673,7 +706,8 @@
    "feed": "https://www.theverge.com/rss/index.xml",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "ars",
@@ -682,7 +716,8 @@
    "feed": "https://feeds.arstechnica.com/arstechnica/index",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "techcrunch",
@@ -691,7 +726,8 @@
    "feed": "https://techcrunch.com/feed/",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "mittr",
@@ -700,7 +736,8 @@
    "feed": "https://www.technologyreview.com/feed/",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "wired",
@@ -709,7 +746,8 @@
    "feed": "https://www.wired.com/feed/rss",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "cnbctech",
@@ -718,7 +756,8 @@
    "feed": "https://www.cnbc.com/id/19854910/device/rss/rss.html",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "restofworld",
@@ -727,7 +766,8 @@
    "feed": "https://restofworld.org/feed/latest",
    "sectie": "tech",
    "aan": true,
-   "kamp": "tech"
+   "kamp": "tech",
+   "perspectief": "tech"
   },
   {
    "id": "newsweek",
@@ -735,7 +775,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://www.newsweek.com/rss",
    "kamp": "west",
-   "aan": true
+   "aan": true,
+   "perspectief": "west"
   },
   {
    "id": "euronews",
@@ -743,7 +784,8 @@
    "label": "Westerse mainstream media",
    "feed": "https://www.euronews.com/rss?format=mrss&level=theme&name=news",
    "kamp": "west",
-   "aan": true
+   "aan": true,
+   "perspectief": "west"
   },
   {
    "id": "foreignpolicy",
@@ -751,7 +793,8 @@
    "label": "Westers buitenlandtijdschrift",
    "feed": "https://foreignpolicy.com/feed/",
    "kamp": "west",
-   "aan": true
+   "aan": true,
+   "perspectief": "west"
   },
   {
    "id": "aa",
@@ -760,7 +803,8 @@
    "feed": "https://www.aa.com.tr/en/rss/default?cat=world",
    "kamp": "turkije",
    "aan": true,
-   "staat": true
+   "staat": true,
+   "perspectief": "midden-oosten"
   },
   {
    "id": "trtworld",
@@ -769,7 +813,8 @@
    "feed": "https://www.trtworld.com/rss",
    "kamp": "turkije",
    "aan": true,
-   "staat": true
+   "staat": true,
+   "perspectief": "midden-oosten"
   },
   {
    "id": "arabnews",
@@ -777,7 +822,8 @@
    "label": "Saoedische media (regeringsgezind)",
    "feed": "https://www.arabnews.com/rss.xml",
    "kamp": "golf",
-   "aan": true
+   "aan": true,
+   "perspectief": "midden-oosten"
   },
   {
    "id": "thenational",
@@ -786,7 +832,8 @@
    "feed": "https://www.thenationalnews.com/arc/outboundfeeds/rss/?outputType=xml",
    "kamp": "golf",
    "aan": true,
-   "staat": true
+   "staat": true,
+   "perspectief": "midden-oosten"
   },
   {
    "id": "middleeasteye",
@@ -794,7 +841,8 @@
    "label": "Midden-Oosten nieuwssite (Londen)",
    "feed": "https://www.middleeasteye.net/rss",
    "kamp": "midden-oosten",
-   "aan": true
+   "aan": true,
+   "perspectief": "midden-oosten"
   },
   {
    "id": "haaretz",
@@ -802,7 +850,8 @@
    "label": "Israëlische media",
    "feed": "https://www.haaretz.com/srv/haaretz-latest-headlines",
    "kamp": "israel",
-   "aan": true
+   "aan": true,
+   "perspectief": "midden-oosten"
   },
   {
    "id": "irna",
@@ -812,7 +861,8 @@
    "kamp": "iran",
    "aan": true,
    "staat": true,
-   "sectie": "iran"
+   "sectie": "iran",
+   "perspectief": "midden-oosten"
   },
   {
    "id": "moscowtimes",
@@ -821,7 +871,8 @@
    "feed": "https://www.themoscowtimes.com/rss/news",
    "kamp": "rusland-onafh",
    "aan": true,
-   "sectie": "oekraine"
+   "sectie": "oekraine",
+   "perspectief": "rusland"
   },
   {
    "id": "novaya",
@@ -830,7 +881,8 @@
    "feed": "https://novayagazeta.eu/feed/rss/en",
    "kamp": "rusland-onafh",
    "aan": true,
-   "sectie": "oekraine"
+   "sectie": "oekraine",
+   "perspectief": "rusland"
   },
   {
    "id": "ukrinform",
@@ -840,7 +892,8 @@
    "kamp": "oekraine",
    "aan": true,
    "staat": true,
-   "sectie": "oekraine"
+   "sectie": "oekraine",
+   "perspectief": "oekraine"
   },
   {
    "id": "xinhua",
@@ -849,7 +902,8 @@
    "feed": "https://english.news.cn/rss/worldrss.xml",
    "kamp": "china",
    "aan": true,
-   "staat": true
+   "staat": true,
+   "perspectief": "china"
   },
   {
    "id": "responsible",
@@ -857,7 +911,198 @@
    "label": "Amerikaanse denktank-media (pleit voor militaire terughoudendheid)",
    "feed": "https://responsiblestatecraft.org/feed/",
    "kamp": "kritisch",
+   "aan": true,
+   "perspectief": "west"
+  },
+  {
+   "id": "spiegel",
+   "naam": "Der Spiegel International",
+   "label": "Duitse media",
+   "feed": "https://www.spiegel.de/international/index.rss",
+   "kamp": "west",
+   "perspectief": "west",
    "aan": true
+  },
+  {
+   "id": "lemonde",
+   "naam": "Le Monde (English)",
+   "label": "Franse media",
+   "feed": "https://www.lemonde.fr/en/rss/une.xml",
+   "kamp": "west",
+   "perspectief": "west",
+   "aan": true
+  },
+  {
+   "id": "npr",
+   "naam": "NPR World",
+   "label": "Amerikaanse publieke omroep",
+   "feed": "https://feeds.npr.org/1004/rss.xml",
+   "kamp": "west",
+   "perspectief": "west",
+   "aan": true
+  },
+  {
+   "id": "jpost",
+   "naam": "Jerusalem Post",
+   "label": "Israëlische media",
+   "feed": "https://www.jpost.com/rss/rssfeedsheadlines.aspx",
+   "kamp": "israel",
+   "perspectief": "midden-oosten",
+   "aan": true
+  },
+  {
+   "id": "tehrantimes",
+   "naam": "Tehran Times",
+   "label": "Iraanse media (regeringsgezind)",
+   "feed": "https://www.tehrantimes.com/rss",
+   "kamp": "iran",
+   "perspectief": "midden-oosten",
+   "aan": true,
+   "staat": true,
+   "sectie": "iran"
+  },
+  {
+   "id": "alarabiya",
+   "naam": "Al Arabiya English",
+   "label": "Saoedische omroep",
+   "feed": "https://english.alarabiya.net/feed/rss2/en.xml",
+   "kamp": "golf",
+   "perspectief": "midden-oosten",
+   "aan": true
+  },
+  {
+   "id": "dailysabah",
+   "naam": "Daily Sabah",
+   "label": "Turkse media (regeringsgezind)",
+   "feed": "https://www.dailysabah.com/rssFeed/10",
+   "kamp": "turkije",
+   "perspectief": "midden-oosten",
+   "aan": true
+  },
+  {
+   "id": "rudaw",
+   "naam": "Rudaw",
+   "label": "Koerdische media (Irak)",
+   "feed": "https://www.rudaw.net/english/rss",
+   "kamp": "midden-oosten",
+   "perspectief": "midden-oosten",
+   "aan": true
+  },
+  {
+   "id": "lorient",
+   "naam": "L'Orient Today",
+   "label": "Libanese media",
+   "feed": "https://today.lorientlejour.com/rss",
+   "kamp": "midden-oosten",
+   "perspectief": "midden-oosten",
+   "aan": true
+  },
+  {
+   "id": "cgtn",
+   "naam": "CGTN",
+   "label": "Chinese staatsomroep",
+   "feed": "https://www.cgtn.com/subscribe/rss/section/world.xml",
+   "kamp": "china",
+   "perspectief": "china",
+   "aan": true,
+   "staat": true
+  },
+  {
+   "id": "chinadaily",
+   "naam": "China Daily",
+   "label": "Chinese staatsmedia",
+   "feed": "https://www.chinadaily.com.cn/rss/world_rss.xml",
+   "kamp": "china",
+   "perspectief": "china",
+   "aan": true,
+   "staat": true
+  },
+  {
+   "id": "koreaherald",
+   "naam": "The Korea Herald",
+   "label": "Zuid-Koreaanse media",
+   "feed": "https://www.koreaherald.com/common/rss_xml.php?ct=102",
+   "kamp": "korea",
+   "perspectief": "korea",
+   "aan": true,
+   "sectie": "china"
+  },
+  {
+   "id": "joongang",
+   "naam": "Korea JoongAng Daily",
+   "label": "Zuid-Koreaanse media",
+   "feed": "https://koreajoongangdaily.joins.com/xmls/joongang/rss_all.xml",
+   "kamp": "korea",
+   "perspectief": "korea",
+   "aan": true,
+   "sectie": "china"
+  },
+  {
+   "id": "hankyoreh",
+   "naam": "The Hankyoreh",
+   "label": "Zuid-Koreaanse media (progressief)",
+   "feed": "https://english.hani.co.kr/rss/",
+   "kamp": "korea",
+   "perspectief": "korea",
+   "aan": true,
+   "sectie": "china"
+  },
+  {
+   "id": "japantimes",
+   "naam": "The Japan Times",
+   "label": "Japanse media",
+   "feed": "https://www.japantimes.co.jp/feed/",
+   "kamp": "japan-azie",
+   "perspectief": "japan-azie",
+   "aan": true,
+   "sectie": "china"
+  },
+  {
+   "id": "nhk",
+   "naam": "NHK World",
+   "label": "Japanse publieke omroep",
+   "feed": "https://www3.nhk.or.jp/rss/news/cat0.xml",
+   "kamp": "japan-azie",
+   "perspectief": "japan-azie",
+   "aan": true,
+   "sectie": "china"
+  },
+  {
+   "id": "hindustantimes",
+   "naam": "Hindustan Times",
+   "label": "Indiase media",
+   "feed": "https://www.hindustantimes.com/feeds/rss/world-news/rssfeed.xml",
+   "kamp": "zuidazie",
+   "perspectief": "india",
+   "aan": true
+  },
+  {
+   "id": "indianexpress",
+   "naam": "The Indian Express",
+   "label": "Indiase media",
+   "feed": "https://indianexpress.com/section/world/feed/",
+   "kamp": "zuidazie",
+   "perspectief": "india",
+   "aan": true
+  },
+  {
+   "id": "ndtv",
+   "naam": "NDTV",
+   "label": "Indiase media",
+   "feed": "https://feeds.feedburner.com/ndtvnews-world-news",
+   "kamp": "zuidazie",
+   "perspectief": "india",
+   "aan": true
+  },
+  {
+   "id": "thewire",
+   "naam": "The Wire",
+   "label": "Indiase onafhankelijke media",
+   "feed": "https://thewire.in/rss",
+   "kamp": "zuidazie",
+   "perspectief": "india",
+   "aan": true,
+   "sectie": "zuidazie"
   }
  ],
  "kampen": {
@@ -878,6 +1123,53 @@
   "latam": "Latijns-Amerikaanse media",
   "kritisch": "Westers-kritisch",
   "tech": "Techmedia",
-  "overig": "Overig"
+  "overig": "Overig",
+  "korea": "Koreaanse media"
+ },
+ "perspectieven": {
+  "west": {
+   "naam": "Westers",
+   "kleur": "#3B6FB6"
+  },
+  "rusland": {
+   "naam": "Russisch",
+   "kleur": "#B23A2E"
+  },
+  "oekraine": {
+   "naam": "Oekraïens",
+   "kleur": "#C9A227"
+  },
+  "midden-oosten": {
+   "naam": "Midden-Oosten",
+   "kleur": "#2E8B57"
+  },
+  "china": {
+   "naam": "Chinees",
+   "kleur": "#E07B24"
+  },
+  "korea": {
+   "naam": "Koreaans",
+   "kleur": "#7B4FB3"
+  },
+  "japan-azie": {
+   "naam": "Japans en overig Azië",
+   "kleur": "#1F8A8A"
+  },
+  "india": {
+   "naam": "Indiaas en Zuid-Aziatisch",
+   "kleur": "#9C6B30"
+  },
+  "afrika": {
+   "naam": "Afrikaans",
+   "kleur": "#6E8B3D"
+  },
+  "latam": {
+   "naam": "Latijns-Amerikaans",
+   "kleur": "#C2477F"
+  },
+  "tech": {
+   "naam": "Techmedia",
+   "kleur": "#6B7280"
+  }
  }
 }

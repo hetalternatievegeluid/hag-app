@@ -133,6 +133,27 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.persp{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.03em}
+.persp::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pk)}
+.perspbalk{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:4px -20px 10px;padding:4px 20px 8px;border-bottom:1px solid var(--line)}
+.perspbalk::-webkit-scrollbar{display:none}
+.pchip{flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.82rem;padding:5px 11px;border-radius:999px;cursor:pointer}
+.pchip i{width:9px;height:9px;border-radius:50%;background:var(--pk)}
+.pchip .n{font-size:.72rem;color:var(--muted)}
+.pchip[aria-pressed="true"]{border-color:var(--pk,var(--ink));box-shadow:inset 0 0 0 1px var(--pk,var(--ink));font-weight:600}
+.pkolommen{display:grid;gap:12px;margin-top:12px}
+@media (min-width:700px){.pkolommen{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.pkolommen{grid-template-columns:repeat(3,1fr)}}
+.pkolom{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--pk);border-radius:0 0 8px 8px;padding:12px}
+.pkolom h3{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:1.08rem;margin:0 0 6px}
+.pkolom h3 i{width:10px;height:10px;border-radius:50%;background:var(--pk)}
+.pkolom h3 .n{font-family:var(--sans);font-size:.75rem;color:var(--muted);font-weight:400}
+.pkolom ul{list-style:none;margin:0 0 8px;padding:0}
+.pkolom li{padding:8px 0;border-bottom:1px solid var(--line)}
+.pkolom li:last-child{border-bottom:0}
+.pkolom li .nmeta{font-size:.74rem}
+.pkolom li a{display:block;font-family:var(--serif);font-size:.98rem;line-height:1.3;color:var(--ink);text-decoration:none;margin-top:2px}
+.pkolom li a:hover{text-decoration:underline}
 .terug{flex:none;background:none;border:0;color:#fff;width:36px;height:36px;margin-left:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .terug:hover{background:rgba(255,255,255,.1)}
 @media (max-width:440px){.brand h1{font-size:1.1rem}.brand .home img{width:32px;height:32px}}
@@ -558,7 +579,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {fDossier:"", fJaar:"", aandeel:"NVDA", koersBereik:90, stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
+const state = {persp:"", fDossier:"", fJaar:"", aandeel:"NVDA", koersBereik:90, stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -587,7 +608,7 @@ document.getElementById("tabs").addEventListener("click", e=>{
   const b = e.target.closest(".tab"); if(!b) return;
   state.cat = b.dataset.cat;
   state.agendaFilter = state.agendaFilter || "";
-  state.dossier = null; state.sectie = null; state.limit = 80;
+  state.dossier = null; state.sectie = null; state.persp = ""; state.limit = 80;
   if(state.cat==="gesprek") RUIMTES = null;
   if(location.hash) location.hash = ""; else renderList();
   renderTabs();
@@ -619,7 +640,7 @@ function renderListBinnen(){
   document.getElementById("tabs").hidden = false;
   stopBol();
   if(state.q.trim() && ["start","wereld","energie","gesprek","agenda","tech"].includes(state.cat)){ main.innerHTML = zoekView(); return; }
-  if(state.cat==="stroom"){ main.innerHTML = state.stroomModus==="vergelijk" ? vergelijkView() : stroomView(); return; }
+  if(state.cat==="stroom"){ main.innerHTML = state.stroomModus==="vergelijk" ? vergelijkView() : state.stroomModus==="perspectief" ? perspectiefView() : stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
   if(state.cat==="start"){ main.innerHTML = startView(); return; }
   if(state.cat==="agenda"){
@@ -794,7 +815,7 @@ function nTijd(iso){
 }
 function newsItem(b, alleenTijd){
   const d = new Date(b.tijd);
-  return `<li class="news${b.beeld ? " heeftbeeld" : ""}">${b.beeld ? `<img class="nthumb" src="${esc(b.beeld)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<div class="nmeta"><time datetime="${esc(b.tijd)}">${alleenTijd ? fmtTime.format(d) : nTijd(b.tijd)}</time><b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></div><a class="ntitle" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a>${b.samenvatting ? `<p>${esc(b.samenvatting)}</p>` : ""}${b.plaats ? `<span class="nplaats">${esc(b.plaats.naam)}</span>` : ""}</li>`;
+  return `<li class="news${b.beeld ? " heeftbeeld" : ""}">${b.beeld ? `<img class="nthumb" src="${esc(b.beeld)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<div class="nmeta"><time datetime="${esc(b.tijd)}">${alleenTijd ? fmtTime.format(d) : nTijd(b.tijd)}</time>${perspBadge(b)}<b>${esc(b.bron)}</b><span class="lbl${b.staat ? " staat" : ""}">${esc(b.label)}</span></div><a class="ntitle" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a>${b.samenvatting ? `<p>${esc(b.samenvatting)}</p>` : ""}${b.plaats ? `<span class="nplaats">${esc(b.plaats.naam)}</span>` : ""}</li>`;
 }
 function stroomBlok(sectie, n){
   if(!NIEUWS) return `<section class="stroomblok"><h2>Nieuwsstroom</h2><p class="stroom-intro">Laden…</p></section>`;
@@ -812,9 +833,10 @@ function stroomView(){
   if(NIEUWS.fout && !NIEUWS.berichten.length) return html + `<div class="empty"><strong>De nieuwsstroom is nu niet bereikbaar</strong>Probeer het over een paar minuten opnieuw.</div>`;
   html += modusChips();
   html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...NIEUWS.secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
+  html += perspChips();
   if(state.sectie) html += hagBlok(state.sectie, null, "Van Het Alternatieve Geluid over dit onderwerp") + xBlok(state.sectie);
   const q = norm(state.q.trim());
-  const lijst = NIEUWS.berichten.filter(b => (!state.sectie || b.secties.includes(state.sectie)) && (!q || norm(b.titel + " " + b.samenvatting + " " + b.bron).includes(q)));
+  const lijst = NIEUWS.berichten.filter(b => (!state.sectie || b.secties.includes(state.sectie)) && (!state.persp || b.perspectief === state.persp) && (!q || norm(b.titel + " " + b.samenvatting + " " + b.bron).includes(q)));
   if(!lijst.length) return html + `<div class="empty"><strong>Geen berichten gevonden</strong>Kies een andere sectie of zoekterm.</div>`;
   const toon = lijst.slice(0, state.limit);
   let dag = "";
@@ -826,6 +848,35 @@ function stroomView(){
   }).join("") + `</ul>`;
   if(lijst.length > toon.length) html += `<p><button class="btn ghost" data-act="meer">Meer laden</button></p>`;
   html += `<p class="stroom-intro">Bijgewerkt om ${fmtTime.format(new Date(NIEUWS.bijgewerkt))}.</p>`;
+  return html;
+}
+
+/* ---------- perspectieven ---------- */
+const PERSP_VOLGORDE = ["west","rusland","oekraine","midden-oosten","china","korea","japan-azie","india","afrika","latam","tech"];
+const perspInfo = id => (NIEUWS?.perspectieven || {})[id] || {naam: id || "Overig", kleur: "#6B7280"};
+function perspBadge(b){ if(!b.perspectief) return ""; const p = perspInfo(b.perspectief); return `<span class="persp" style="--pk:${esc(p.kleur)}">${esc(p.naam)}</span>`; }
+function perspTelling(lijst){ const t = {}; lijst.forEach(b => { if(b.perspectief) t[b.perspectief] = (t[b.perspectief] || 0) + 1; }); return t; }
+function perspChips(){
+  const basis = (NIEUWS?.berichten || []).filter(b => !state.sectie || b.secties.includes(state.sectie));
+  const t = perspTelling(basis);
+  const ids = PERSP_VOLGORDE.filter(id => t[id]);
+  if(ids.length < 2) return "";
+  return `<div class="perspbalk" role="group" aria-label="Filter op perspectief"><button class="pchip" data-act="persp" data-id="" aria-pressed="${!state.persp}">Alle perspectieven</button>${ids.map(id => { const p = perspInfo(id); return `<button class="pchip" style="--pk:${esc(p.kleur)}" data-act="persp" data-id="${id}" aria-pressed="${state.persp===id}"><i></i>${esc(p.naam)} <span class="n">${t[id]}</span></button>`; }).join("")}</div>`;
+}
+function perspectiefView(){
+  if(!NIEUWS) return `<p class="loading">Nieuwsstroom laden…</p>`;
+  let html = `<section class="dhead"><h2>Nieuwsstroom per perspectief</h2><p>De nieuwste koppen naast elkaar, gegroepeerd naar waar de bron vandaan komt. Zo zie je in één oogopslag waar westerse, Russische, Chinese, Indiase, Koreaanse en Midden-Oosterse media nu over berichten, en waarover juist niet. Staatsmedia hebben een rood label.</p></section>`;
+  html += modusChips();
+  html += `<div class="chips">` + [{id:"", naam:"Alle onderwerpen"}, ...NIEUWS.secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
+  const q = norm(state.q.trim());
+  const lijst = NIEUWS.berichten.filter(b => (!state.sectie || b.secties.includes(state.sectie)) && (!q || norm(b.titel + " " + b.bron).includes(q)));
+  const groepen = PERSP_VOLGORDE.map(id => ({id, p: perspInfo(id), l: lijst.filter(b => b.perspectief === id)})).filter(g => g.l.length);
+  if(!groepen.length) return html + `<div class="empty"><strong>Geen berichten gevonden</strong>Kies een ander onderwerp.</div>`;
+  html += `<div class="pkolommen">${groepen.map(g => `<section class="pkolom" style="--pk:${esc(g.p.kleur)}">
+    <h3><i></i>${esc(g.p.naam)} <span class="n">${g.l.length}</span></h3>
+    <ul>${g.l.slice(0, 6).map(b => `<li><span class="nmeta"><time>${nTijd(b.tijd)}</time><b>${esc(b.bron)}</b>${b.staat ? `<span class="lbl staat">staatsmedia</span>` : ""}</span><a href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a></li>`).join("")}</ul>
+    ${g.l.length > 6 ? `<button class="btn ghost small" data-act="perspnaar" data-id="${g.id}">Alle ${g.l.length} berichten</button>` : ""}
+  </section>`).join("")}</div>`;
   return html;
 }
 
@@ -1543,7 +1594,7 @@ function startView(){
 /* ---------- bronvergelijking ---------- */
 function modusChips(){
   const n = NIEUWS?.vergelijking?.length || 0;
-  return `<div class="chips modus"><button class="chip" data-act="modus" data-id="lijst" aria-pressed="${state.stroomModus!=="vergelijk"}">Alle berichten</button><button class="chip" data-act="modus" data-id="vergelijk" aria-pressed="${state.stroomModus==="vergelijk"}">Bronvergelijking${n ? ` <span class="n">${n}</span>` : ""}</button></div>`;
+  return `<div class="chips modus"><button class="chip" data-act="modus" data-id="lijst" aria-pressed="${state.stroomModus==="lijst"}">Tijdlijn</button><button class="chip" data-act="modus" data-id="perspectief" aria-pressed="${state.stroomModus==="perspectief"}">Per perspectief</button><button class="chip" data-act="modus" data-id="vergelijk" aria-pressed="${state.stroomModus==="vergelijk"}">Bronvergelijking${n ? ` <span class="n">${n}</span>` : ""}</button></div>`;
 }
 function vergelijkView(){
   let html = `<section class="dhead"><h2>Bronvergelijking en framing-check</h2><p>Hetzelfde nieuws, naast elkaar gezet per soort bron: westers, Russisch, Oekraïens, Iraans, Israëlisch, uit de Golfstaten, Turks, Chinees en meer. Zo zie je wat elke kant benadrukt, welke woorden ze kiezen en wat ze weglaten. Woorden met politieke lading zijn <mark class="framing voorbeeld">gemarkeerd</mark>: tik erop voor uitleg. De app groepeert automatisch op overeenkomende woorden in de koppen; soms belandt er een bericht in de verkeerde groep.</p></section>`;
@@ -1946,6 +1997,8 @@ document.getElementById("main").addEventListener("click", e=>{
   if(act==="filterweg"){ state.fDossier = ""; state.fJaar = ""; renderList(); return; }
   if(act==="aandeel"){ state.aandeel = b.dataset.id; renderList(); document.getElementById("koersdetail")?.scrollIntoView({behavior:"smooth", block:"start"}); return; }
   if(act==="koersbereik"){ state.koersBereik = +b.dataset.id; document.querySelectorAll('[data-act="koersbereik"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenKoers(); return; }
+  if(act==="perspnaar"){ state.persp = b.dataset.id; state.stroomModus = "lijst"; state.limit = 80; renderList(); window.scrollTo(0,0); return; }
+  if(act==="persp"){ state.persp = b.dataset.id || ""; state.limit = 80; renderList(); return; }
   if(act==="modus"){ state.stroomModus = b.dataset.id; state.limit = 80; renderList(); return; }
   if(act==="installeer"){ installeer(); return; }
   if(act==="installweg"){ try { localStorage.setItem("hag-install-weg", "1"); } catch(err) {} b.closest(".installbalk")?.remove(); return; }
@@ -1969,7 +2022,7 @@ document.getElementById("main").addEventListener("click", e=>{
 window.addEventListener("hashchange", route);
 /* ---------- navigatiegeschiedenis en terugknop ---------- */
 let herstelBezig = false;
-const momentopname = () => ({cat:state.cat, sectie:state.sectie, dossier:state.dossier, stroomModus:state.stroomModus, fDossier:state.fDossier, fJaar:state.fJaar, aandeel:state.aandeel, agendaFilter:state.agendaFilter || ""});
+const momentopname = () => ({persp:state.persp, cat:state.cat, sectie:state.sectie, dossier:state.dossier, stroomModus:state.stroomModus, fDossier:state.fDossier, fJaar:state.fJaar, aandeel:state.aandeel, agendaFilter:state.agendaFilter || ""});
 function naRender(){
   if(location.hash && location.hash !== "#"){ zetTerugknop(); return; }
   const nu = momentopname(), vorige = history.state?.app;

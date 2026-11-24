@@ -4,6 +4,7 @@ import { getStore } from "@netlify/blobs";
 import config from "../../config/nieuws.json";
 import plaatsen from "../../config/plaatsen.json";
 import framing from "../../config/framing.json";
+import { bewaarHoogtepunten } from "./hoogtepunten.mjs";
 import { archiveerEnergie } from "./energie.mjs";
 import { archiveerTech } from "./beurs.mjs";
 
@@ -98,9 +99,9 @@ const STOP = new Set(("the and for with from that this says said after over amid
   "voor over door naar maar niet deze wordt worden heeft hebben zijn meer tegen onder ook nog als want omdat toen waar zegt zeggen eerste laatste nieuwe land landen").split(/\s+/));
 const normT = s => (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 const tokens = t => new Set(normT(t).split(" ").filter(w => w.length >= 4 && !STOP.has(w) && !/^\d+$/.test(w)).map(w => w.length > 5 && w.endsWith("s") ? w.slice(0, -1) : w));
-export function vergelijk(berichten) {
-  const grens = Date.now() - 72 * 36e5;
-  const items = berichten.filter(b => new Date(b.tijd).getTime() > grens).map(b => ({ b, t: tokens(b.titel + " " + (b.samenvatting || "").slice(0, 160)) })).filter(x => x.t.size >= 3);
+export function vergelijk(berichten, opties = {}) {
+  const grens = opties.vanaf ?? Date.now() - 72 * 36e5, tot = opties.tot ?? Infinity;
+  const items = berichten.filter(b => { const t = new Date(b.tijd).getTime(); return t > grens && t <= tot; }).map(b => ({ b, t: tokens(b.titel + " " + (b.samenvatting || "").slice(0, 160)) })).filter(x => x.t.size >= 3);
   const clusters = [];
   const kern = c => new Set([...c.freq.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([w]) => w));
   for (const x of items) {
@@ -125,11 +126,11 @@ export function vergelijk(berichten) {
     const centraal = c.leden.slice().sort((a, b) => [...b.t].filter(w => k.has(w)).length - [...a.t].filter(w => k.has(w)).length)[0].b;
     const plekTelling = {}; c.leden.forEach(({ b }) => { if (b.plaats) plekTelling[b.plaats.naam] = (plekTelling[b.plaats.naam] || 0) + 1; });
     const plaats = Object.entries(plekTelling).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
-    const berichten = [...perBron.values()].sort((a, b) => b.tijd.localeCompare(a.tijd)).map(b => ({ bron: b.bron, label: b.label, staat: b.staat, kamp: b.kamp || "overig", titel: b.titel, url: b.url, tijd: b.tijd }));
+    const berichten = [...perBron.values()].sort((a, b) => b.tijd.localeCompare(a.tijd)).map(b => ({ bron: b.bron, label: b.label, staat: b.staat, kamp: b.kamp || "overig", perspectief: b.perspectief || null, titel: b.titel, url: b.url, tijd: b.tijd }));
     return { id: centraal.url, kop: centraal.titel, plaats, laatst: berichten[0].tijd, secties: [...new Set(c.leden.flatMap(({ b }) => b.secties))], berichten };
   }).filter(c => c.berichten.length >= 3 || (c.berichten.length >= 2 && new Set(c.berichten.map(b => b.kamp)).size >= 2))
     .sort((a, b) => (b.berichten.length - a.berichten.length) || b.laatst.localeCompare(a.laatst))
-    .slice(0, 30);
+    .slice(0, opties.max || 30);
 }
 
 export async function verversNieuws() {
@@ -154,6 +155,7 @@ export async function verversNieuws() {
     .slice(0, MAX_BERICHTEN);
   const data = { bijgewerkt: new Date().toISOString(), kampen: config.kampen || {}, perspectieven: config.perspectieven || {}, framing: framing.termen || [], secties: config.secties.map(({ id, naam }) => ({ id, naam })), berichten, status, vergelijking: vergelijk(berichten) };
   await store().setJSON("stroom", data);
+  try { await bewaarHoogtepunten(berichten, vergelijk); } catch (e) { console.warn("Hoogtepunten: " + e.message); }
   try { await archiveerEnergie(berichten); } catch (e) { console.warn("Energie-archief: " + e.message); }
   try { await archiveerTech(berichten); } catch (e) { console.warn("Tech-archief: " + e.message); }
   return data;

@@ -133,6 +133,26 @@ ol.feed::before{content:"";position:absolute;left:61px;top:6px;bottom:6px;width:
 .body ul,.body ol{padding-left:1.3em}
 .body hr{border:0;border-top:1px solid var(--line);margin:2em 0}
 .loading{padding:60px 0;text-align:center;color:var(--muted)}
+.htkort{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:14px 0 6px}
+.htkop{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.htkop h3{font-family:var(--serif);font-size:1.12rem;margin:0}
+ol.htlijst{list-style:none;margin:6px 0 0;padding:0}
+.htitem{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.htitem:last-child{border-bottom:0}
+.htnr{font-family:var(--serif);font-weight:700;font-size:1.5rem;line-height:1;color:var(--accent);text-align:center}
+.httitel{font-family:var(--serif);font-weight:600;font-size:1.05rem;line-height:1.3;color:var(--ink);text-decoration:none;display:block}
+.httitel:hover{text-decoration:underline}
+.htlijst.groot .httitel{font-size:1.2rem}
+.htlijst.groot .htnr{font-size:1.9rem}
+.htinhoud .nmeta{margin-top:4px;font-size:.78rem}
+.pstippen{display:inline-flex;gap:3px}
+.pstippen i{width:9px;height:9px;border-radius:50%;background:var(--pk)}
+.htdetail{margin-top:6px}
+.htdetail summary{font-size:.84rem;color:var(--accent);cursor:pointer;font-weight:600}
+.htdetail ul{list-style:none;margin:6px 0 0;padding:0}
+.htdetail li{font-size:.88rem;padding:6px 0;border-top:1px solid var(--line);line-height:1.35}
+.htdetail li a{color:var(--ink)}
+.htchips{margin-top:0}
 .persp{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.03em}
 .persp::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pk)}
 .perspbalk{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:4px -20px 10px;padding:4px 20px 8px;border-bottom:1px solid var(--line)}
@@ -579,7 +599,7 @@ function dossierLine(a){
 let ARTICLES = [];
 
 /* ---------- state ---------- */
-const state = {persp:"", fDossier:"", fJaar:"", aandeel:"NVDA", koersBereik:90, stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
+const state = {htPeriode:"dag", persp:"", fDossier:"", fJaar:"", aandeel:"NVDA", koersBereik:90, stroomModus:"lijst", cat:"start", q:"", dossier:null, sectie:null, limit:80, periode:24, plek:null, reeks:"brent", bereik:365};
 let saved = new Set();
 try { saved = new Set(JSON.parse(localStorage.getItem("hag-saved") || "[]")); } catch(e) {}
 function persist(){ try { localStorage.setItem("hag-saved", JSON.stringify([...saved])); } catch(e) {} }
@@ -640,7 +660,7 @@ function renderListBinnen(){
   document.getElementById("tabs").hidden = false;
   stopBol();
   if(state.q.trim() && ["start","wereld","energie","gesprek","agenda","tech"].includes(state.cat)){ main.innerHTML = zoekView(); return; }
-  if(state.cat==="stroom"){ main.innerHTML = state.stroomModus==="vergelijk" ? vergelijkView() : state.stroomModus==="perspectief" ? perspectiefView() : stroomView(); return; }
+  if(state.cat==="stroom"){ main.innerHTML = state.stroomModus==="hoogtepunten" ? hoogtepuntenView() : state.stroomModus==="vergelijk" ? vergelijkView() : state.stroomModus==="perspectief" ? perspectiefView() : stroomView(); return; }
   if(state.cat==="wereld"){ main.innerHTML = wereldView(); startBol(); return; }
   if(state.cat==="start"){ main.innerHTML = startView(); return; }
   if(state.cat==="agenda"){
@@ -833,6 +853,7 @@ function stroomView(){
   if(NIEUWS.fout && !NIEUWS.berichten.length) return html + `<div class="empty"><strong>De nieuwsstroom is nu niet bereikbaar</strong>Probeer het over een paar minuten opnieuw.</div>`;
   html += modusChips();
   html += `<div class="chips">` + [{id:"", naam:"Alles"}, ...NIEUWS.secties].map(s => `<button class="chip" data-act="sectie" data-id="${s.id}" aria-pressed="${(state.sectie || "")===s.id}">${esc(s.naam)}</button>`).join("") + `</div>`;
+  if(!state.sectie && !state.persp && !state.q.trim()) html += hoogtepuntenKort();
   html += perspChips();
   if(state.sectie) html += hagBlok(state.sectie, null, "Van Het Alternatieve Geluid over dit onderwerp") + xBlok(state.sectie);
   const q = norm(state.q.trim());
@@ -848,6 +869,50 @@ function stroomView(){
   }).join("") + `</ul>`;
   if(lijst.length > toon.length) html += `<p><button class="btn ghost" data-act="meer">Meer laden</button></p>`;
   html += `<p class="stroom-intro">Bijgewerkt om ${fmtTime.format(new Date(NIEUWS.bijgewerkt))}.</p>`;
+  return html;
+}
+
+/* ---------- hoogtepunten ---------- */
+let HOOGTE = null, hoogteBezig = false;
+async function laadHoogtepunten(){
+  if(hoogteBezig) return; hoogteBezig = true;
+  try { const r = await fetch("/api/hoogtepunten"); HOOGTE = r.ok ? await r.json() : {fout:true}; } catch(e){ HOOGTE = {fout:true}; }
+  hoogteBezig = false;
+  if(state.cat==="stroom" && !location.hash) renderList();
+}
+const HT_PERIODE = {dag:"Vandaag", week:"Deze week", maand:"Deze maand"};
+function perspStippen(ids){ return `<span class="pstippen">${(ids || []).map(id => { const p = perspInfo(id); return `<i style="--pk:${esc(p.kleur)}" title="${esc(p.naam)}"></i>`; }).join("")}</span>`; }
+function htItem(h, i, uitgebreid){
+  const eerste = h.berichten[0];
+  const dagen = h.dagen?.length || 1;
+  return `<li class="htitem">
+    <span class="htnr">${i + 1}</span>
+    <div class="htinhoud">
+      <a class="httitel" href="${esc(eerste?.url || "#")}" target="_blank" rel="noopener">${esc(h.kop)}</a>
+      <div class="nmeta"><b>${h.bronnen.length} bronnen</b><span>${h.perspectieven.length} ${h.perspectieven.length===1 ? "perspectief" : "perspectieven"}</span>${perspStippen(h.perspectieven)}${h.plaats ? `<span class="nplaats">${esc(h.plaats)}</span>` : ""}${dagen > 1 ? `<span>${dagen} dagen in het nieuws</span>` : `<span>${nTijd(h.laatst)}</span>`}</div>
+      ${uitgebreid ? `<details class="htdetail"><summary>Zo brachten de bronnen het</summary><ul>${h.berichten.map(b => `<li>${b.perspectief ? perspBadge(b) : ""} <b>${esc(b.bron)}</b>${b.staat ? ` <span class="lbl staat">staatsmedia</span>` : ""} <a href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a> <span class="fmeta">${nTijd(b.tijd)}</span></li>`).join("")}</ul></details>` : ""}
+    </div></li>`;
+}
+function hoogtepuntenKort(){
+  if(!HOOGTE){ laadHoogtepunten(); return ""; }
+  const l = HOOGTE.dag?.items || [];
+  if(!l.length) return "";
+  return `<section class="htkort"><div class="htkop"><h3>Hoogtepunten van vandaag</h3><button class="btn ghost small" data-act="htnaar" data-id="dag">Dag, week en maand</button></div><ol class="htlijst">${l.slice(0, 3).map((h, i) => htItem(h, i, false)).join("")}</ol></section>`;
+}
+function hoogtepuntenView(){
+  let html = `<section class="dhead"><h2>Hoogtepunten</h2><p>De gebeurtenissen waarover de meeste bronnen en perspectieven berichtten. Hoe meer verschillende media, uit hoe meer delen van de wereld, en hoe meer dagen achter elkaar, hoe hoger een gebeurtenis staat. De rangschikking gebeurt automatisch op basis van de koppen in de nieuwsstroom; het is een maat voor aandacht, niet voor belang of juistheid.</p></section>`;
+  html += modusChips();
+  if(!HOOGTE){ laadHoogtepunten(); return html + `<p class="loading">Hoogtepunten laden…</p>`; }
+  if(HOOGTE.fout) return html + `<div class="empty"><strong>De hoogtepunten zijn nu niet bereikbaar</strong>Probeer het later opnieuw.</div>`;
+  const per = state.htPeriode || "dag";
+  html += `<div class="chips htchips">${Object.entries(HT_PERIODE).map(([k, t]) => `<button class="chip" data-act="htperiode" data-id="${k}" aria-pressed="${per===k}">${t}</button>`).join("")}</div>`;
+  const blok = HOOGTE[per] || {items: []};
+  const f = d => d ? fmtShort.format(new Date(d + "T12:00:00")) : "";
+  const sub = per === "dag" ? (blok.datum && blok.datum !== vandaagIso() ? `Van ${f(blok.datum)}; vandaag is er nog weinig nieuws.` : "")
+    : per === "week" ? `Van ${f(blok.vanaf)} tot vandaag.` : `Van ${f(blok.vanaf)} tot vandaag${blok.dagen < 28 ? `. De maandlijst wordt opgebouwd sinds de invoering: nu ${blok.dagen} ${blok.dagen===1 ? "dag" : "dagen"}.` : "."}`;
+  if(sub) html += `<p class="stroom-intro">${sub}</p>`;
+  if(!blok.items.length) return html + `<div class="empty"><strong>Nog geen hoogtepunten</strong>Zodra meerdere bronnen over hetzelfde berichten, verschijnen ze hier.</div>`;
+  html += `<ol class="htlijst groot">${blok.items.map((h, i) => htItem(h, i, true)).join("")}</ol>`;
   return html;
 }
 
@@ -1594,7 +1659,7 @@ function startView(){
 /* ---------- bronvergelijking ---------- */
 function modusChips(){
   const n = NIEUWS?.vergelijking?.length || 0;
-  return `<div class="chips modus"><button class="chip" data-act="modus" data-id="lijst" aria-pressed="${state.stroomModus==="lijst"}">Tijdlijn</button><button class="chip" data-act="modus" data-id="perspectief" aria-pressed="${state.stroomModus==="perspectief"}">Per perspectief</button><button class="chip" data-act="modus" data-id="vergelijk" aria-pressed="${state.stroomModus==="vergelijk"}">Bronvergelijking${n ? ` <span class="n">${n}</span>` : ""}</button></div>`;
+  return `<div class="chips modus"><button class="chip" data-act="modus" data-id="hoogtepunten" aria-pressed="${state.stroomModus==="hoogtepunten"}">Hoogtepunten</button><button class="chip" data-act="modus" data-id="lijst" aria-pressed="${state.stroomModus==="lijst"}">Tijdlijn</button><button class="chip" data-act="modus" data-id="perspectief" aria-pressed="${state.stroomModus==="perspectief"}">Per perspectief</button><button class="chip" data-act="modus" data-id="vergelijk" aria-pressed="${state.stroomModus==="vergelijk"}">Bronvergelijking${n ? ` <span class="n">${n}</span>` : ""}</button></div>`;
 }
 function vergelijkView(){
   let html = `<section class="dhead"><h2>Bronvergelijking en framing-check</h2><p>Hetzelfde nieuws, naast elkaar gezet per soort bron: westers, Russisch, Oekraïens, Iraans, Israëlisch, uit de Golfstaten, Turks, Chinees en meer. Zo zie je wat elke kant benadrukt, welke woorden ze kiezen en wat ze weglaten. Woorden met politieke lading zijn <mark class="framing voorbeeld">gemarkeerd</mark>: tik erop voor uitleg. De app groepeert automatisch op overeenkomende woorden in de koppen; soms belandt er een bericht in de verkeerde groep.</p></section>`;
@@ -1997,6 +2062,8 @@ document.getElementById("main").addEventListener("click", e=>{
   if(act==="filterweg"){ state.fDossier = ""; state.fJaar = ""; renderList(); return; }
   if(act==="aandeel"){ state.aandeel = b.dataset.id; renderList(); document.getElementById("koersdetail")?.scrollIntoView({behavior:"smooth", block:"start"}); return; }
   if(act==="koersbereik"){ state.koersBereik = +b.dataset.id; document.querySelectorAll('[data-act="koersbereik"]').forEach(x=>x.setAttribute("aria-pressed", x===b)); tekenKoers(); return; }
+  if(act==="htperiode"){ state.htPeriode = b.dataset.id; renderList(); return; }
+  if(act==="htnaar"){ state.stroomModus = "hoogtepunten"; state.htPeriode = b.dataset.id || "dag"; renderList(); window.scrollTo(0,0); return; }
   if(act==="perspnaar"){ state.persp = b.dataset.id; state.stroomModus = "lijst"; state.limit = 80; renderList(); window.scrollTo(0,0); return; }
   if(act==="persp"){ state.persp = b.dataset.id || ""; state.limit = 80; renderList(); return; }
   if(act==="modus"){ state.stroomModus = b.dataset.id; state.limit = 80; renderList(); return; }
@@ -2022,7 +2089,7 @@ document.getElementById("main").addEventListener("click", e=>{
 window.addEventListener("hashchange", route);
 /* ---------- navigatiegeschiedenis en terugknop ---------- */
 let herstelBezig = false;
-const momentopname = () => ({persp:state.persp, cat:state.cat, sectie:state.sectie, dossier:state.dossier, stroomModus:state.stroomModus, fDossier:state.fDossier, fJaar:state.fJaar, aandeel:state.aandeel, agendaFilter:state.agendaFilter || ""});
+const momentopname = () => ({htPeriode:state.htPeriode, persp:state.persp, cat:state.cat, sectie:state.sectie, dossier:state.dossier, stroomModus:state.stroomModus, fDossier:state.fDossier, fJaar:state.fJaar, aandeel:state.aandeel, agendaFilter:state.agendaFilter || ""});
 function naRender(){
   if(location.hash && location.hash !== "#"){ zetTerugknop(); return; }
   const nu = momentopname(), vorige = history.state?.app;

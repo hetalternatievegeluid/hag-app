@@ -11,6 +11,7 @@ import { leesBeurs } from "../lib/beurs.mjs";
 import { leesIndex as leesArtikelIndex } from "../lib/artikelen.mjs";
 import { haalPost, bewaarPost, verwijderPost, leesPosts } from "../lib/xposts.mjs";
 import { leesSignalen, verversSignalen } from "../lib/signalen.mjs";
+import { leesHoogtepunten, verberg, zetVast, herstelRedactie } from "../lib/hoogtepunten.mjs";
 
 async function meld(opties) { try { return await stuur(opties); } catch (e) { console.warn("Push mislukt: " + e.message); return { fout: e.message }; } }
 
@@ -259,6 +260,25 @@ export default async (req) => {
       if (!s || b.ververs) s = await verversSignalen();
       return json(s);
     }
+
+    case "ht-overzicht":
+      return json(await leesHoogtepunten({ ruw: true }));
+
+    case "ht-verberg":
+    case "ht-vast": {
+      const it = b.item || {};
+      if (!Array.isArray(it.woorden) || !it.woorden.length) return json({ fout: "Ongeldig hoogtepunt" }, 400);
+      const item = { kop: schoon(it.kop, 300), plaats: schoon(it.plaats, 80) || null, woorden: it.woorden.map(w => schoon(w, 40)).slice(0, 40),
+        secties: (it.secties || []).map(x => schoon(x, 40)).slice(0, 10), bronnen: (it.bronnen || []).map(x => schoon(x, 80)).slice(0, 40),
+        perspectieven: (it.perspectieven || []).map(x => schoon(x, 40)).slice(0, 12), eerst: schoon(it.eerst, 40), laatst: schoon(it.laatst, 40),
+        dagen: (it.dagen || []).map(x => schoon(x, 12)).slice(0, 40),
+        berichten: (it.berichten || []).slice(0, 10).map(m => ({ bron: schoon(m.bron, 80), label: schoon(m.label, 120), staat: !!m.staat, perspectief: schoon(m.perspectief, 40) || null, titel: schoon(m.titel, 400), url: schoonUrl(m.url), tijd: schoon(m.tijd, 40) })) };
+      const dagen = Math.min(60, Math.max(1, Number(b.dagen) || (b.actie === "ht-vast" ? 7 : 31)));
+      return json(b.actie === "ht-vast" ? await zetVast(item, dagen) : await verberg(item, dagen));
+    }
+
+    case "ht-herstel":
+      return json(await herstelRedactie(String(b.id || "")));
 
     default:
       return json({ fout: "Onbekende actie" }, 400);

@@ -79,21 +79,66 @@ export async function bewaarHoogtepunten(berichten, vergelijk) {
   }
 }
 
-export async function leesHoogtepunten() {
+// ---------- redactie: verbergen en vastzetten ----------
+const HT_ID = h => (h.woorden || []).slice(0, 6).join("-") + "|" + (h.plaats || "");
+export async function leesRedactie() {
+  const r = (await store().get("redactie", { type: "json" })) || { verborgen: [], vast: [] };
+  const nu = new Date().toISOString();
+  r.verborgen = (r.verborgen || []).filter(x => x.tot > nu);
+  r.vast = (r.vast || []).filter(x => x.tot > nu);
+  return r;
+}
+async function bewaarRedactie(r) { await store().setJSON("redactie", r); }
+export async function verberg(item, dagen = 31) {
+  const r = await leesRedactie();
+  const tot = new Date(Date.now() + dagen * 864e5).toISOString();
+  r.vast = r.vast.filter(x => !lijkt(x.item, item));
+  r.verborgen = r.verborgen.filter(x => !lijkt(x.item, item));
+  r.verborgen.push({ id: HT_ID(item), item: { kop: item.kop, plaats: item.plaats, woorden: item.woorden }, tot });
+  await bewaarRedactie(r); return r;
+}
+export async function zetVast(item, dagen = 7) {
+  const r = await leesRedactie();
+  const tot = new Date(Date.now() + dagen * 864e5).toISOString();
+  r.verborgen = r.verborgen.filter(x => !lijkt(x.item, item));
+  r.vast = r.vast.filter(x => !lijkt(x.item, item));
+  r.vast.unshift({ id: HT_ID(item), item, tot });
+  await bewaarRedactie(r); return r;
+}
+export async function herstelRedactie(id) {
+  const r = await leesRedactie();
+  r.verborgen = r.verborgen.filter(x => x.id !== id);
+  r.vast = r.vast.filter(x => x.id !== id);
+  await bewaarRedactie(r); return r;
+}
+
+export async function leesHoogtepunten(opties = {}) {
   const dagen = ((await store().get("dagen", { type: "json" })) || []).sort();
+  const red = await leesRedactie();
   const lees = async d => ((await store().get(`dag/${d}`, { type: "json" })) || []).map(i => ({ ...i, dagen: i.dagen?.length ? i.dagen : [d] }));
   const vandaag = dagVan(new Date());
   const binnen = n => dagen.filter(d => d > dagVan(new Date(Date.now() - n * 864e5)) && d <= vandaag);
-  const top = (items, n) => groepeer(items).sort((a, b) => score(b) - score(a)).slice(0, n)
-    .map(({ woorden, ...r }) => ({ ...r, berichten: r.berichten.sort((a, b) => b.tijd.localeCompare(a.tijd)).slice(0, 8) }));
+  const top = (items, n) => {
+    let lijst = groepeer(items).filter(h => !red.verborgen.some(v => lijkt(v.item, h)));
+    const vast = red.vast.map(v => {
+      const live = lijst.find(h => lijkt(v.item, h));
+      if (live) lijst = lijst.filter(h => h !== live);
+      return { ...(live || v.item), vast: true, vastTot: v.tot };
+    });
+    lijst = [...vast, ...lijst.sort((a, b) => score(b) - score(a))].slice(0, n);
+    return lijst.map(h => ({ ...h, id: HT_ID(h), berichten: [...h.berichten].sort((a, b) => b.tijd.localeCompare(a.tijd)).slice(0, 8), woorden: opties.ruw ? h.woorden : undefined }));
+  };
   let dagLijst = await lees(vandaag), dagLabel = vandaag;
   if (dagLijst.length < 2 && dagen.length > 1) { dagLabel = dagen.filter(d => d < vandaag).at(-1) || vandaag; dagLijst = [...dagLijst, ...(await lees(dagLabel))]; }
   const week = (await Promise.all(binnen(7).map(lees))).flat();
   const maand = (await Promise.all(binnen(31).map(lees))).flat();
-  return {
+  const n = opties.ruw ? 15 : null;
+  const uit = {
     bijgewerkt: new Date().toISOString(),
-    dag: { datum: dagLabel, items: top(dagLijst, 5) },
-    week: { vanaf: binnen(7)[0] || vandaag, items: top(week, 7) },
-    maand: { vanaf: binnen(31)[0] || vandaag, dagen: binnen(31).length, items: top(maand, 10) }
+    dag: { datum: dagLabel, items: top(dagLijst, n || 5) },
+    week: { vanaf: binnen(7)[0] || vandaag, items: top(week, n || 7) },
+    maand: { vanaf: binnen(31)[0] || vandaag, dagen: binnen(31).length, items: top(maand, n || 10) }
   };
+  if (opties.ruw) uit.redactie = red;
+  return uit;
 }

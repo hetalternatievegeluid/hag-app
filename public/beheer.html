@@ -29,7 +29,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bar .wrap{display:flex;align-items:center;gap:12px;padding:10px 20px;flex-wrap:wrap}
 .bar img{width:32px;height:32px}
 .bar strong{font-family:var(--serif);font-size:1.1rem;margin-right:auto}
-.bar nav{display:flex;gap:4px}
+.bar nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;max-width:100%;flex:1 1 100%;order:3}
+.bar nav::-webkit-scrollbar{display:none}
+.bar nav button{flex:none}
+html,body{overflow-x:hidden}
 .bar nav button{background:none;border:0;color:#C9CBD2;font:inherit;font-size:.9rem;padding:6px 10px;border-radius:999px;cursor:pointer}
 .bar nav button[aria-pressed="true"]{background:var(--accent);color:#fff}
 .wrap{max-width:820px;margin:0 auto;padding:0 20px}
@@ -86,6 +89,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-
     <button data-view="agenda" aria-pressed="false">Agenda</button>
     <button data-view="uitlichten" aria-pressed="false">Uitlichten</button>
     <button data-view="x" aria-pressed="false">X</button>
+    <button data-view="hoogtepunten" aria-pressed="false">Hoogtepunten</button>
     <button data-view="energie" aria-pressed="false">Energie</button>
     <button data-view="meldingen" aria-pressed="false">Meldingen</button>
     <button data-view="moderatie" aria-pressed="false">Moderatie <span id="wachtteller"></span></button>
@@ -137,7 +141,7 @@ document.getElementById("nav").addEventListener("click", e=>{
 function kies(view){
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===view));
   main.onclick = null; main.onchange = null;
-  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else if(view==="status") toonStatus(); else if(view==="uitlichten") toonUitlichten(); else if(view==="x") toonX(); else toonFlitsen();
+  if(view==="moderatie") toonModeratie(); else if(view==="gesprekken") toonGesprekken(); else if(view==="energie") toonEnergie(); else if(view==="agenda") toonAgenda(); else if(view==="meldingen") toonMeldingen(); else if(view==="status") toonStatus(); else if(view==="uitlichten") toonUitlichten(); else if(view==="x") toonX(); else if(view==="hoogtepunten") toonHoogtepunten(); else toonFlitsen();
 }
 
 /* ---------- flitsen-overzicht ---------- */
@@ -520,6 +524,39 @@ async function toonX(){
       } catch(e){ melding(document.getElementById("xmsg"), e.message, "fout"); }
     };
     main.onclick = async e => { const w = e.target.closest("[data-xweg]"); if(w && confirm("Deze post uit de app halen?")){ await api("x-weg", {id: w.dataset.xweg}); toonX(); } };
+  } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
+}
+
+/* ---------- hoogtepunten ---------- */
+let HTP = "dag";
+async function toonHoogtepunten(){
+  main.innerHTML = `<p class="hint">Laden…</p>`;
+  try {
+    const h = await api("ht-overzicht");
+    window._HT = h;
+    const lijst = h[HTP]?.items || [];
+    const red = h.redactie || {verborgen: [], vast: []};
+    const regel = (x, i) => `<div class="card"><span class="tag ${x.vast ? "actief" : ""}">${x.vast ? "Vastgezet" : "#" + (lijst.slice(0, i).filter(y => !y.vast).length + 1)}</span><span class="meta">${x.bronnen.length} bronnen · ${x.perspectieven.length} perspectieven${x.plaats ? " · " + esc(x.plaats) : ""}${(x.dagen?.length || 1) > 1 ? " · " + x.dagen.length + " dagen" : ""}</span>
+      <h2 style="margin:6px 0 4px;font-size:1.05rem">${esc(x.kop)}</h2>
+      <p class="meta">${esc(x.bronnen.slice(0, 8).join(", "))}${x.bronnen.length > 8 ? "…" : ""}</p>
+      <div class="actions">${x.vast ? `<button class="btn ghost small" data-hther="${esc(x.id)}">Losmaken</button>` : `<button class="btn small" data-htvast="${i}">Vastzetten</button>`}<button class="btn ghost small" data-htweg="${i}">Verbergen</button></div></div>`;
+    main.innerHTML = `<h1>Hoogtepunten</h1><p class="hint">De app bepaalt de hoogtepunten automatisch. Hier kun je ingrijpen: <b>vastzetten</b> zet een gebeurtenis bovenaan dag, week en maand (7 dagen lang), <b>verbergen</b> haalt hem weg (31 dagen lang), bijvoorbeeld een sportuitslag of een groep die verkeerd is samengevoegd. Wijzigingen staan binnen vijf minuten in de app.</p>
+      <div class="labels" style="margin-bottom:14px">${[["dag","Vandaag"],["week","Deze week"],["maand","Deze maand"]].map(([k,t]) => `<label><input type="radio" name="htp" value="${k}" ${HTP===k ? "checked" : ""}>${t}</label>`).join("")}</div>
+      ${lijst.length ? lijst.map(regel).join("") : `<div class="card"><p class="hint" style="margin:0">Nog geen hoogtepunten.</p></div>`}
+      <h2>Vastgezet en verborgen</h2>
+      <div class="card">${[...red.vast.map(v => ["Vastgezet", v]), ...red.verborgen.map(v => ["Verborgen", v])].map(([soort, v]) => `<div class="update"><span class="tag ${soort==="Vastgezet" ? "actief" : ""}">${soort}</span><span class="meta">tot ${fmt(v.tot)}</span><p class="quote">${esc(v.item.kop)}</p><button class="btn ghost small" data-hther="${esc(v.id)}">Ongedaan maken</button></div>`).join("") || `<p class="hint" style="margin:0">Niets vastgezet of verborgen.</p>`}</div>
+      <div id="htmsg"></div>`;
+    main.onchange = e => { const r = e.target.closest('input[name="htp"]'); if(r){ HTP = r.value; toonHoogtepunten(); } };
+    main.onclick = async e => {
+      const v = e.target.closest("[data-htvast]"), w = e.target.closest("[data-htweg]"), r = e.target.closest("[data-hther]");
+      try {
+        if(v) await api("ht-vast", {item: lijst[+v.dataset.htvast]});
+        else if(w){ if(!confirm("Dit hoogtepunt 31 dagen verbergen?")) return; await api("ht-verberg", {item: lijst[+w.dataset.htweg]}); }
+        else if(r) await api("ht-herstel", {id: r.dataset.hther});
+        else return;
+        toonHoogtepunten();
+      } catch(err){ melding(document.getElementById("htmsg"), err.message, "fout"); }
+    };
   } catch(e){ if(/Wachtwoord/.test(e.message)) toonLogin(e.message); else melding(main, e.message, "fout"); }
 }
 

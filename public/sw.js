@@ -1,5 +1,5 @@
 // Eenvoudige service worker: altijd eerst het netwerk, offline de laatst bewaarde versie.
-const CACHE = "hag-v5";
+const CACHE = "hag-v6";
 const SHELL = ["/", "/index.html", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/logo.png"];
 
 self.addEventListener("install", e => {

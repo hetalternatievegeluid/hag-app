@@ -153,6 +153,7 @@ ol.htlijst{list-style:none;margin:6px 0 0;padding:0}
 .htdetail li{font-size:.88rem;padding:6px 0;border-top:1px solid var(--line);line-height:1.35}
 .htdetail li a{color:var(--ink)}
 .htchips{margin-top:0}
+.htinhoud .uitgelichtlabel{display:inline-block;margin-bottom:3px}
 .persp{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.03em}
 .persp::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pk)}
 .perspbalk{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:4px -20px 10px;padding:4px 20px 8px;border-bottom:1px solid var(--line)}
@@ -882,12 +883,15 @@ async function laadHoogtepunten(){
 }
 const HT_PERIODE = {dag:"Vandaag", week:"Deze week", maand:"Deze maand"};
 function perspStippen(ids){ return `<span class="pstippen">${(ids || []).map(id => { const p = perspInfo(id); return `<i style="--pk:${esc(p.kleur)}" title="${esc(p.naam)}"></i>`; }).join("")}</span>`; }
+let HT_LIJST_HUIDIG = [];
+const HT_VAST_TELLER = (h, i) => HT_LIJST_HUIDIG.slice(0, i).filter(x => x.vast).length;
 function htItem(h, i, uitgebreid){
   const eerste = h.berichten[0];
   const dagen = h.dagen?.length || 1;
   return `<li class="htitem">
-    <span class="htnr">${i + 1}</span>
+    <span class="htnr">${h.vast ? "★" : i + 1 - (HT_VAST_TELLER(h, i))}</span>
     <div class="htinhoud">
+      ${h.vast ? `<span class="uitgelichtlabel">Uitgelicht door de redactie</span>` : ""}
       <a class="httitel" href="${esc(eerste?.url || "#")}" target="_blank" rel="noopener">${esc(h.kop)}</a>
       <div class="nmeta"><b>${h.bronnen.length} bronnen</b><span>${h.perspectieven.length} ${h.perspectieven.length===1 ? "perspectief" : "perspectieven"}</span>${perspStippen(h.perspectieven)}${h.plaats ? `<span class="nplaats">${esc(h.plaats)}</span>` : ""}${dagen > 1 ? `<span>${dagen} dagen in het nieuws</span>` : `<span>${nTijd(h.laatst)}</span>`}</div>
       ${uitgebreid ? `<details class="htdetail"><summary>Zo brachten de bronnen het</summary><ul>${h.berichten.map(b => `<li>${b.perspectief ? perspBadge(b) : ""} <b>${esc(b.bron)}</b>${b.staat ? ` <span class="lbl staat">staatsmedia</span>` : ""} <a href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.titel)}</a> <span class="fmeta">${nTijd(b.tijd)}</span></li>`).join("")}</ul></details>` : ""}
@@ -897,6 +901,7 @@ function hoogtepuntenKort(){
   if(!HOOGTE){ laadHoogtepunten(); return ""; }
   const l = HOOGTE.dag?.items || [];
   if(!l.length) return "";
+  HT_LIJST_HUIDIG = l;
   return `<section class="htkort"><div class="htkop"><h3>Hoogtepunten van vandaag</h3><button class="btn ghost small" data-act="htnaar" data-id="dag">Dag, week en maand</button></div><ol class="htlijst">${l.slice(0, 3).map((h, i) => htItem(h, i, false)).join("")}</ol></section>`;
 }
 function hoogtepuntenView(){
@@ -912,6 +917,7 @@ function hoogtepuntenView(){
     : per === "week" ? `Van ${f(blok.vanaf)} tot vandaag.` : `Van ${f(blok.vanaf)} tot vandaag${blok.dagen < 28 ? `. De maandlijst wordt opgebouwd sinds de invoering: nu ${blok.dagen} ${blok.dagen===1 ? "dag" : "dagen"}.` : "."}`;
   if(sub) html += `<p class="stroom-intro">${sub}</p>`;
   if(!blok.items.length) return html + `<div class="empty"><strong>Nog geen hoogtepunten</strong>Zodra meerdere bronnen over hetzelfde berichten, verschijnen ze hier.</div>`;
+  HT_LIJST_HUIDIG = blok.items;
   html += `<ol class="htlijst groot">${blok.items.map((h, i) => htItem(h, i, true)).join("")}</ol>`;
   return html;
 }
